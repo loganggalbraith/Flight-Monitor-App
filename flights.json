@@ -1,25 +1,5 @@
 {
-  "last_updated": "2026-09-09T10:58:29.336720+00:00",
-  "flight_count": 1,
-  "flights": [
-    {
-      "callsign": "JRE391",
-      "icao24": "a48759",
-      "origin_country": "United States",
-      "latitude": 27.922,
-      "longitude": -82.692,
-      "altitude_meters": null,
-      "velocity_mps": 5.4,
-      "heading": 351.56,
-      "vertical_rate": null,
-      "on_ground": true,
-      "nearest_airport": "KPSP",
-      "nearest_airport_name": "Palm Springs",
-      "distance_to_nearest_airport_miles": 2036.9,
-      "possible_destination": null,
-      "possible_destination_name": null,
-      "possible_destination_distance_miles": null,
-      "last_seen": "2026-09-09T10:58:29.334750+00:00"
-    }
-  ]
+  "last_updated": "2026-09-09T11:20:12.321967+00:00",
+  "flight_count": 0,
+  "flights": []
 }
