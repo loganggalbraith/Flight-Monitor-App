@@ -42,13 +42,14 @@
       margin: 30px auto;
     }
 
-    .status-card {
+    .status-card,
+    .alert-card {
       background: #121e33;
       border: 1px solid #263957;
       border-radius: 18px;
-      padding: 24px;
-      margin-bottom: 20px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+      padding: 22px;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
     }
 
     .status-row {
@@ -78,12 +79,10 @@
       margin-top: 16px;
     }
 
-    .alert-card {
-      background: #121e33;
-      border: 1px solid #263957;
-      border-radius: 18px;
-      padding: 22px;
-      margin-bottom: 16px;
+    .last-updated {
+      margin-top: 12px;
+      color: #7185a5;
+      font-size: 13px;
     }
 
     .alert-card h2 {
@@ -91,14 +90,68 @@
       font-size: 18px;
     }
 
-    .alert-example {
+    .flight-card {
       background: #09101d;
+      border: 1px solid #243550;
+      border-radius: 14px;
       padding: 18px;
+      margin-top: 14px;
+    }
+
+    .flight-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .callsign {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .operator-badge {
+      background: #183766;
+      color: #8bb7ff;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .flight-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .flight-detail {
+      background: #0d1728;
+      padding: 12px;
+      border-radius: 10px;
+    }
+
+    .flight-detail-label {
+      color: #7185a5;
+      font-size: 11px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .flight-detail-value {
+      color: #e7eef9;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .empty-state {
+      background: #09101d;
+      color: #8fa1bd;
+      text-align: center;
+      padding: 24px;
       border-radius: 12px;
-      line-height: 1.8;
-      white-space: pre-line;
-      font-family: monospace;
-      color: #dce7f7;
+      line-height: 1.6;
     }
 
     .airport-list {
@@ -141,12 +194,18 @@
     }
 
     @media (max-width: 500px) {
-      .airport-list {
+      .airport-list,
+      .flight-grid {
         grid-template-columns: 1fr;
       }
 
       header h1 {
         font-size: 23px;
+      }
+
+      .flight-header {
+        align-items: flex-start;
+        flex-direction: column;
       }
     }
   </style>
@@ -156,7 +215,7 @@
 
 <header>
   <h1>✈️ SoCal Flight Monitor</h1>
-  <p>flyExclusive aircraft approaching Southern California</p>
+  <p>flyExclusive & NetJets aircraft activity in Southern California</p>
 </header>
 
 <div class="container">
@@ -164,33 +223,33 @@
   <div class="status-card">
     <div class="status-row">
       <div class="status-title">Flight Monitor</div>
-      <div class="status-badge">● ACTIVE</div>
+      <div class="status-badge" id="statusBadge">● ACTIVE</div>
     </div>
 
     <div class="description">
-      Monitoring flyExclusive aircraft and looking for aircraft
-      positioned toward Southern California airports.
-      Alerts are delivered through Discord.
+      Monitoring flyExclusive and NetJets aircraft for arrivals,
+      departures, aircraft on the ground, and possible positioning
+      flights near Southern California.
+    </div>
+
+    <div class="last-updated" id="lastUpdated">
+      Loading flight data...
     </div>
   </div>
 
 
   <div class="alert-card">
-    <h2>Example Alert</h2>
+    <h2>✈️ Current Aircraft Activity</h2>
 
-    <div class="alert-example">✈️ POSSIBLE FLYEXCLUSIVE APPROACH TO SOUTHERN CALIFORNIA
-
-Callsign: JRE123
-Possible airport: KCRQ - Carlsbad
-Distance: 276 miles
-Aircraft heading: 268°
-Direction to airport: 274°
-Heading difference: 6°</div>
+    <div id="flightList">
+      <div class="empty-state">
+        Loading flights.json...
+      </div>
+    </div>
   </div>
 
 
   <div class="alert-card">
-
     <h2>Airports Being Monitored</h2>
 
     <div class="airport-list">
@@ -216,11 +275,10 @@ Heading difference: 6°</div>
       <div class="airport">KPOC<br>Brackett Field</div>
 
     </div>
-
   </div>
 
 
-  <button class="refresh-button" onclick="location.reload()">
+  <button class="refresh-button" onclick="loadFlights()">
     Refresh Monitor
   </button>
 
@@ -230,6 +288,351 @@ Heading difference: 6°</div>
 <footer>
   SoCal Private Flight Monitor
 </footer>
+
+
+<script>
+
+  async function loadFlights() {
+
+    const flightList = document.getElementById("flightList");
+    const lastUpdated = document.getElementById("lastUpdated");
+    const statusBadge = document.getElementById("statusBadge");
+
+    try {
+
+      /*
+        Adding ?t= prevents the browser from showing
+        an old cached copy of flights.json.
+      */
+
+      const response = await fetch(
+        "flights.json?t=" + new Date().getTime()
+      );
+
+      if (!response.ok) {
+        throw new Error("Could not load flights.json");
+      }
+
+      const data = await response.json();
+
+      /*
+        This allows flights.json to work as either:
+
+        [
+          { flight },
+          { flight }
+        ]
+
+        OR:
+
+        {
+          "updated": "...",
+          "flights": [
+            { flight },
+            { flight }
+          ]
+        }
+      */
+
+      let flights = [];
+
+      if (Array.isArray(data)) {
+        flights = data;
+      } else if (Array.isArray(data.flights)) {
+        flights = data.flights;
+      } else if (Array.isArray(data.aircraft)) {
+        flights = data.aircraft;
+      }
+
+      /*
+        LAST UPDATED
+      */
+
+      let updateTime =
+        data.updated ||
+        data.last_updated ||
+        data.generated_at ||
+        null;
+
+      if (updateTime) {
+
+        const date = new Date(updateTime);
+
+        if (!isNaN(date)) {
+          lastUpdated.textContent =
+            "Last updated: " + date.toLocaleString();
+        } else {
+          lastUpdated.textContent =
+            "Last updated: " + updateTime;
+        }
+
+      } else {
+
+        lastUpdated.textContent =
+          "Dashboard refreshed: " +
+          new Date().toLocaleString();
+      }
+
+
+      /*
+        NO AIRCRAFT
+      */
+
+      if (!flights.length) {
+
+        flightList.innerHTML = `
+          <div class="empty-state">
+            ✈️ No monitored flyExclusive or NetJets aircraft
+            are currently detected near the monitored airports.
+          </div>
+        `;
+
+        statusBadge.textContent = "● ACTIVE";
+        return;
+      }
+
+
+      /*
+        DISPLAY AIRCRAFT
+      */
+
+      flightList.innerHTML = "";
+
+      flights.forEach(flight => {
+
+        const callsign =
+          flight.callsign ||
+          flight.flight ||
+          flight.ident ||
+          "Unknown";
+
+        let operator =
+          flight.operator ||
+          flight.operator_name ||
+          "";
+
+        if (!operator) {
+
+          if (callsign.toUpperCase().startsWith("JRE")) {
+            operator = "flyExclusive";
+          } else if (callsign.toUpperCase().startsWith("EJA")) {
+            operator = "NetJets";
+          } else {
+            operator = "Monitored Aircraft";
+          }
+
+        }
+
+        const airport =
+          flight.airport ||
+          flight.possible_airport ||
+          flight.nearest_airport ||
+          flight.destination ||
+          "Unknown";
+
+        const airportName =
+          flight.airport_name ||
+          flight.possible_airport_name ||
+          "";
+
+        const distance =
+          flight.distance ??
+          flight.distance_miles ??
+          flight.distance_to_airport ??
+          "—";
+
+        const heading =
+          flight.heading ??
+          flight.track ??
+          "—";
+
+        const altitude =
+          flight.altitude ??
+          flight.altitude_ft ??
+          "—";
+
+        const speed =
+          flight.speed ??
+          flight.speed_mph ??
+          flight.velocity ??
+          "—";
+
+        const status =
+          flight.status ||
+          flight.activity ||
+          flight.type ||
+          "Detected";
+
+        const icao24 =
+          flight.icao24 ||
+          flight.icao ||
+          "—";
+
+
+        const card = document.createElement("div");
+        card.className = "flight-card";
+
+        card.innerHTML = `
+
+          <div class="flight-header">
+
+            <div class="callsign">
+              ${escapeHtml(callsign)}
+            </div>
+
+            <div class="operator-badge">
+              ${escapeHtml(operator)}
+            </div>
+
+          </div>
+
+
+          <div class="flight-grid">
+
+            <div class="flight-detail">
+              <div class="flight-detail-label">
+                Activity
+              </div>
+              <div class="flight-detail-value">
+                ${escapeHtml(status)}
+              </div>
+            </div>
+
+
+            <div class="flight-detail">
+              <div class="flight-detail-label">
+                Airport
+              </div>
+              <div class="flight-detail-value">
+                ${escapeHtml(airport)}
+                ${airportName ? " - " + escapeHtml(airportName) : ""}
+              </div>
+            </div>
+
+
+            <div class="flight-detail">
+              <div class="flight-detail-label">
+                Distance
+              </div>
+              <div class="flight-detail-value">
+                ${formatNumber(distance, " miles")}
+              </div>
+            </div>
+
+
+            <div class="flight-detail">
+              <div class="flight-detail-label">
+                Heading
+              </div>
+              <div class="flight-detail-value">
+                ${formatNumber(heading, "°")}
+              </div>
+            </div>
+
+
+            <div class="flight-detail">
+              <div class="flight-detail-label">
+                Altitude
+              </div>
+              <div class="flight-detail-value">
+                ${formatNumber(altitude, " ft")}
+              </div>
+            </div>
+
+
+            <div class="flight-detail">
+              <div class="flight-detail-label">
+                Speed
+              </div>
+              <div class="flight-detail-value">
+                ${formatNumber(speed, "")}
+              </div>
+            </div>
+
+
+            <div class="flight-detail">
+              <div class="flight-detail-label">
+                ICAO24
+              </div>
+              <div class="flight-detail-value">
+                ${escapeHtml(icao24)}
+              </div>
+            </div>
+
+          </div>
+        `;
+
+        flightList.appendChild(card);
+
+      });
+
+
+      statusBadge.textContent =
+        "● ACTIVE • " + flights.length + " DETECTED";
+
+    } catch (error) {
+
+      console.error(error);
+
+      flightList.innerHTML = `
+        <div class="empty-state">
+          ⚠️ Flight data is not available yet.<br><br>
+          The monitor is waiting for flights.json to be generated.
+        </div>
+      `;
+
+      lastUpdated.textContent =
+        "Unable to load flights.json";
+
+      statusBadge.textContent =
+        "● WAITING";
+    }
+  }
+
+
+  function escapeHtml(value) {
+
+    const div = document.createElement("div");
+
+    div.textContent =
+      value === null || value === undefined
+        ? ""
+        : String(value);
+
+    return div.innerHTML;
+  }
+
+
+  function formatNumber(value, suffix) {
+
+    if (
+      value === null ||
+      value === undefined ||
+      value === "" ||
+      value === "—"
+    ) {
+      return "—";
+    }
+
+    return escapeHtml(value) + suffix;
+  }
+
+
+  /*
+    Load immediately when the page opens.
+  */
+
+  loadFlights();
+
+
+  /*
+    Automatically reload flight information
+    every 5 minutes.
+  */
+
+  setInterval(loadFlights, 300000);
+
+</script>
 
 
 </body>
