@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>SoCal Flight Monitor</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0b1220;
+      color: white;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #111c31;
+      padding: 22px;
+      text-align: center;
+      border-bottom: 1px solid #253653;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    header p {
+      margin: 8px 0 0;
+      color: #9fb0ca;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 700px;
+      margin: 30px auto;
+    }
+
+    .status-card {
+      background: #121e33;
+      border: 1px solid #263957;
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    }
+
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .status-title {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .status-badge {
+      background: #173d2a;
+      color: #65e59c;
+      padding: 8px 13px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .description {
+      color: #aab8ce;
+      line-height: 1.6;
+      margin-top: 16px;
+    }
+
+    .alert-card {
+      background: #121e33;
+      border: 1px solid #263957;
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 16px;
+    }
+
+    .alert-card h2 {
+      margin-top: 0;
+      font-size: 18px;
+    }
+
+    .alert-example {
+      background: #09101d;
+      padding: 18px;
+      border-radius: 12px;
+      line-height: 1.8;
+      white-space: pre-line;
+      font-family: monospace;
+      color: #dce7f7;
+    }
+
+    .airport-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .airport {
+      background: #0b1526;
+      border: 1px solid #243550;
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .refresh-button {
+      width: 100%;
+      background: #2d73ff;
+      border: none;
+      color: white;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .refresh-button:hover {
+      background: #1f62df;
+    }
+
+    footer {
+      text-align: center;
+      color: #667895;
+      font-size: 13px;
+      padding: 30px 10px;
+    }
+
+    @media (max-width: 500px) {
+      .airport-list {
+        grid-template-columns: 1fr;
+      }
+
+      header h1 {
+        font-size: 23px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>✈️ SoCal Flight Monitor</h1>
+  <p>flyExclusive aircraft approaching Southern California</p>
+</header>
+
+<div class="container">
+
+  <div class="status-card">
+    <div class="status-row">
+      <div class="status-title">Flight Monitor</div>
+      <div class="status-badge">● ACTIVE</div>
+    </div>
+
+    <div class="description">
+      Monitoring flyExclusive aircraft and looking for aircraft
+      positioned toward Southern California airports.
+      Alerts are delivered through Discord.
+    </div>
+  </div>
+
+
+  <div class="alert-card">
+    <h2>Example Alert</h2>
+
+    <div class="alert-example">✈️ POSSIBLE FLYEXCLUSIVE APPROACH TO SOUTHERN CALIFORNIA
+
+Callsign: JRE123
+Possible airport: KCRQ - Carlsbad
+Distance: 276 miles
+Aircraft heading: 268°
+Direction to airport: 274°
+Heading difference: 6°</div>
+  </div>
+
+
+  <div class="alert-card">
+
+    <h2>Airports Being Monitored</h2>
+
+    <div class="airport-list">
+
+      <div class="airport">KLAX<br>Los Angeles</div>
+      <div class="airport">KVNY<br>Van Nuys</div>
+
+      <div class="airport">KSNA<br>Orange County</div>
+      <div class="airport">KONT<br>Ontario</div>
+
+      <div class="airport">KPSP<br>Palm Springs</div>
+      <div class="airport">KCRQ<br>Carlsbad</div>
+
+      <div class="airport">KSAN<br>San Diego</div>
+      <div class="airport">KSMO<br>Santa Monica</div>
+
+      <div class="airport">KSBA<br>Santa Barbara</div>
+      <div class="airport">KLGB<br>Long Beach</div>
+
+      <div class="airport">KFUL<br>Fullerton</div>
+      <div class="airport">KCNO<br>Chino</div>
+
+      <div class="airport">KPOC<br>Brackett Field</div>
+
+    </div>
+
+  </div>
+
+
+  <button class="refresh-button" onclick="location.reload()">
+    Refresh Monitor
+  </button>
+
+</div>
+
+
+<footer>
+  SoCal Private Flight Monitor
+</footer>
+
+
+</body>
+</html>
