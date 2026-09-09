@@ -1,5 +1,44 @@
 {
-  "last_updated": "2026-09-09T11:43:45.444952+00:00",
-  "flight_count": 0,
-  "flights": []
+  "last_updated": "2026-09-09T11:58:14.977296+00:00",
+  "flight_count": 2,
+  "flights": [
+    {
+      "callsign": "JRE847",
+      "icao24": "ab9ab3",
+      "origin_country": "United States",
+      "latitude": 29.9787,
+      "longitude": -95.2319,
+      "altitude_meters": 5029.2,
+      "velocity_mps": 147.65,
+      "heading": 12.68,
+      "vertical_rate": 9.43,
+      "on_ground": false,
+      "nearest_airport": "KPSP",
+      "nearest_airport_name": "Palm Springs",
+      "distance_to_nearest_airport_miles": 1273.5,
+      "possible_destination": null,
+      "possible_destination_name": null,
+      "possible_destination_distance_miles": null,
+      "last_seen": "2026-09-09T11:58:14.976575+00:00"
+    },
+    {
+      "callsign": "JRE841",
+      "icao24": "ab8469",
+      "origin_country": "United States",
+      "latitude": 40.6166,
+      "longitude": -74.8544,
+      "altitude_meters": 5189.22,
+      "velocity_mps": 156.92,
+      "heading": 246.63,
+      "vertical_rate": 12.35,
+      "on_ground": false,
+      "nearest_airport": "KPSP",
+      "nearest_airport_name": "Palm Springs",
+      "distance_to_nearest_airport_miles": 2316.8,
+      "possible_destination": null,
+      "possible_destination_name": null,
+      "possible_destination_distance_miles": null,
+      "last_seen": "2026-09-09T11:58:14.977163+00:00"
+    }
+  ]
 }
