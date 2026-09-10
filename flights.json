@@ -1,8 +1,37 @@
 {
-  "last_updated": "2026-09-10T02:20:40.551371+00:00",
-  "flight_count": 0,
-  "flights": [],
+  "last_updated": "2026-09-10T02:44:49.300680+00:00",
+  "flight_count": 1,
+  "flights": [
+    {
+      "callsign": "JRE394",
+      "icao24": "a4927e",
+      "origin_country": "United States",
+      "registration": null,
+      "aircraft_type": "Unknown",
+      "photo_url": null,
+      "flightaware_url": "https://www.flightaware.com/live/flight/JRE394",
+      "route_origin": null,
+      "route_destination": null,
+      "route_destination_in_california": false,
+      "physically_in_california": true,
+      "latitude": 34.721,
+      "longitude": -117.2226,
+      "altitude_meters": 5105.4,
+      "velocity_mps": 194.94,
+      "heading": 262.87,
+      "vertical_rate": -4.55,
+      "on_ground": false,
+      "nearest_airport": "KONT",
+      "nearest_airport_name": "Ontario",
+      "distance_to_nearest_airport_miles": 50.8,
+      "possible_destination": "KVNY",
+      "possible_destination_name": "Van Nuys",
+      "possible_destination_distance_miles": 80.4,
+      "last_seen": "2026-09-10T02:44:47.446162+00:00"
+    }
+  ],
   "seen_alerts": [
+    "possible|JRE394|KVNY",
     "possible|JRE943|KSBA"
   ]
 }
