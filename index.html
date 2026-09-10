@@ -152,14 +152,24 @@ async function loadFlights(){
     const r=await fetch("flights.json?t="+Date.now());
     if(!r.ok) throw new Error("Could not load flights.json");
     const data=await r.json();
-    const flights=Array.isArray(data)?data:(data.flights||data.aircraft||[]);
+    const rawFlights=Array.isArray(data)?data:(data.flights||data.aircraft||[]);
+
+    // Never show unrelated JRE aircraft.
+    const flights=rawFlights.filter(f =>
+      f.route_destination_in_california === true ||
+      (
+        f.physically_in_california === true &&
+        !!f.possible_destination
+      )
+    );
+
     const update=data.last_updated||data.updated||data.generated_at;
     document.getElementById("lastUpdated").textContent=update?new Date(update).toLocaleString():new Date().toLocaleString();
     document.getElementById("activeCount").textContent=flights.length;
     document.getElementById("caCount").textContent=flights.filter(f=>f.route_destination_in_california===true).length;
-    document.getElementById("possibleCount").textContent=flights.filter(f=>f.possible_destination && !f.route_destination_in_california).length;
+    document.getElementById("possibleCount").textContent=flights.filter(f=>f.physically_in_california===true && f.possible_destination && !f.route_destination_in_california).length;
 
-    if(!flights.length){list.innerHTML='<div class="empty">No monitored flyExclusive aircraft are currently detected.</div>';return}
+    if(!flights.length){list.innerHTML='<div class="empty">No California-bound or qualifying in-California flyExclusive aircraft are currently detected.</div>';return}
     list.innerHTML="";
     flights.forEach(f=>{
       const call=f.callsign||f.flight||f.ident||"Unknown";
@@ -168,7 +178,8 @@ async function loadFlights(){
       const photo=f.photo_url||f.url_photo||f.aircraft_photo||"";
       const origin=f.route_origin||f.origin||f.departure||"—";
       const dest=f.route_destination||f.destination||f.arrival||f.possible_destination||"—";
-      const possible=!!f.possible_destination && !f.route_destination_in_california;
+      const confirmedCalifornia=f.route_destination_in_california===true;
+      const possible=f.physically_in_california===true && !!f.possible_destination && !confirmedCalifornia;
       const nearest=f.nearest_airport||"—";
       const dist=f.possible_destination_distance_miles??f.distance_to_nearest_airport_miles??f.distance??"—";
       const heading=f.heading??f.track??"—";
@@ -185,7 +196,7 @@ async function loadFlights(){
         <div class="photo">${photo?`<img src="${attr(photo)}" alt="${attr(call+" aircraft")}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="photo-placeholder" style="display:none">Aircraft image unavailable</div>`:`<div class="photo-placeholder">Aircraft image unavailable</div>`}</div>
         <div class="flight-main">
           <div>
-            <div class="status ${possible?"possible":""}">${possible?"⌖ Possible Approach":"✈ California Destination Identified"}</div>
+            <div class="status ${possible?"possible":""}">${confirmedCalifornia?"✈ California Destination Identified":"⌖ Possible Approach"}</div>
             <div class="callsign">${esc(call)}</div>
             <div class="type">${esc(type)}${reg?"<br><strong>"+esc(reg)+"</strong>":""}</div>
             <div class="route">
