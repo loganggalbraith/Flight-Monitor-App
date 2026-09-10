@@ -4,12 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SoCal Private Jet Tracker</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  integrity="sha256-p4NxAoJBhIINfQ3ynhLHGOgqSOM9c8w5cBbiZ54VxYk="
-  crossorigin=""/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-  crossorigin=""></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#f4f6f8;color:#20262d;font-family:Arial,Helvetica,sans-serif}
@@ -43,13 +39,55 @@ main{padding:20px 0 35px}
 .map-panel{background:#fff;border:1px solid #ddd;border-radius:7px;padding:14px;margin-bottom:14px}
 .map-title{font-size:15px;font-weight:700;margin-bottom:4px}
 .map-sub{font-size:11px;color:#68737d;margin-bottom:10px;line-height:1.4}
-#flightMap{height:430px;width:100%;border-radius:6px;border:1px solid #ddd}
+#flightMap{height:430px;width:100%;border-radius:6px;border:1px solid #ddd;overflow:hidden;position:relative}
+
+/* Leaflet layout fallback — keeps map tiles correctly clipped and positioned */
+.leaflet-container{overflow:hidden;position:relative;outline:0;background:#ddd}
+.leaflet-pane,.leaflet-tile,.leaflet-marker-icon,.leaflet-marker-shadow,
+.leaflet-tile-container,.leaflet-pane>svg,.leaflet-pane>canvas,
+.leaflet-zoom-box,.leaflet-image-layer,.leaflet-layer{
+  position:absolute;left:0;top:0
+}
+.leaflet-tile-container{pointer-events:none}
+.leaflet-tile{visibility:hidden}
+.leaflet-tile-loaded{visibility:inherit}
+.leaflet-container img.leaflet-tile{
+  max-width:none!important;
+  max-height:none!important;
+  width:256px!important;
+  height:256px!important;
+  padding:0!important;
+  margin:0!important
+}
+.leaflet-map-pane{z-index:2}
+.leaflet-tile-pane{z-index:200}
+.leaflet-overlay-pane{z-index:400}
+.leaflet-shadow-pane{z-index:500}
+.leaflet-marker-pane{z-index:600}
+.leaflet-tooltip-pane{z-index:650}
+.leaflet-popup-pane{z-index:700}
+.leaflet-control{position:relative;z-index:800;pointer-events:auto}
+.leaflet-top,.leaflet-bottom{position:absolute;z-index:1000;pointer-events:none}
+.leaflet-top{top:0}.leaflet-right{right:0}.leaflet-bottom{bottom:0}.leaflet-left{left:0}
+.leaflet-control-zoom a{
+  display:block;width:30px;height:30px;line-height:30px;text-align:center;
+  text-decoration:none;background:#fff;color:#222;border-bottom:1px solid #ccc
+}
+.leaflet-control-zoom{
+  margin:10px;border:1px solid #aaa;border-radius:4px;overflow:hidden;
+  box-shadow:0 1px 4px rgba(0,0,0,.2)
+}
+.leaflet-control-attribution{
+  background:rgba(255,255,255,.8);padding:2px 5px;font-size:9px
+}
+
 .map-legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;font-size:10px;color:#68737d}
 .legend-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:-1px}
 .legend-ca{background:#087f5b}.legend-possible{background:#986800}.legend-ground{background:#2f5f8f}
 .leaflet-popup-content{font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.45}
 .leaflet-popup-content strong{font-size:13px}
-.plane-marker{background:transparent;border:none;font-size:22px;line-height:22px;text-shadow:0 1px 2px rgba(255,255,255,.9)}
+.plane-marker{background:transparent;border:none}
+.plane-marker svg{display:block;width:18px;height:18px;filter:drop-shadow(0 1px 1px rgba(255,255,255,.9))}
 .alert-help{margin-top:14px;background:#fff;border:1px solid #ddd;border-radius:7px;padding:18px}
 .alert-help h2{font-size:16px;margin:0 0 14px}
 .alert-type{padding:12px 0;border-top:1px solid #eee}
@@ -128,6 +166,8 @@ function initFlightMap(){
     attribution:"&copy; OpenStreetMap contributors"
   }).addTo(flightMap);
   flightMarkerLayer=L.layerGroup().addTo(flightMap);
+  setTimeout(()=>flightMap.invalidateSize(),150);
+  window.addEventListener("resize",()=>flightMap.invalidateSize());
 }
 
 function alertTypeForFlight(f){
@@ -161,9 +201,14 @@ function renderFlightMap(flights){
 
     const icon=L.divIcon({
       className:"plane-marker",
-      html:`<div style="color:${alert.color};transform:rotate(${Number.isFinite(heading)?heading:0}deg)">✈</div>`,
-      iconSize:[24,24],
-      iconAnchor:[12,12]
+      html:`
+        <div style="transform:rotate(${Number.isFinite(heading)?heading:0}deg);transform-origin:50% 50%">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="${alert.color}" d="M21.5 16.2l-8.2-3.9V6.6c0-1-.6-2.1-1.3-2.1s-1.3 1.1-1.3 2.1v5.7l-8.2 3.9v1.6l8.2-2.5v3.6l-2.1 1.4v1.2l3.4-.8 3.4.8v-1.2l-2.1-1.4v-3.6l8.2 2.5z"/>
+          </svg>
+        </div>`,
+      iconSize:[18,18],
+      iconAnchor:[9,9]
     });
 
     const marker=L.marker([lat,lon],{icon}).addTo(flightMarkerLayer);
