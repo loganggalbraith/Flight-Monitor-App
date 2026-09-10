@@ -24,7 +24,14 @@ main{padding:20px 0 35px}
 .photo{min-height:165px;background:#e9edf0}.photo img{width:100%;height:100%;min-height:165px;object-fit:cover;display:block}
 .photo-placeholder{height:100%;min-height:165px;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;color:#8a949d;font-size:11px}
 .flight-main{padding:17px;display:grid;grid-template-columns:1.1fr 1fr;gap:18px}
-.status{font-size:10px;font-weight:700;text-transform:uppercase;color:#087f5b;margin-bottom:7px}.status.possible{color:#986800}
+.status{font-size:10px;font-weight:700;text-transform:uppercase;color:#087f5b;margin-bottom:7px}
+.score-box{margin-top:14px;border:1px solid #ddd;border-radius:6px;padding:10px;background:#f8f9fa}
+.score-top{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.score-title{font-size:10px;text-transform:uppercase;color:#68737d;font-weight:700}
+.score-number{font-size:18px;font-weight:700}
+.score-bar{height:7px;background:#e1e5e8;border-radius:10px;overflow:hidden;margin-top:7px}
+.score-fill{height:100%;background:#5b6570;border-radius:10px}
+.score-reason{font-size:10px;color:#68737d;line-height:1.4;margin-top:7px}.status.possible{color:#986800}
 .callsign{font-size:24px;font-weight:700}.type{font-size:12px;color:#68737d;line-height:1.5;margin-top:3px}
 .route{display:flex;align-items:center;gap:12px;margin-top:16px}.airport-code{font-size:16px;font-weight:700}.route-arrow{color:#68737d}
 .route-label{font-size:9px;color:#8a949d;margin-top:3px}
@@ -112,6 +119,7 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
     <span><span class="legend-dot legend-ca"></span>California destination identified</span>
     <span><span class="legend-dot legend-possible"></span>Possible approach</span>
     <span><span class="legend-dot legend-ground"></span>SoCal departure identified</span>
+    <span><span class="legend-dot" style="background:#5b6570"></span>Reposition watch</span>
   </div>
 </section>
 
@@ -143,6 +151,10 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
   <div class="alert-type">
     <strong>SoCal Departure Identified</strong>
     <p>A flyExclusive aircraft is currently on the ground at a monitored SoCal airport, and route information identifies that airport as the origin with another airport as its destination.</p>
+  </div>
+  <div class="alert-type">
+    <strong>Repositioning Opportunity Score</strong>
+    <p>For a flyExclusive aircraft observed on the ground at a monitored SoCal airport, the tracker estimates a 0–100 opportunity score. A short observed ground time raises the estimate, an identified outbound route raises it sharply, and your tracker's own completed turnaround history is blended in as observations accumulate. This is an estimate of another departure, not confirmation that the flight is an empty leg or available on Vaunt.</p>
   </div>
 </section>
 
@@ -177,6 +189,7 @@ function alertTypeForFlight(f){
   if(grounded) return {label:"SoCal Departure Identified",color:"#2f5f8f"};
   if(confirmed) return {label:"California Destination Identified",color:"#087f5b"};
   if(possible) return {label:"Possible Approach",color:"#986800"};
+  if(f.socal_on_ground===true) return {label:"Reposition Watch",color:"#5b6570"};
   return {label:"Tracked Flight",color:"#68737d"};
 }
 
@@ -217,6 +230,8 @@ function renderFlightMap(flights){
       ${esc(type)}${reg?` · ${esc(reg)}`:""}<br>
       <b>${esc(alert.label)}</b><br>
       ${esc(origin)} → ${esc(dest)}<br>
+      ${f.reposition_score!=null?`<b>Repositioning Opportunity:</b> ${esc(f.reposition_score)}/100 — ${esc(f.reposition_label||"")}<br>`:""}
+      ${f.ground_hours_observed!=null?`Observed on ground: ${Number(f.ground_hours_observed).toFixed(1)} hr<br>`:""}
       <a href="${attr(fa)}" target="_blank" rel="noopener noreferrer">View on FlightAware</a>
     `);
 
@@ -243,6 +258,7 @@ async function loadFlights(){
 
     // Never show unrelated JRE aircraft.
     const flights=rawFlights.filter(f =>
+      f.socal_on_ground === true ||
       f.grounded_departure === true ||
       f.route_destination_in_california === true ||
       (
@@ -270,6 +286,10 @@ async function loadFlights(){
       const origin=f.grounded_departure ? (f.ground_airport||f.route_origin||"—") : (f.route_origin||f.origin||f.departure||"—");
       const dest=f.route_destination||f.destination||f.arrival||f.possible_destination||"—";
       const groundedDeparture=f.grounded_departure===true;
+      const socalOnGround=f.socal_on_ground===true;
+      const repositionScore=f.reposition_score;
+      const repositionLabel=f.reposition_label||"";
+      const repositionReasons=Array.isArray(f.reposition_reasons)?f.reposition_reasons:[];
       const confirmedCalifornia=f.route_destination_in_california===true;
       const possible=f.physically_in_california===true && !!f.possible_destination && !confirmedCalifornia && !groundedDeparture;
       const nearest=f.nearest_airport||"—";
@@ -288,7 +308,7 @@ async function loadFlights(){
         <div class="photo">${photo?`<img src="${attr(photo)}" alt="${attr(call+" aircraft")}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="photo-placeholder" style="display:none">Aircraft image unavailable</div>`:`<div class="photo-placeholder">Aircraft image unavailable</div>`}</div>
         <div class="flight-main">
           <div>
-            <div class="status ${possible?"possible":""}">${groundedDeparture?"🛫 SoCal Departure Identified":(confirmedCalifornia?"✈ California Destination Identified":"⌖ Possible Approach")}</div>
+            <div class="status ${possible?"possible":""}">${groundedDeparture?"🛫 SoCal Departure Identified":(confirmedCalifornia?"✈ California Destination Identified":(possible?"⌖ Possible Approach":"Reposition Watch"))}</div>
             <div class="callsign">${esc(call)}</div>
             <div class="type">${esc(type)}${reg?"<br><strong>"+esc(reg)+"</strong>":""}</div>
             <div class="route">
@@ -296,6 +316,18 @@ async function loadFlights(){
               <div class="route-arrow">⟶</div>
               <div><div class="airport-code">${esc(dest)}</div><div class="route-label">${possible?"Possible destination":"Destination"}</div></div>
             </div>
+            ${repositionScore!=null?`
+              <div class="score-box">
+                <div class="score-top">
+                  <div class="score-title">Estimated Repositioning Opportunity</div>
+                  <div class="score-number">${esc(repositionScore)}/100 · ${esc(repositionLabel)}</div>
+                </div>
+                <div class="score-bar"><div class="score-fill" style="width:${Math.max(0,Math.min(100,Number(repositionScore)))}%"></div></div>
+                <div class="score-reason">
+                  ${f.ground_hours_observed!=null?`Observed on ground: ${Number(f.ground_hours_observed).toFixed(1)} hr. `:""}
+                  ${repositionReasons.length?esc(repositionReasons.join(" · ")):"Estimated from current ground time and observed tracker history."}
+                </div>
+              </div>`:""}
           </div>
           <div class="metrics">
             <div class="metric"><span class="ico">⌁</span><span class="name">Altitude</span><span class="val">${num(alt," ft")}</span></div>
