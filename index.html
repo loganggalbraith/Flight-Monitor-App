@@ -1,150 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#071018" />
-  <title>Private Jet Flight Tracker</title>
-  <style>
-    :root{
-      --bg:#071018; --panel:#0b1721; --panel2:#0d1b26; --line:#293641;
-      --text:#f3f1ea; --muted:#9aa5ad; --gold:#e1bd78; --aqua:#58e0ce;
-      --green:#53e2a5; --shadow:0 18px 55px rgba(0,0,0,.38);
-    }
-    *{box-sizing:border-box}
-    body{margin:0;background:linear-gradient(180deg,#071018,#050c12);color:var(--text);
-      font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
-    .shell{width:min(96%,1500px);margin:auto}
-    .hero{position:relative;min-height:270px;overflow:hidden;border-bottom:1px solid var(--line);
-      background:
-      radial-gradient(circle at 75% 20%,rgba(225,189,120,.16),transparent 28%),
-      linear-gradient(110deg,#071018 0%,#0a151e 48%,#2a2119 100%)}
-    .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,10,15,.2),transparent 55%)}
-    .hero-inner{position:relative;z-index:1;padding:46px 10px 38px;display:flex;justify-content:space-between;gap:30px}
-    .brand{max-width:650px}
-    .jet-mark{width:min(360px,82vw);height:62px;margin-bottom:6px}
-    .jet-mark svg{width:100%;height:100%}
-    h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(34px,5vw,58px);
-      letter-spacing:.16em;font-weight:400;color:#ecd09a;margin:0;text-transform:uppercase}
-    .subtitle{font-size:14px;letter-spacing:.38em;text-transform:uppercase;color:#d9dde0;margin-top:9px}
-    .tagline{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#c0c5c8;margin-top:28px}
-    .hero-right{text-align:right;padding-top:10px}
-    .hero-nav{letter-spacing:.35em;text-transform:uppercase;font-size:12px;color:#e9e5dc}
-    .script{font-family:Georgia,"Times New Roman",serif;font-style:italic;color:#e6c889;font-size:27px;margin-top:32px}
-    main{padding:18px 0 40px}
-    .summary{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);
-      background:rgba(10,22,31,.92);border-radius:12px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:18px}
-    .stat{padding:20px 24px;min-height:100px;border-right:1px solid var(--line);display:flex;align-items:center;gap:18px}
-    .stat:last-child{border-right:0}.stat-icon{color:var(--gold);font-size:30px}.stat-number{font-size:27px}
-    .stat-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#e3e5e6;margin-top:4px}
-    .stat-sub{font-size:11px;color:var(--muted);margin-top:5px}.updated{font-size:13px;line-height:1.55;color:#d7dadd}
-    .flight-list{display:grid;gap:15px}
-    .flight-card{display:grid;grid-template-columns:minmax(260px,34%) 1fr minmax(200px,18%);
-      background:linear-gradient(90deg,#0b1721,#08131c);border:1px solid var(--line);border-radius:12px;
-      overflow:hidden;box-shadow:var(--shadow);min-height:178px}
-    .photo{background:#111c24;min-height:178px;position:relative}
-    .photo img{width:100%;height:100%;object-fit:cover;display:block}
-    .photo-placeholder{height:100%;min-height:178px;display:flex;align-items:center;justify-content:center;
-      color:#56636d;letter-spacing:.12em;text-transform:uppercase;font-size:11px}
-    .flight-main{padding:18px 24px;display:grid;grid-template-columns:1.2fr 1fr;gap:24px}
-    .status{color:var(--green);font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:800;margin-bottom:10px}
-    .status.possible{color:var(--gold)}.callsign{font-size:27px;letter-spacing:.05em}
-    .type{color:#b8c0c6;font-size:13px;margin-top:4px}.route{display:flex;align-items:end;gap:25px;margin-top:15px}
-    .airport-code{font-size:18px;color:var(--aqua);letter-spacing:.08em;font-weight:700}.route-arrow{color:var(--gold);font-size:22px}
-    .route-label{font-size:11px;color:#aab3ba;margin-top:3px}
-    .metrics{border-left:1px solid var(--line);padding-left:24px;display:grid;align-content:center;gap:13px}
-    .metric{display:grid;grid-template-columns:24px 1fr 1fr;gap:8px;font-size:13px}
-    .metric .ico{color:var(--gold)}.metric .name{color:#a9b1b7}.metric .val{color:#f0f0ed;font-weight:600}
-    .actions{border-left:1px solid var(--line);padding:24px;display:flex;flex-direction:column;justify-content:center;gap:12px}
-    .btn{display:block;text-align:center;text-decoration:none;border-radius:8px;padding:14px 10px;font-size:10px;
-      letter-spacing:.1em;text-transform:uppercase;font-weight:800}
-    .btn.gold{background:linear-gradient(#ebcb8b,#d6ad63);color:#111820}.btn.outline{border:1px solid var(--gold);color:#e9cc91}
-    .empty{padding:42px;text-align:center;border:1px solid var(--line);border-radius:12px;color:var(--muted);background:var(--panel)}
-    .airports{margin-top:18px;border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:18px}
-    .airports-title{font-family:Georgia,serif;font-size:21px;color:#e6ca91;margin-bottom:12px}
-    .airport-grid{display:flex;flex-wrap:wrap;gap:8px}.airport-chip{border:1px solid #283743;border-radius:999px;padding:8px 11px;
-      font-size:10px;letter-spacing:.06em;color:#aeb8bf}.refresh{width:100%;margin-top:14px;background:transparent;color:var(--gold);
-      border:1px solid rgba(225,189,120,.5);border-radius:8px;padding:13px;text-transform:uppercase;letter-spacing:.15em;cursor:pointer}
-    footer{display:flex;justify-content:space-between;gap:20px;color:#68747d;font-size:9px;letter-spacing:.16em;text-transform:uppercase;
-      padding:18px 0 30px;border-top:1px solid rgba(255,255,255,.04)}
-    @media(max-width:900px){.summary{grid-template-columns:1fr 1fr}.stat:nth-child(2){border-right:0}
-      .flight-card{grid-template-columns:1fr}.photo{max-height:260px}.flight-main{grid-template-columns:1fr}
-      .metrics,.actions{border-left:0;border-top:1px solid var(--line)}.actions{padding:18px;flex-direction:row}.btn{flex:1}}
-    @media(max-width:600px){.hero-inner{display:block}.hero-right{display:none}.summary{grid-template-columns:1fr}
-      .stat{border-right:0;border-bottom:1px solid var(--line)}.flight-main{padding:18px}.route{gap:14px}
-      .actions{flex-direction:column}h1{letter-spacing:.08em}.subtitle{letter-spacing:.22em}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoCal Private Jet Tracker</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIINfQ3ynhLHGOgqSOM9c8w5cBbiZ54VxYk="
+  crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin=""></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f4f6f8;color:#20262d;font-family:Arial,Helvetica,sans-serif}
+.container{width:min(94%,1000px);margin:auto}
+header{background:#fff;border-bottom:1px solid #ddd;padding:22px 0}
+h1{margin:0;font-size:25px}
+header p{margin:6px 0 0;color:#68737d;font-size:13px}
+main{padding:20px 0 35px}
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.stat{background:#fff;border:1px solid #ddd;border-radius:7px;padding:15px}
+.stat-icon{display:none}.stat-number{font-size:24px;font-weight:700}
+.stat-label{font-size:10px;text-transform:uppercase;color:#68737d;margin-top:5px}
+.stat-sub{font-size:10px;color:#8a949d;margin-top:4px}.updated{font-size:12px;line-height:1.5}
+.flight-list{display:grid;gap:12px}
+.flight-card{display:grid;grid-template-columns:210px 1fr 170px;background:#fff;border:1px solid #ddd;border-radius:7px;overflow:hidden}
+.photo{min-height:165px;background:#e9edf0}.photo img{width:100%;height:100%;min-height:165px;object-fit:cover;display:block}
+.photo-placeholder{height:100%;min-height:165px;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;color:#8a949d;font-size:11px}
+.flight-main{padding:17px;display:grid;grid-template-columns:1.1fr 1fr;gap:18px}
+.status{font-size:10px;font-weight:700;text-transform:uppercase;color:#087f5b;margin-bottom:7px}.status.possible{color:#986800}
+.callsign{font-size:24px;font-weight:700}.type{font-size:12px;color:#68737d;line-height:1.5;margin-top:3px}
+.route{display:flex;align-items:center;gap:12px;margin-top:16px}.airport-code{font-size:16px;font-weight:700}.route-arrow{color:#68737d}
+.route-label{font-size:9px;color:#8a949d;margin-top:3px}
+.metrics{border-left:1px solid #eee;padding-left:17px;display:grid;align-content:center;gap:9px}
+.metric{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px}.metric .ico{display:none}.metric .name{color:#68737d}.metric .val{font-weight:700}
+.actions{border-left:1px solid #eee;padding:16px;display:flex;flex-direction:column;justify-content:center;gap:9px}
+.btn{display:block;text-align:center;text-decoration:none;border:1px solid #333;border-radius:5px;padding:11px 8px;font-size:10px;font-weight:700;color:#222;background:#fff}
+.btn.gold{background:#222;color:#fff}
+.empty{background:#fff;border:1px solid #ddd;border-radius:7px;padding:32px;text-align:center;color:#68737d}
+.airports{margin-top:14px;background:#fff;border:1px solid #ddd;border-radius:7px;padding:15px}.airports-title{font-weight:700;font-size:15px;margin-bottom:10px}
+.airport-grid{display:flex;flex-wrap:wrap;gap:6px}.airport-chip{border:1px solid #ddd;border-radius:4px;padding:6px 8px;font-size:10px;color:#68737d}
+.map-panel{background:#fff;border:1px solid #ddd;border-radius:7px;padding:14px;margin-bottom:14px}
+.map-title{font-size:15px;font-weight:700;margin-bottom:4px}
+.map-sub{font-size:11px;color:#68737d;margin-bottom:10px;line-height:1.4}
+#flightMap{height:430px;width:100%;border-radius:6px;border:1px solid #ddd}
+.map-legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;font-size:10px;color:#68737d}
+.legend-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:-1px}
+.legend-ca{background:#087f5b}.legend-possible{background:#986800}.legend-ground{background:#2f5f8f}
+.leaflet-popup-content{font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.45}
+.leaflet-popup-content strong{font-size:13px}
+.plane-marker{background:transparent;border:none;font-size:22px;line-height:22px;text-shadow:0 1px 2px rgba(255,255,255,.9)}
+.alert-help{margin-top:14px;background:#fff;border:1px solid #ddd;border-radius:7px;padding:18px}
+.alert-help h2{font-size:16px;margin:0 0 14px}
+.alert-type{padding:12px 0;border-top:1px solid #eee}
+.alert-type:first-of-type{border-top:0;padding-top:0}
+.alert-type strong{display:block;font-size:13px;margin-bottom:4px}
+.alert-type p{margin:0;color:#68737d;font-size:12px;line-height:1.5}
+.refresh{width:100%;margin-top:10px;padding:11px;background:#fff;border:1px solid #bbb;border-radius:5px;font-weight:700;cursor:pointer}
+footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
+@media(max-width:800px){.summary{grid-template-columns:1fr 1fr}.flight-card{grid-template-columns:1fr}.photo{max-height:240px}.flight-main{grid-template-columns:1fr}.metrics,.actions{border-left:0;border-top:1px solid #eee}.actions{flex-direction:row}.btn{flex:1}}
+@media(max-width:500px){.summary{grid-template-columns:1fr}.actions{flex-direction:column}}
+</style>
 </head>
 <body>
-<header class="hero">
-  <div class="shell hero-inner">
-    <div class="brand">
-      <div class="jet-mark" aria-hidden="true">
-        <svg viewBox="0 0 520 86" xmlns="http://www.w3.org/2000/svg" aria-label="Private jet">
-          <path
-            d="M24 52
-               C82 51 139 49 205 43
-               L258 37
-               L289 13
-               L303 13
-               L294 36
-               L405 38
-               C450 39 485 45 503 53
-               C483 59 448 61 404 60
-               L294 57
-               L248 76
-               L230 76
-               L254 56
-               L180 55
-               L148 68
-               L132 68
-               L148 54
-               C100 56 58 56 24 52Z"
-            fill="#e4c27f"/>
-        </svg>
-      </div>
-      <h1>Private Jet</h1>
-      <div class="subtitle">Flight Tracker</div>
-      <div class="tagline">Exclusive flights. Extraordinary destinations.</div>
-    </div>
-    <div class="hero-right">
-      <div class="hero-nav">Track &nbsp; | &nbsp; Monitor &nbsp; | &nbsp; Arrive</div>
-      <div class="script">SoCal Travel</div>
-    </div>
+<header><div class="container"><h1>SoCal Private Jet Tracker</h1><p>flyExclusive flights heading to or approaching California</p></div></header>
+<main class="container">
+
+<section class="map-panel">
+  <div class="map-title">Live U.S. Flight Map</div>
+  <div class="map-sub">Shows only flyExclusive aircraft that currently meet one of your three alert conditions. Positions refresh when the tracker updates flights.json.</div>
+  <div id="flightMap"></div>
+  <div class="map-legend">
+    <span><span class="legend-dot legend-ca"></span>California destination identified</span>
+    <span><span class="legend-dot legend-possible"></span>Possible approach</span>
+    <span><span class="legend-dot legend-ground"></span>SoCal departure identified</span>
   </div>
-</header>
+</section>
 
-<main class="shell">
-  <section class="summary">
-    <div class="stat"><div class="stat-icon">✈</div><div><div class="stat-number" id="activeCount">0</div><div class="stat-label">Active JRE Flights</div></div></div>
-    <div class="stat"><div class="stat-icon">◖</div><div><div class="stat-number" id="caCount">0</div><div class="stat-label">Heading to California</div></div></div>
-    <div class="stat"><div class="stat-icon">⌖</div><div><div class="stat-number" id="possibleCount">0</div><div class="stat-label">Possible Approaches</div><div class="stat-sub">In California</div></div></div>
-    <div class="stat"><div class="stat-icon">◷</div><div class="updated"><span style="color:#8f9aa2">Last Updated</span><br><span id="lastUpdated">Loading…</span><br><span class="stat-sub">Auto-refreshes every 5 minutes</span></div></div>
-  </section>
+<section class="summary">
+<div class="stat"><div class="stat-number" id="activeCount">0</div><div class="stat-label">Relevant Flights</div></div>
+<div class="stat"><div class="stat-number" id="caCount">0</div><div class="stat-label">California Destinations</div></div>
+<div class="stat"><div class="stat-number" id="groundCount">0</div><div class="stat-label">SoCal Departures</div><div class="stat-sub">On ground with outbound route</div></div>
+<div class="stat"><div class="stat-number" id="possibleCount">0</div><div class="stat-label">Possible Approaches</div><div class="stat-sub">Already in California</div></div>
+</section>
+<div class="stat" style="margin-bottom:14px"><div class="updated"><strong>Last Updated</strong><br><span id="lastUpdated">Loading...</span><br><span class="stat-sub">Refreshes every 5 minutes</span></div></div>
+<section id="flightList" class="flight-list"><div class="empty">Loading flight data...</div></section>
+<section class="airports"><div class="airports-title">Monitored Airports</div><div class="airport-grid">
+<span class="airport-chip">KLAX Los Angeles</span><span class="airport-chip">KVNY Van Nuys</span><span class="airport-chip">KSNA Orange County</span>
+<span class="airport-chip">KONT Ontario</span><span class="airport-chip">KPSP Palm Springs</span><span class="airport-chip">KCRQ Carlsbad</span>
+<span class="airport-chip">KSAN San Diego</span><span class="airport-chip">KSMO Santa Monica</span><span class="airport-chip">KSBA Santa Barbara</span>
+<span class="airport-chip">KLGB Long Beach</span><span class="airport-chip">KFUL Fullerton</span><span class="airport-chip">KCNO Chino</span><span class="airport-chip">KPOC Brackett Field</span>
+</div></section>
 
-  <section id="flightList" class="flight-list"><div class="empty">Loading flights.json…</div></section>
+<section class="alert-help">
+  <h2>How alerts work</h2>
+  <div class="alert-type">
+    <strong>California Destination Identified</strong>
+    <p>A flyExclusive flight has route information showing a California airport as its destination. The aircraft may still be outside California when this alert appears.</p>
+  </div>
+  <div class="alert-type">
+    <strong>Possible Approach</strong>
+    <p>No California destination has been identified from the route data, but the aircraft is already inside California and its current position and heading suggest it may be approaching one of the monitored SoCal airports. This is an estimate, not a confirmed destination.</p>
+  </div>
+  <div class="alert-type">
+    <strong>SoCal Departure Identified</strong>
+    <p>A flyExclusive aircraft is currently on the ground at a monitored SoCal airport, and route information identifies that airport as the origin with another airport as its destination.</p>
+  </div>
+</section>
 
-  <section class="airports">
-    <div class="airports-title">California Airports Monitored</div>
-    <div class="airport-grid">
-      <span class="airport-chip">KLAX · Los Angeles</span><span class="airport-chip">KVNY · Van Nuys</span>
-      <span class="airport-chip">KSNA · Orange County</span><span class="airport-chip">KONT · Ontario</span>
-      <span class="airport-chip">KPSP · Palm Springs</span><span class="airport-chip">KCRQ · Carlsbad</span>
-      <span class="airport-chip">KSAN · San Diego</span><span class="airport-chip">KSMO · Santa Monica</span>
-      <span class="airport-chip">KSBA · Santa Barbara</span><span class="airport-chip">KLGB · Long Beach</span>
-      <span class="airport-chip">KFUL · Fullerton</span><span class="airport-chip">KCNO · Chino</span>
-      <span class="airport-chip">KPOC · Brackett Field</span>
-    </div>
-  </section>
-  <button class="refresh" onclick="loadFlights()">Refresh Live Data</button>
+<button class="refresh" onclick="loadFlights()">Refresh</button>
 </main>
-
-<footer class="shell"><span>Private Jet Flight Tracker · Precision. Privacy. Peace of mind.</span><span>Live data · JRE fleet · California monitor</span></footer>
-
+<footer>SoCal Private Jet Tracker</footer>
 <script>
 const esc=v=>{const d=document.createElement("div");d.textContent=v==null?"":String(v);return d.innerHTML};
 const attr=v=>esc(v).replace(/"/g,"&quot;");
 const num=(v,s="")=>v==null||v===""||v==="—"?"—":(Number.isFinite(Number(v))?(Number.isInteger(Number(v))?Number(v):Number(v).toFixed(1)):esc(v))+s;
+
+
+let flightMap;
+let flightMarkerLayer;
+
+function initFlightMap(){
+  if(flightMap) return;
+  flightMap=L.map("flightMap",{zoomControl:true}).setView([39.5,-98.35],4);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
+    maxZoom:18,
+    attribution:"&copy; OpenStreetMap contributors"
+  }).addTo(flightMap);
+  flightMarkerLayer=L.layerGroup().addTo(flightMap);
+}
+
+function alertTypeForFlight(f){
+  const grounded=f.grounded_departure===true;
+  const confirmed=f.route_destination_in_california===true;
+  const possible=f.physically_in_california===true && !!f.possible_destination && !confirmed && !grounded;
+  if(grounded) return {label:"SoCal Departure Identified",color:"#2f5f8f"};
+  if(confirmed) return {label:"California Destination Identified",color:"#087f5b"};
+  if(possible) return {label:"Possible Approach",color:"#986800"};
+  return {label:"Tracked Flight",color:"#68737d"};
+}
+
+function renderFlightMap(flights){
+  initFlightMap();
+  flightMarkerLayer.clearLayers();
+
+  const bounds=[];
+  flights.forEach(f=>{
+    const lat=Number(f.latitude);
+    const lon=Number(f.longitude);
+    if(!Number.isFinite(lat)||!Number.isFinite(lon)) return;
+
+    const call=f.callsign||f.flight||f.ident||"Unknown";
+    const type=f.aircraft_type||f.aircraft||f.model||"Aircraft type unavailable";
+    const reg=f.registration||f.tail_number||f.tail||"";
+    const origin=f.grounded_departure ? (f.ground_airport||f.route_origin||"—") : (f.route_origin||f.origin||f.departure||"—");
+    const dest=f.route_destination||f.destination||f.arrival||f.possible_destination||"—";
+    const heading=Number(f.heading??f.track??0);
+    const fa=f.flightaware_url||("https://www.flightaware.com/live/flight/"+encodeURIComponent(call));
+    const alert=alertTypeForFlight(f);
+
+    const icon=L.divIcon({
+      className:"plane-marker",
+      html:`<div style="color:${alert.color};transform:rotate(${Number.isFinite(heading)?heading:0}deg)">✈</div>`,
+      iconSize:[24,24],
+      iconAnchor:[12,12]
+    });
+
+    const marker=L.marker([lat,lon],{icon}).addTo(flightMarkerLayer);
+    marker.bindPopup(`
+      <strong>${esc(call)}</strong><br>
+      ${esc(type)}${reg?` · ${esc(reg)}`:""}<br>
+      <b>${esc(alert.label)}</b><br>
+      ${esc(origin)} → ${esc(dest)}<br>
+      <a href="${attr(fa)}" target="_blank" rel="noopener noreferrer">View on FlightAware</a>
+    `);
+
+    bounds.push([lat,lon]);
+  });
+
+  // Keep a useful whole-USA view for zero/one aircraft; otherwise frame all tracked aircraft.
+  if(bounds.length>1){
+    flightMap.fitBounds(bounds,{padding:[35,35],maxZoom:7});
+  }else if(bounds.length===1){
+    flightMap.setView(bounds[0],6);
+  }else{
+    flightMap.setView([39.5,-98.35],4);
+  }
+}
 
 async function loadFlights(){
   const list=document.getElementById("flightList");
@@ -156,6 +198,7 @@ async function loadFlights(){
 
     // Never show unrelated JRE aircraft.
     const flights=rawFlights.filter(f =>
+      f.grounded_departure === true ||
       f.route_destination_in_california === true ||
       (
         f.physically_in_california === true &&
@@ -167,7 +210,10 @@ async function loadFlights(){
     document.getElementById("lastUpdated").textContent=update?new Date(update).toLocaleString():new Date().toLocaleString();
     document.getElementById("activeCount").textContent=flights.length;
     document.getElementById("caCount").textContent=flights.filter(f=>f.route_destination_in_california===true).length;
-    document.getElementById("possibleCount").textContent=flights.filter(f=>f.physically_in_california===true && f.possible_destination && !f.route_destination_in_california).length;
+    document.getElementById("groundCount").textContent=flights.filter(f=>f.grounded_departure===true).length;
+    document.getElementById("possibleCount").textContent=flights.filter(f=>f.physically_in_california===true && f.possible_destination && !f.route_destination_in_california && !f.grounded_departure).length;
+
+    renderFlightMap(flights);
 
     if(!flights.length){list.innerHTML='<div class="empty">No California-bound or qualifying in-California flyExclusive aircraft are currently detected.</div>';return}
     list.innerHTML="";
@@ -176,10 +222,11 @@ async function loadFlights(){
       const type=f.aircraft_type||f.aircraft||f.model||"Aircraft type unavailable";
       const reg=f.registration||f.tail_number||f.tail||"";
       const photo=f.photo_url||f.url_photo||f.aircraft_photo||"";
-      const origin=f.route_origin||f.origin||f.departure||"—";
+      const origin=f.grounded_departure ? (f.ground_airport||f.route_origin||"—") : (f.route_origin||f.origin||f.departure||"—");
       const dest=f.route_destination||f.destination||f.arrival||f.possible_destination||"—";
+      const groundedDeparture=f.grounded_departure===true;
       const confirmedCalifornia=f.route_destination_in_california===true;
-      const possible=f.physically_in_california===true && !!f.possible_destination && !confirmedCalifornia;
+      const possible=f.physically_in_california===true && !!f.possible_destination && !confirmedCalifornia && !groundedDeparture;
       const nearest=f.nearest_airport||"—";
       const dist=f.possible_destination_distance_miles??f.distance_to_nearest_airport_miles??f.distance??"—";
       const heading=f.heading??f.track??"—";
@@ -196,7 +243,7 @@ async function loadFlights(){
         <div class="photo">${photo?`<img src="${attr(photo)}" alt="${attr(call+" aircraft")}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="photo-placeholder" style="display:none">Aircraft image unavailable</div>`:`<div class="photo-placeholder">Aircraft image unavailable</div>`}</div>
         <div class="flight-main">
           <div>
-            <div class="status ${possible?"possible":""}">${confirmedCalifornia?"✈ California Destination Identified":"⌖ Possible Approach"}</div>
+            <div class="status ${possible?"possible":""}">${groundedDeparture?"🛫 SoCal Departure Identified":(confirmedCalifornia?"✈ California Destination Identified":"⌖ Possible Approach")}</div>
             <div class="callsign">${esc(call)}</div>
             <div class="type">${esc(type)}${reg?"<br><strong>"+esc(reg)+"</strong>":""}</div>
             <div class="route">
@@ -224,7 +271,7 @@ async function loadFlights(){
     document.getElementById("lastUpdated").textContent="Unable to load data";
   }
 }
-loadFlights(); setInterval(loadFlights,300000);
+initFlightMap(); loadFlights(); setInterval(loadFlights,300000);
 </script>
 </body>
 </html>
