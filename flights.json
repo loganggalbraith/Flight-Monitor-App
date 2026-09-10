@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-10T02:44:49.300680+00:00",
+  "last_updated": "2026-09-10T02:58:22.099722+00:00",
   "flight_count": 1,
   "flights": [
     {
@@ -14,20 +14,20 @@
       "route_destination": null,
       "route_destination_in_california": false,
       "physically_in_california": true,
-      "latitude": 34.721,
-      "longitude": -117.2226,
-      "altitude_meters": 5105.4,
-      "velocity_mps": 194.94,
-      "heading": 262.87,
-      "vertical_rate": -4.55,
+      "latitude": 34.3983,
+      "longitude": -118.535,
+      "altitude_meters": 1310.64,
+      "velocity_mps": 108.81,
+      "heading": 166.88,
+      "vertical_rate": -3.58,
       "on_ground": false,
-      "nearest_airport": "KONT",
-      "nearest_airport_name": "Ontario",
-      "distance_to_nearest_airport_miles": 50.8,
+      "nearest_airport": "KVNY",
+      "nearest_airport_name": "Van Nuys",
+      "distance_to_nearest_airport_miles": 13.3,
       "possible_destination": "KVNY",
       "possible_destination_name": "Van Nuys",
-      "possible_destination_distance_miles": 80.4,
-      "last_seen": "2026-09-10T02:44:47.446162+00:00"
+      "possible_destination_distance_miles": 13.3,
+      "last_seen": "2026-09-10T02:58:20.809401+00:00"
     }
   ],
   "seen_alerts": [
