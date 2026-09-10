@@ -1,9 +1,12 @@
 {
-  "last_updated": "2026-09-10T06:48:41.811967+00:00",
+  "last_updated": "2026-09-10T07:01:38.680950+00:00",
   "flight_count": 0,
   "flights": [],
   "seen_alerts": [
     "possible|JRE394|KVNY",
     "possible|JRE943|KSBA"
-  ]
+  ],
+  "ground_tracking": {},
+  "turnaround_history": [],
+  "reposition_model_note": "Estimated opportunity score. It is not a confirmed empty-leg or Vaunt availability probability."
 }
