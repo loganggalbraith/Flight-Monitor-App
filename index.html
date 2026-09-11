@@ -121,16 +121,119 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:24px;
-  background:#f4f6f8;
+  padding:26px;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(93,124,158,.18), transparent 34%),
+    linear-gradient(135deg,#0b1622 0%,#122233 48%,#1b2f43 100%);
+  overflow:auto;
+}
+.auth-wrap{
+  width:min(1180px,96vw);
+  min-height:720px;
+  display:grid;
+  grid-template-columns:1.08fr .92fr;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 28px 90px rgba(0,0,0,.34);
+  border:1px solid rgba(255,255,255,.08);
+}
+.auth-hero{
+  position:relative;
+  color:#fff;
+  padding:54px 58px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  background:
+    linear-gradient(180deg,rgba(8,18,28,.28),rgba(8,18,28,.78)),
+    radial-gradient(circle at 62% 38%,rgba(255,255,255,.10),transparent 28%),
+    linear-gradient(145deg,#162b3f 0%,#20384d 52%,#0f1c29 100%);
+}
+.auth-hero:after{
+  content:"";
+  position:absolute;
+  right:-80px;
+  bottom:42px;
+  width:430px;
+  height:430px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.12),rgba(255,255,255,0) 68%);
+  pointer-events:none;
+}
+.auth-topbrand{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.auth-plane-mark{
+  font-size:31px;
+  transform:rotate(-8deg);
+  display:inline-block;
+}
+.hero-kicker{
+  font-size:11px;
+  letter-spacing:.30em;
+  text-transform:uppercase;
+  color:#c7d2dc;
+  margin-bottom:16px;
+}
+.auth-hero h2{
+  margin:0;
+  font-size:58px;
+  line-height:.98;
+  letter-spacing:.01em;
+  max-width:520px;
+}
+.hero-copy{
+  font-size:19px;
+  line-height:1.55;
+  color:#d5dee6;
+  max-width:520px;
+  margin:22px 0 30px;
+}
+.hero-features{
+  display:grid;
+  gap:18px;
+  max-width:500px;
+}
+.hero-feature{
+  display:grid;
+  grid-template-columns:40px 1fr;
+  gap:12px;
+  align-items:start;
+}
+.hero-feature-icon{
+  width:34px;
+  height:34px;
+  border:1px solid rgba(255,255,255,.28);
+  border-radius:9px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:17px;
+}
+.hero-feature strong{display:block;font-size:14px;margin-bottom:3px}
+.hero-feature span{font-size:12px;line-height:1.45;color:#c7d2dc}
+.hero-bottom{
+  font-size:10px;
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  color:#d2dae1;
+}
+.auth-panel{
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:54px 46px;
 }
 .auth-card{
-  width:min(92vw,420px);
+  width:min(100%,480px);
   background:#fff;
-  border:1px solid #ddd;
-  border-radius:10px;
-  padding:28px;
-  box-shadow:0 12px 40px rgba(0,0,0,.08);
 }
 .auth-brand{
   font-size:11px;
@@ -140,51 +243,76 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
   color:#68737d;
   margin-bottom:8px;
 }
-.auth-card h1{font-size:25px;margin:0 0 6px}
-.auth-card>p{font-size:12px;color:#68737d;line-height:1.5;margin:0 0 20px}
-.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px}
+.auth-logo{
+  text-align:center;
+  font-size:34px;
+  margin-bottom:10px;
+}
+.auth-card h1{
+  font-size:30px;
+  margin:0 0 7px;
+  text-align:center;
+}
+.auth-card>p{
+  font-size:13px;
+  color:#68737d;
+  line-height:1.5;
+  margin:0 0 24px;
+  text-align:center;
+}
+.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:22px;background:#eef1f4;border-radius:8px;padding:4px}
 .auth-tab{
-  border:1px solid #ccc;
-  background:#fff;
-  padding:10px;
+  border:0;
+  background:transparent;
+  padding:11px;
   border-radius:6px;
-  font-size:11px;
+  font-size:12px;
   font-weight:700;
   cursor:pointer;
+  color:#27313a;
 }
-.auth-tab.active{background:#222;color:#fff;border-color:#222}
-.auth-field{margin-bottom:12px}
-.auth-field label{display:block;font-size:10px;text-transform:uppercase;color:#68737d;font-weight:700;margin-bottom:6px}
+.auth-tab.active{background:#102033;color:#fff}
+.auth-field{margin-bottom:14px}
+.auth-field label{display:block;font-size:11px;color:#27313a;font-weight:700;margin-bottom:7px}
 .auth-field input{
   width:100%;
-  padding:12px;
-  border:1px solid #cfd4d8;
-  border-radius:6px;
+  padding:13px 14px;
+  border:1px solid #cfd6dd;
+  border-radius:7px;
   font-size:14px;
   outline:none;
+  background:#fff;
 }
-.auth-field input:focus{border-color:#222}
+.auth-field input:focus{border-color:#102033;box-shadow:0 0 0 3px rgba(16,32,51,.07)}
 .auth-submit{
   width:100%;
-  padding:12px;
-  border:1px solid #222;
-  border-radius:6px;
-  background:#222;
+  padding:13px;
+  border:1px solid #102033;
+  border-radius:7px;
+  background:#102033;
   color:#fff;
   font-weight:700;
   cursor:pointer;
   margin-top:4px;
+  font-size:13px;
 }
 .auth-submit:disabled{opacity:.55;cursor:not-allowed}
 .auth-message{min-height:18px;margin-top:12px;font-size:11px;line-height:1.45;color:#68737d}
 .auth-message.error{color:#b42318}
 .auth-message.success{color:#087f5b}
-.auth-note{margin-top:14px;font-size:10px;color:#8a949d;line-height:1.45}
-.app-shell{display:none}
-.user-bar{
-  background:#fff;
-  border-bottom:1px solid #eee;
+.auth-note{
+  margin-top:18px;
+  padding:14px 15px;
+  border:1px solid #e2e6ea;
+  border-radius:8px;
+  background:#f6f8fa;
+  font-size:11px;
+  color:#68737d;
+  line-height:1.5;
 }
+.auth-note strong{color:#27313a}
+.app-shell{display:none}
+.user-bar{background:#fff;border-bottom:1px solid #eee}
 .user-bar .container{
   min-height:38px;
   display:flex;
@@ -203,7 +331,16 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
   font-weight:700;
   cursor:pointer;
 }
-
+@media(max-width:900px){
+  .auth-wrap{grid-template-columns:1fr;min-height:0}
+  .auth-hero{display:none}
+  .auth-panel{padding:34px 24px}
+}
+@media(max-width:520px){
+  .auth-screen{padding:0;background:#fff}
+  .auth-wrap{width:100%;border:0;border-radius:0;box-shadow:none}
+  .auth-panel{padding:30px 20px}
+}
 
 /* Subscription access */
 .paywall-screen{position:fixed;inset:0;z-index:99998;display:none;align-items:center;justify-content:center;padding:24px;background:#f4f6f8}
@@ -218,34 +355,90 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
 <body>
 
 <div id="authScreen" class="auth-screen">
-  <div class="auth-card">
-    <div class="auth-brand">Private Aviation Intelligence</div>
-    <h1>SoCal Private Jet Tracker</h1>
-    <p>Sign in to access the live flight monitor, or create an account.</p>
-
-    <div class="auth-tabs">
-      <button id="signInTab" class="auth-tab active" type="button">Sign In</button>
-      <button id="signUpTab" class="auth-tab" type="button">Create Account</button>
-    </div>
-
-    <form id="authForm">
-      <div class="auth-field">
-        <label for="authEmail">Email</label>
-        <input id="authEmail" type="email" autocomplete="email" required>
+  <div class="auth-wrap">
+    <section class="auth-hero">
+      <div class="auth-topbrand">
+        <span class="auth-plane-mark">✈</span>
+        <span>Private Jet Tracker</span>
       </div>
 
-      <div class="auth-field">
-        <label for="authPassword">Password</label>
-        <input id="authPassword" type="password" autocomplete="current-password" minlength="8" required>
+      <div>
+        <div class="hero-kicker">Real-Time Aviation Intelligence</div>
+        <h2>PRIVATE JET<br>TRACKER</h2>
+        <div class="hero-copy">
+          Track flyExclusive aircraft across the United States with nationwide, state, and regional views.
+        </div>
+
+        <div class="hero-features">
+          <div class="hero-feature">
+            <div class="hero-feature-icon">⌖</div>
+            <div>
+              <strong>Live Flight Tracking</strong>
+              <span>See detected aircraft positions and flight activity in real time.</span>
+            </div>
+          </div>
+
+          <div class="hero-feature">
+            <div class="hero-feature-icon">▥</div>
+            <div>
+              <strong>State &amp; Regional Views</strong>
+              <span>Switch between the full United States, individual states, and dedicated California regions.</span>
+            </div>
+          </div>
+
+          <div class="hero-feature">
+            <div class="hero-feature-icon">✈</div>
+            <div>
+              <strong>Grounded Aircraft</strong>
+              <span>See tracked aircraft that have landed or are positioned near monitored airports.</span>
+            </div>
+          </div>
+
+          <div class="hero-feature">
+            <div class="hero-feature-icon">☆</div>
+            <div>
+              <strong>Flight Opportunity Insights</strong>
+              <span>Review destination, approach, and repositioning indicators in one dashboard.</span>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <button id="authSubmit" class="auth-submit" type="submit">Sign In</button>
-      <div id="authMessage" class="auth-message"></div>
-    </form>
+      <div class="hero-bottom">More Than Flights · Opportunity Intelligence</div>
+    </section>
 
-    <div class="auth-note">
-      New accounts must verify their email address before signing in.
-    </div>
+    <section class="auth-panel">
+      <div class="auth-card">
+        <div class="auth-logo">✈</div>
+        <h1>Private Jet Tracker</h1>
+        <p>Sign in to access the live flight tracker, or create an account.</p>
+
+        <div class="auth-tabs">
+          <button id="signInTab" class="auth-tab active" type="button">Sign In</button>
+          <button id="signUpTab" class="auth-tab" type="button">Create Account</button>
+        </div>
+
+        <form id="authForm">
+          <div class="auth-field">
+            <label for="authEmail">Email</label>
+            <input id="authEmail" type="email" autocomplete="email" placeholder="you@example.com" required>
+          </div>
+
+          <div class="auth-field">
+            <label for="authPassword">Password</label>
+            <input id="authPassword" type="password" autocomplete="current-password" minlength="8" placeholder="Enter your password" required>
+          </div>
+
+          <button id="authSubmit" class="auth-submit" type="submit">Sign In</button>
+          <div id="authMessage" class="auth-message"></div>
+        </form>
+
+        <div class="auth-note">
+          <strong>New here?</strong><br>
+          Create an account to start your 7-day free trial and get full access to Private Jet Tracker.
+        </div>
+      </div>
+    </section>
   </div>
 </div>
 
@@ -277,7 +470,7 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
 <section class="region-bar">
   <div>
     <label for="regionSelect">Viewing Region</label>
-    <div class="region-note">The dashboard tracks nationally. Discord notifications are still restricted to Southern California.</div>
+    <div class="region-note">Track nationwide or choose a state or regional view.</div>
   </div>
   <select id="regionSelect" class="region-select"><option value="all">All United States</option></select>
 </section>
@@ -321,10 +514,6 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
   <div class="alert-type">
     <strong>Repositioning Opportunity Score</strong>
     <p>The tracker can estimate the likelihood of another departure after an aircraft lands. This is a prediction only; it does not confirm that a flight is empty, available for booking, or available through Vaunt.</p>
-  </div>
-  <div class="alert-type">
-    <strong>Discord Notifications</strong>
-    <p>The website tracks all states, but Discord notifications remain limited to Southern California.</p>
   </div>
 </section>
 
@@ -512,6 +701,18 @@ let allFlights=[];
 let airportRegions=[];
 let selectedRegion="all";
 
+const FALLBACK_REGIONS = [{"id":"al","name":"Alabama","states":["AL"],"airports":[]},{"id":"ak","name":"Alaska","states":["AK"],"airports":[]},{"id":"az","name":"Arizona","states":["AZ"],"airports":[]},{"id":"ar","name":"Arkansas","states":["AR"],"airports":[]},{"id":"ca","name":"California","states":["CA"],"airports":[]},{"id":"co","name":"Colorado","states":["CO"],"airports":[]},{"id":"ct","name":"Connecticut","states":["CT"],"airports":[]},{"id":"de","name":"Delaware","states":["DE"],"airports":[]},{"id":"fl","name":"Florida","states":["FL"],"airports":[]},{"id":"ga","name":"Georgia","states":["GA"],"airports":[]},{"id":"hi","name":"Hawaii","states":["HI"],"airports":[]},{"id":"id","name":"Idaho","states":["ID"],"airports":[]},{"id":"il","name":"Illinois","states":["IL"],"airports":[]},{"id":"in","name":"Indiana","states":["IN"],"airports":[]},{"id":"ia","name":"Iowa","states":["IA"],"airports":[]},{"id":"ks","name":"Kansas","states":["KS"],"airports":[]},{"id":"ky","name":"Kentucky","states":["KY"],"airports":[]},{"id":"la","name":"Louisiana","states":["LA"],"airports":[]},{"id":"me","name":"Maine","states":["ME"],"airports":[]},{"id":"md","name":"Maryland","states":["MD"],"airports":[]},{"id":"ma","name":"Massachusetts","states":["MA"],"airports":[]},{"id":"mi","name":"Michigan","states":["MI"],"airports":[]},{"id":"mn","name":"Minnesota","states":["MN"],"airports":[]},{"id":"ms","name":"Mississippi","states":["MS"],"airports":[]},{"id":"mo","name":"Missouri","states":["MO"],"airports":[]},{"id":"mt","name":"Montana","states":["MT"],"airports":[]},{"id":"ne","name":"Nebraska","states":["NE"],"airports":[]},{"id":"nv","name":"Nevada","states":["NV"],"airports":[]},{"id":"nh","name":"New Hampshire","states":["NH"],"airports":[]},{"id":"nj","name":"New Jersey","states":["NJ"],"airports":[]},{"id":"nm","name":"New Mexico","states":["NM"],"airports":[]},{"id":"ny","name":"New York","states":["NY"],"airports":[]},{"id":"nc","name":"North Carolina","states":["NC"],"airports":[]},{"id":"nd","name":"North Dakota","states":["ND"],"airports":[]},{"id":"oh","name":"Ohio","states":["OH"],"airports":[]},{"id":"ok","name":"Oklahoma","states":["OK"],"airports":[]},{"id":"or","name":"Oregon","states":["OR"],"airports":[]},{"id":"pa","name":"Pennsylvania","states":["PA"],"airports":[]},{"id":"ri","name":"Rhode Island","states":["RI"],"airports":[]},{"id":"sc","name":"South Carolina","states":["SC"],"airports":[]},{"id":"sd","name":"South Dakota","states":["SD"],"airports":[]},{"id":"tn","name":"Tennessee","states":["TN"],"airports":[]},{"id":"tx","name":"Texas","states":["TX"],"airports":[]},{"id":"ut","name":"Utah","states":["UT"],"airports":[]},{"id":"vt","name":"Vermont","states":["VT"],"airports":[]},{"id":"va","name":"Virginia","states":["VA"],"airports":[]},{"id":"wa","name":"Washington","states":["WA"],"airports":[]},{"id":"wv","name":"West Virginia","states":["WV"],"airports":[]},{"id":"wi","name":"Wisconsin","states":["WI"],"airports":[]},{"id":"wy","name":"Wyoming","states":["WY"],"airports":[]},{"id":"socal","name":"Southern California","states":["CA"],"special_view":true,"airports":[]},{"id":"norcal","name":"Northern California","states":["CA"],"special_view":true,"airports":[]}];
+
+function populateRegionSelect(){
+  const select=document.getElementById("regionSelect");
+  const states=airportRegions.filter(r=>!r.special_view);
+  const specials=airportRegions.filter(r=>r.special_view);
+  select.innerHTML='<option value="all">All United States</option>'
+    +'<optgroup label="States">'+states.map(r=>`<option value="${attr(r.id)}">${esc(r.name)}</option>`).join("")+'</optgroup>'
+    +(specials.length?'<optgroup label="California Regional Views">'+specials.map(r=>`<option value="${attr(r.id)}">${esc(r.name)}</option>`).join("")+'</optgroup>':"");
+  select.value=selectedRegion;
+}
+
 function initFlightMap(){
   if(flightMap) return;
   flightMap=L.map("flightMap",{zoomControl:true}).setView([39.5,-98.35],4);
@@ -593,22 +794,34 @@ function renderFlightMap(flights){
 }
 
 async function loadAirportRegions(){
+  // Populate the selector immediately so all regions are available even if airports.json
+  // is temporarily cached, missing, or slow to load.
+  airportRegions=FALLBACK_REGIONS.map(r=>({...r,airports:[]}));
+  populateRegionSelect();
+  renderAirportChips();
+
   try{
-    const r=await fetch("airports.json?t="+Date.now());
+    const r=await fetch("airports.json?t="+Date.now(),{cache:"no-store"});
     if(!r.ok) throw new Error("Could not load airports.json");
     const data=await r.json();
-    airportRegions=Array.isArray(data.regions)?data.regions:[];
-    const select=document.getElementById("regionSelect");
-    const states=airportRegions.filter(r=>!r.special_view);
-    const specials=airportRegions.filter(r=>r.special_view);
-    select.innerHTML='<option value="all">United States — Main Page</option>'
-      +'<optgroup label="States">'+states.map(r=>`<option value="${attr(r.id)}">${esc(r.name)}</option>`).join("")+'</optgroup>'
-      +(specials.length?'<optgroup label="California Regional Views">'+specials.map(r=>`<option value="${attr(r.id)}">${esc(r.name)}</option>`).join("")+'</optgroup>':"");
-    select.value=selectedRegion;
+    const loaded=Array.isArray(data.regions)?data.regions:[];
+
+    if(loaded.length){
+      const byId=new Map(loaded.map(r=>[r.id,r]));
+      airportRegions=FALLBACK_REGIONS.map(base=>({
+        ...base,
+        ...(byId.get(base.id)||{}),
+        states:(byId.get(base.id)?.states||base.states||[]),
+        airports:(byId.get(base.id)?.airports||[])
+      }));
+    }
+
+    populateRegionSelect();
     renderAirportChips();
+    if(trackerStarted) renderDashboard();
   }catch(e){
-    console.error(e);
-    document.getElementById("airportGrid").innerHTML='<span class="airport-chip">Airport list unavailable</span>';
+    console.error("Airport region file unavailable; using built-in state list.",e);
+    document.getElementById("airportGrid").innerHTML='<span class="airport-chip">Airport details are temporarily unavailable, but state selection still works.</span>';
   }
 }
 
@@ -618,8 +831,10 @@ function renderAirportChips(){
   if(!airportRegions.length) return;
   if(selectedRegion==="all"){
     const count=airportRegions.reduce((n,r)=>n+(Array.isArray(r.airports)?r.airports.length:0),0);
-    title.textContent=`Monitored Airports · ${count} currently indexed nationwide`;
-    grid.innerHTML=airportRegions.map(r=>`<span class="airport-chip">${esc(r.name)} · ${(r.airports||[]).length}</span>`).join("");
+    title.textContent=count
+      ? `Monitored Airports · ${count} currently indexed nationwide`
+      : "Monitored Regions";
+    grid.innerHTML=airportRegions.filter(r=>!r.special_view).map(r=>`<span class="airport-chip">${esc(r.name)}${(r.airports||[]).length?" · "+(r.airports||[]).length:""}</span>`).join("");
     return;
   }
   const region=airportRegions.find(r=>r.id===selectedRegion);
