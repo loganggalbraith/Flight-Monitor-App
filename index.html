@@ -796,7 +796,7 @@ function renderFlightMap(flights){
 async function loadAirportRegions(){
   // Populate the selector immediately so all regions are available even if airports.json
   // is temporarily cached, missing, or slow to load.
-  airportRegions=EMBEDDED_AIRPORT_REGIONS.map(r=>({...r,airports:[]}));
+  airportRegions=EMBEDDED_AIRPORT_REGIONS.map(r=>({...r,airports:[...(r.airports||[])]}));
   populateRegionSelect();
   renderAirportChips();
 
@@ -820,8 +820,11 @@ async function loadAirportRegions(){
     renderAirportChips();
     if(trackerStarted) renderDashboard();
   }catch(e){
-    console.error("Airport region file unavailable; using built-in state list.",e);
-    document.getElementById("airportGrid").innerHTML='<span class="airport-chip">Airport details are temporarily unavailable, but state selection still works.</span>';
+    console.error("airports.json unavailable; continuing with embedded airport data.",e);
+    // Keep and display the embedded airport list instead of clearing it.
+    populateRegionSelect();
+    renderAirportChips();
+    if(trackerStarted) renderDashboard();
   }
 }
 
