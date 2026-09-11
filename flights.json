@@ -1,6 +1,8 @@
 {
-  "last_updated": "2026-09-11T06:48:15.446245+00:00",
+  "last_updated": "2026-09-11T07:00:55.945766+00:00",
   "flight_count": 0,
+  "region_counts": {},
+  "regions": [],
   "flights": [],
   "seen_alerts": [
     "possible|JRE394|KPOC",
@@ -8,9 +10,5 @@
     "possible|JRE397|KPSP",
     "possible|JRE774|KPSP",
     "possible|JRE943|KSBA"
-  ],
-  "ground_tracking": {},
-  "approach_tracking": {},
-  "turnaround_history": [],
-  "reposition_model_note": "Estimated opportunity score. It is not a confirmed empty-leg or Vaunt availability probability."
+  ]
 }
