@@ -1,8 +1,373 @@
 {
-  "last_updated": "2026-09-11T07:57:58.315231+00:00",
+  "last_updated": "2026-09-11T08:21:07.152638+00:00",
   "flight_count": 0,
   "region_counts": {},
-  "regions": [],
+  "regions": [
+    {
+      "id": "al",
+      "name": "Alabama",
+      "states": [
+        "AL"
+      ]
+    },
+    {
+      "id": "ak",
+      "name": "Alaska",
+      "states": [
+        "AK"
+      ]
+    },
+    {
+      "id": "az",
+      "name": "Arizona",
+      "states": [
+        "AZ"
+      ]
+    },
+    {
+      "id": "ar",
+      "name": "Arkansas",
+      "states": [
+        "AR"
+      ]
+    },
+    {
+      "id": "ca",
+      "name": "California",
+      "states": [
+        "CA"
+      ]
+    },
+    {
+      "id": "co",
+      "name": "Colorado",
+      "states": [
+        "CO"
+      ]
+    },
+    {
+      "id": "ct",
+      "name": "Connecticut",
+      "states": [
+        "CT"
+      ]
+    },
+    {
+      "id": "de",
+      "name": "Delaware",
+      "states": [
+        "DE"
+      ]
+    },
+    {
+      "id": "fl",
+      "name": "Florida",
+      "states": [
+        "FL"
+      ]
+    },
+    {
+      "id": "ga",
+      "name": "Georgia",
+      "states": [
+        "GA"
+      ]
+    },
+    {
+      "id": "hi",
+      "name": "Hawaii",
+      "states": [
+        "HI"
+      ]
+    },
+    {
+      "id": "id",
+      "name": "Idaho",
+      "states": [
+        "ID"
+      ]
+    },
+    {
+      "id": "il",
+      "name": "Illinois",
+      "states": [
+        "IL"
+      ]
+    },
+    {
+      "id": "in",
+      "name": "Indiana",
+      "states": [
+        "IN"
+      ]
+    },
+    {
+      "id": "ia",
+      "name": "Iowa",
+      "states": [
+        "IA"
+      ]
+    },
+    {
+      "id": "ks",
+      "name": "Kansas",
+      "states": [
+        "KS"
+      ]
+    },
+    {
+      "id": "ky",
+      "name": "Kentucky",
+      "states": [
+        "KY"
+      ]
+    },
+    {
+      "id": "la",
+      "name": "Louisiana",
+      "states": [
+        "LA"
+      ]
+    },
+    {
+      "id": "me",
+      "name": "Maine",
+      "states": [
+        "ME"
+      ]
+    },
+    {
+      "id": "md",
+      "name": "Maryland",
+      "states": [
+        "MD"
+      ]
+    },
+    {
+      "id": "ma",
+      "name": "Massachusetts",
+      "states": [
+        "MA"
+      ]
+    },
+    {
+      "id": "mi",
+      "name": "Michigan",
+      "states": [
+        "MI"
+      ]
+    },
+    {
+      "id": "mn",
+      "name": "Minnesota",
+      "states": [
+        "MN"
+      ]
+    },
+    {
+      "id": "ms",
+      "name": "Mississippi",
+      "states": [
+        "MS"
+      ]
+    },
+    {
+      "id": "mo",
+      "name": "Missouri",
+      "states": [
+        "MO"
+      ]
+    },
+    {
+      "id": "mt",
+      "name": "Montana",
+      "states": [
+        "MT"
+      ]
+    },
+    {
+      "id": "ne",
+      "name": "Nebraska",
+      "states": [
+        "NE"
+      ]
+    },
+    {
+      "id": "nv",
+      "name": "Nevada",
+      "states": [
+        "NV"
+      ]
+    },
+    {
+      "id": "nh",
+      "name": "New Hampshire",
+      "states": [
+        "NH"
+      ]
+    },
+    {
+      "id": "nj",
+      "name": "New Jersey",
+      "states": [
+        "NJ"
+      ]
+    },
+    {
+      "id": "nm",
+      "name": "New Mexico",
+      "states": [
+        "NM"
+      ]
+    },
+    {
+      "id": "ny",
+      "name": "New York",
+      "states": [
+        "NY"
+      ]
+    },
+    {
+      "id": "nc",
+      "name": "North Carolina",
+      "states": [
+        "NC"
+      ]
+    },
+    {
+      "id": "nd",
+      "name": "North Dakota",
+      "states": [
+        "ND"
+      ]
+    },
+    {
+      "id": "oh",
+      "name": "Ohio",
+      "states": [
+        "OH"
+      ]
+    },
+    {
+      "id": "ok",
+      "name": "Oklahoma",
+      "states": [
+        "OK"
+      ]
+    },
+    {
+      "id": "or",
+      "name": "Oregon",
+      "states": [
+        "OR"
+      ]
+    },
+    {
+      "id": "pa",
+      "name": "Pennsylvania",
+      "states": [
+        "PA"
+      ]
+    },
+    {
+      "id": "ri",
+      "name": "Rhode Island",
+      "states": [
+        "RI"
+      ]
+    },
+    {
+      "id": "sc",
+      "name": "South Carolina",
+      "states": [
+        "SC"
+      ]
+    },
+    {
+      "id": "sd",
+      "name": "South Dakota",
+      "states": [
+        "SD"
+      ]
+    },
+    {
+      "id": "tn",
+      "name": "Tennessee",
+      "states": [
+        "TN"
+      ]
+    },
+    {
+      "id": "tx",
+      "name": "Texas",
+      "states": [
+        "TX"
+      ]
+    },
+    {
+      "id": "ut",
+      "name": "Utah",
+      "states": [
+        "UT"
+      ]
+    },
+    {
+      "id": "vt",
+      "name": "Vermont",
+      "states": [
+        "VT"
+      ]
+    },
+    {
+      "id": "va",
+      "name": "Virginia",
+      "states": [
+        "VA"
+      ]
+    },
+    {
+      "id": "wa",
+      "name": "Washington",
+      "states": [
+        "WA"
+      ]
+    },
+    {
+      "id": "wv",
+      "name": "West Virginia",
+      "states": [
+        "WV"
+      ]
+    },
+    {
+      "id": "wi",
+      "name": "Wisconsin",
+      "states": [
+        "WI"
+      ]
+    },
+    {
+      "id": "wy",
+      "name": "Wyoming",
+      "states": [
+        "WY"
+      ]
+    },
+    {
+      "id": "socal",
+      "name": "Southern California",
+      "states": [
+        "CA"
+      ]
+    },
+    {
+      "id": "norcal",
+      "name": "Northern California",
+      "states": [
+        "CA"
+      ]
+    }
+  ],
   "flights": [],
   "seen_alerts": [
     "possible|JRE394|KPOC",
