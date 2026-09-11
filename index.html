@@ -6,6 +6,7 @@
 <title>SoCal Private Jet Tracker</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#f4f6f8;color:#20262d;font-family:Arial,Helvetica,sans-serif}
@@ -105,9 +106,142 @@ main{padding:20px 0 35px}
 footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
 @media(max-width:800px){.summary{grid-template-columns:1fr 1fr}.flight-card{grid-template-columns:1fr}.photo{max-height:240px}.flight-main{grid-template-columns:1fr}.metrics,.actions{border-left:0;border-top:1px solid #eee}.actions{flex-direction:row}.btn{flex:1}}
 @media(max-width:500px){.summary{grid-template-columns:1fr}.actions{flex-direction:column}}
+
+/* Authentication */
+.auth-screen{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  background:#f4f6f8;
+}
+.auth-card{
+  width:min(92vw,420px);
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:28px;
+  box-shadow:0 12px 40px rgba(0,0,0,.08);
+}
+.auth-brand{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:#68737d;
+  margin-bottom:8px;
+}
+.auth-card h1{font-size:25px;margin:0 0 6px}
+.auth-card>p{font-size:12px;color:#68737d;line-height:1.5;margin:0 0 20px}
+.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px}
+.auth-tab{
+  border:1px solid #ccc;
+  background:#fff;
+  padding:10px;
+  border-radius:6px;
+  font-size:11px;
+  font-weight:700;
+  cursor:pointer;
+}
+.auth-tab.active{background:#222;color:#fff;border-color:#222}
+.auth-field{margin-bottom:12px}
+.auth-field label{display:block;font-size:10px;text-transform:uppercase;color:#68737d;font-weight:700;margin-bottom:6px}
+.auth-field input{
+  width:100%;
+  padding:12px;
+  border:1px solid #cfd4d8;
+  border-radius:6px;
+  font-size:14px;
+  outline:none;
+}
+.auth-field input:focus{border-color:#222}
+.auth-submit{
+  width:100%;
+  padding:12px;
+  border:1px solid #222;
+  border-radius:6px;
+  background:#222;
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+  margin-top:4px;
+}
+.auth-submit:disabled{opacity:.55;cursor:not-allowed}
+.auth-message{min-height:18px;margin-top:12px;font-size:11px;line-height:1.45;color:#68737d}
+.auth-message.error{color:#b42318}
+.auth-message.success{color:#087f5b}
+.auth-note{margin-top:14px;font-size:10px;color:#8a949d;line-height:1.45}
+.app-shell{display:none}
+.user-bar{
+  background:#fff;
+  border-bottom:1px solid #eee;
+}
+.user-bar .container{
+  min-height:38px;
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  gap:10px;
+  font-size:10px;
+  color:#68737d;
+}
+.signout-btn{
+  border:1px solid #bbb;
+  background:#fff;
+  border-radius:5px;
+  padding:6px 9px;
+  font-size:10px;
+  font-weight:700;
+  cursor:pointer;
+}
+
 </style>
 </head>
 <body>
+
+<div id="authScreen" class="auth-screen">
+  <div class="auth-card">
+    <div class="auth-brand">Private Aviation Intelligence</div>
+    <h1>SoCal Private Jet Tracker</h1>
+    <p>Sign in to access the live flight monitor, or create an account.</p>
+
+    <div class="auth-tabs">
+      <button id="signInTab" class="auth-tab active" type="button">Sign In</button>
+      <button id="signUpTab" class="auth-tab" type="button">Create Account</button>
+    </div>
+
+    <form id="authForm">
+      <div class="auth-field">
+        <label for="authEmail">Email</label>
+        <input id="authEmail" type="email" autocomplete="email" required>
+      </div>
+
+      <div class="auth-field">
+        <label for="authPassword">Password</label>
+        <input id="authPassword" type="password" autocomplete="current-password" minlength="8" required>
+      </div>
+
+      <button id="authSubmit" class="auth-submit" type="submit">Sign In</button>
+      <div id="authMessage" class="auth-message"></div>
+    </form>
+
+    <div class="auth-note">
+      New accounts must verify their email address before signing in.
+    </div>
+  </div>
+</div>
+
+<div id="appShell" class="app-shell">
+  <div class="user-bar">
+    <div class="container">
+      <span id="signedInAs"></span>
+      <button id="signOutBtn" class="signout-btn" type="button">Sign Out</button>
+    </div>
+  </div>
+
 <header><div class="container"><h1>SoCal Private Jet Tracker</h1><p>flyExclusive flights heading to or approaching California</p></div></header>
 <main class="container">
 
@@ -162,6 +296,125 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
 </main>
 <footer>SoCal Private Jet Tracker</footer>
 <script>
+const SUPABASE_URL = "https://nkqxfwdhmaxfvecfqisg.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_BWdmaDhtPNDjPf7NMvjsJg_09rxLpNO";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+let authMode = "signin";
+let trackerStarted = false;
+
+const authScreen = document.getElementById("authScreen");
+const appShell = document.getElementById("appShell");
+const signInTab = document.getElementById("signInTab");
+const signUpTab = document.getElementById("signUpTab");
+const authForm = document.getElementById("authForm");
+const authEmail = document.getElementById("authEmail");
+const authPassword = document.getElementById("authPassword");
+const authSubmit = document.getElementById("authSubmit");
+const authMessage = document.getElementById("authMessage");
+const signedInAs = document.getElementById("signedInAs");
+const signOutBtn = document.getElementById("signOutBtn");
+
+function setAuthMode(mode){
+  authMode = mode;
+  const signingIn = mode === "signin";
+  signInTab.classList.toggle("active", signingIn);
+  signUpTab.classList.toggle("active", !signingIn);
+  authSubmit.textContent = signingIn ? "Sign In" : "Create Account";
+  authPassword.autocomplete = signingIn ? "current-password" : "new-password";
+  authMessage.textContent = "";
+  authMessage.className = "auth-message";
+}
+
+function showAuthMessage(message, type=""){
+  authMessage.textContent = message;
+  authMessage.className = "auth-message" + (type ? " " + type : "");
+}
+
+function showLoggedOut(){
+  authScreen.style.display = "flex";
+  appShell.style.display = "none";
+  signedInAs.textContent = "";
+}
+
+function showLoggedIn(user){
+  authScreen.style.display = "none";
+  appShell.style.display = "block";
+  signedInAs.textContent = user?.email ? "Signed in as " + user.email : "Signed in";
+
+  if(!trackerStarted){
+    trackerStarted = true;
+    initFlightMap();
+    loadFlights();
+    setInterval(loadFlights,300000);
+    setTimeout(()=>flightMap?.invalidateSize(),200);
+  } else {
+    setTimeout(()=>flightMap?.invalidateSize(),200);
+  }
+}
+
+signInTab.addEventListener("click",()=>setAuthMode("signin"));
+signUpTab.addEventListener("click",()=>setAuthMode("signup"));
+
+authForm.addEventListener("submit", async (event)=>{
+  event.preventDefault();
+  const email = authEmail.value.trim();
+  const password = authPassword.value;
+
+  if(password.length < 8){
+    showAuthMessage("Password must be at least 8 characters.", "error");
+    return;
+  }
+
+  authSubmit.disabled = true;
+  showAuthMessage(authMode === "signin" ? "Signing in..." : "Creating account...");
+
+  try{
+    if(authMode === "signin"){
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      if(error) throw error;
+      showLoggedIn(data.user);
+    } else {
+      const { data, error } = await supabaseClient.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: window.location.origin + window.location.pathname
+        }
+      });
+      if(error) throw error;
+
+      if(data.session){
+        showLoggedIn(data.user);
+      } else {
+        showAuthMessage("Account created. Check your email and click the verification link, then come back and sign in.", "success");
+        setAuthMode("signin");
+        authEmail.value = email;
+      }
+    }
+  }catch(error){
+    showAuthMessage(error?.message || "Authentication failed. Please try again.", "error");
+  }finally{
+    authSubmit.disabled = false;
+  }
+});
+
+signOutBtn.addEventListener("click", async ()=>{
+  await supabaseClient.auth.signOut();
+  showLoggedOut();
+});
+
+supabaseClient.auth.onAuthStateChange((_event, session)=>{
+  if(session?.user) showLoggedIn(session.user);
+  else showLoggedOut();
+});
+
+(async ()=>{
+  const { data } = await supabaseClient.auth.getSession();
+  if(data.session?.user) showLoggedIn(data.session.user);
+  else showLoggedOut();
+})();
+
 const esc=v=>{const d=document.createElement("div");d.textContent=v==null?"":String(v);return d.innerHTML};
 const attr=v=>esc(v).replace(/"/g,"&quot;");
 const num=(v,s="")=>v==null||v===""||v==="—"?"—":(Number.isFinite(Number(v))?(Number.isInteger(Number(v))?Number(v):Number(v).toFixed(1)):esc(v))+s;
@@ -348,7 +601,9 @@ async function loadFlights(){
     document.getElementById("lastUpdated").textContent="Unable to load data";
   }
 }
-initFlightMap(); loadFlights(); setInterval(loadFlights,300000);
+
 </script>
+
+</div>
 </body>
 </html>
