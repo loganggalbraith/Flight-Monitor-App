@@ -204,6 +204,15 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
   cursor:pointer;
 }
 
+
+/* Subscription access */
+.paywall-screen{position:fixed;inset:0;z-index:99998;display:none;align-items:center;justify-content:center;padding:24px;background:#f4f6f8}
+.paywall-card{width:min(92vw,470px);background:#fff;border:1px solid #ddd;border-radius:10px;padding:30px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.08)}
+.paywall-card h2{margin:0 0 8px;font-size:25px}.paywall-card p{color:#68737d;font-size:13px;line-height:1.55;margin:0 0 18px}
+.paywall-price{font-size:30px;font-weight:700;margin:10px 0 2px}.paywall-price span{font-size:12px;color:#68737d;font-weight:400}
+.paywall-trial{font-size:12px;font-weight:700;color:#087f5b;margin-bottom:18px}.paywall-btn{width:100%;padding:13px;border:1px solid #222;border-radius:6px;background:#222;color:#fff;font-weight:700;cursor:pointer}
+.paywall-btn:disabled{opacity:.55;cursor:not-allowed}.paywall-link{margin-top:13px;border:0;background:transparent;color:#68737d;text-decoration:underline;cursor:pointer;font-size:11px}
+.paywall-message{min-height:18px;margin-top:12px;color:#b42318;font-size:11px}.billing-btn{border:1px solid #bbb;background:#fff;border-radius:5px;padding:6px 9px;font-size:10px;font-weight:700;cursor:pointer}
 </style>
 </head>
 <body>
@@ -240,15 +249,29 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
   </div>
 </div>
 
+<div id="paywallScreen" class="paywall-screen">
+  <div class="paywall-card">
+    <div class="auth-brand">Private Jet Tracker</div>
+    <h2>Full Access</h2>
+    <p>Track flyExclusive aircraft across the United States with dedicated state and regional flight views.</p>
+    <div class="paywall-price">$9.99 <span>/ month</span></div>
+    <div class="paywall-trial">Start with a 7-day free trial</div>
+    <button id="startTrialBtn" class="paywall-btn" type="button">Start Your 7-Day Free Trial</button>
+    <div id="paywallMessage" class="paywall-message"></div>
+    <button id="paywallSignOut" class="paywall-link" type="button">Sign out</button>
+  </div>
+</div>
+
 <div id="appShell" class="app-shell">
   <div class="user-bar">
     <div class="container">
       <span id="signedInAs"></span>
+      <button id="manageBillingBtn" class="billing-btn" type="button">Manage Subscription</button>
       <button id="signOutBtn" class="signout-btn" type="button">Sign Out</button>
     </div>
   </div>
 
-<header><div class="container"><h1>U.S. Private Jet Tracker</h1><p>flyExclusive aircraft across the United States · Discord alerts remain Southern California only</p></div></header>
+<header><div class="container"><h1 id="pageTitle">U.S. Private Jet Tracker</h1><p id="pageSubtitle">flyExclusive aircraft across the United States</p></div></header>
 <main class="container">
 
 <section class="region-bar">
@@ -260,8 +283,8 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
 </section>
 
 <section class="map-panel">
-  <div class="map-title">Live U.S. Flight Map</div>
-  <div class="map-sub">Shows detected flyExclusive aircraft nationwide. Use the region selector above to focus the map and flight list.</div>
+  <div class="map-title" id="mapTitle">Live U.S. Flight Map</div>
+  <div class="map-sub" id="mapSubtitle">Shows detected flyExclusive aircraft nationwide. Select a state to open its dedicated tracker.</div>
   <div id="flightMap"></div>
   <div class="map-legend">
     <span><span class="legend-dot legend-ca"></span>Identified destination</span>
@@ -272,38 +295,42 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
 </section>
 
 <section class="summary">
-<div class="stat"><div class="stat-number" id="activeCount">0</div><div class="stat-label">Tracked JRE Flights</div></div>
-<div class="stat"><div class="stat-number" id="destinationCount">0</div><div class="stat-label">Identified Destinations</div></div>
-<div class="stat"><div class="stat-number" id="groundCount">0</div><div class="stat-label">Aircraft On Ground</div><div class="stat-sub">Near monitored airports</div></div>
-<div class="stat"><div class="stat-number" id="possibleCount">0</div><div class="stat-label">Possible Approaches</div><div class="stat-sub">Heading-based estimate</div></div>
+<div class="stat"><div class="stat-number" id="activeCount">0</div><div class="stat-label" id="activeLabel">Relevant Flights</div></div>
+<div class="stat"><div class="stat-number" id="destinationCount">0</div><div class="stat-label" id="destinationLabel">U.S. Destinations</div></div>
+<div class="stat"><div class="stat-number" id="groundCount">0</div><div class="stat-label" id="groundLabel">U.S. Departures</div><div class="stat-sub" id="groundSub">On ground with outbound route</div></div>
+<div class="stat"><div class="stat-number" id="possibleCount">0</div><div class="stat-label">Possible Approaches</div><div class="stat-sub" id="possibleSub">Heading-based estimate</div></div>
 </section>
 <div class="stat" style="margin-bottom:14px"><div class="updated"><strong>Last Updated</strong><br><span id="lastUpdated">Loading...</span><br><span class="stat-sub">Refreshes every 5 minutes</span></div></div>
 <section id="flightList" class="flight-list"><div class="empty">Loading flight data...</div></section>
 <section class="airports"><div class="airports-title" id="airportsTitle">Monitored Airports</div><div class="airport-grid" id="airportGrid"></div></section>
 
-<section class="alert-help">
-  <h2>How alerts work</h2>
+<section class="alert-help" id="howItWorks">
+  <h2>How the tracker works</h2>
   <div class="alert-type">
-    <strong>National Dashboard Tracking</strong>
-    <p>The web dashboard can display detected flyExclusive aircraft across the United States and organize them by destination or current region.</p>
-  </div>
-  <div class="alert-type">
-    <strong>Southern California Discord Alerts</strong>
-    <p>Discord remains intentionally limited to Southern California. Flights elsewhere in the country can appear on the dashboard without generating a Discord notification.</p>
+    <strong>Destination Identified</strong>
+    <p>A flyExclusive flight has route information showing an airport in the selected state or region as its destination. The aircraft may still be far outside that state when it first appears.</p>
   </div>
   <div class="alert-type">
     <strong>Possible Approach</strong>
-    <p>When a confirmed destination is unavailable, the tracker can compare an aircraft's position and heading with nearby monitored airports. This is an estimate, not a confirmed destination.</p>
+    <p>If a confirmed destination is unavailable, the tracker compares the aircraft's position and heading with monitored private-jet airports in the selected state or region. This is an estimate, not a confirmed destination.</p>
   </div>
   <div class="alert-type">
-    <strong>Grounded / Reposition Watch</strong>
-    <p>An aircraft observed on the ground near a monitored airport can remain visible so its next outbound route can be watched. A likely reposition is an estimate, not confirmation of an empty leg or Vaunt availability.</p>
+    <strong>Departure Identified</strong>
+    <p>A flyExclusive aircraft is on the ground near a monitored airport and route information identifies that airport as the origin with another airport as its destination.</p>
+  </div>
+  <div class="alert-type">
+    <strong>Repositioning Opportunity Score</strong>
+    <p>The tracker can estimate the likelihood of another departure after an aircraft lands. This is a prediction only; it does not confirm that a flight is empty, available for booking, or available through Vaunt.</p>
+  </div>
+  <div class="alert-type">
+    <strong>Discord Notifications</strong>
+    <p>The website tracks all states, but Discord notifications remain limited to Southern California.</p>
   </div>
 </section>
 
 <button class="refresh" onclick="loadFlights()">Refresh</button>
 </main>
-<footer>U.S. Private Jet Tracker</footer>
+<footer id="pageFooter">U.S. Private Jet Tracker</footer>
 <script>
 const SUPABASE_URL = "https://nkqxfwdhmaxfvecfqisg.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_BWdmaDhtPNDjPf7NMvjsJg_09rxLpNO";
@@ -323,6 +350,11 @@ const authSubmit = document.getElementById("authSubmit");
 const authMessage = document.getElementById("authMessage");
 const signedInAs = document.getElementById("signedInAs");
 const signOutBtn = document.getElementById("signOutBtn");
+const paywallScreen = document.getElementById("paywallScreen");
+const startTrialBtn = document.getElementById("startTrialBtn");
+const paywallMessage = document.getElementById("paywallMessage");
+const paywallSignOut = document.getElementById("paywallSignOut");
+const manageBillingBtn = document.getElementById("manageBillingBtn");
 
 function setAuthMode(mode){
   authMode = mode;
@@ -342,25 +374,71 @@ function showAuthMessage(message, type=""){
 
 function showLoggedOut(){
   authScreen.style.display = "flex";
+  paywallScreen.style.display = "none";
   appShell.style.display = "none";
   signedInAs.textContent = "";
 }
 
-function showLoggedIn(user){
+function showTracker(user){
   authScreen.style.display = "none";
+  paywallScreen.style.display = "none";
   appShell.style.display = "block";
   signedInAs.textContent = user?.email ? "Signed in as " + user.email : "Signed in";
-
   if(!trackerStarted){
     trackerStarted = true;
     initFlightMap();
     loadFlights();
     setInterval(loadFlights,300000);
     setTimeout(()=>flightMap?.invalidateSize(),200);
-  } else {
-    setTimeout(()=>flightMap?.invalidateSize(),200);
+  } else setTimeout(()=>flightMap?.invalidateSize(),200);
+}
+
+async function showLoggedIn(user){
+  authScreen.style.display = "none";
+  signedInAs.textContent = user?.email ? "Signed in as " + user.email : "Signed in";
+  const { data, error } = await supabaseClient.from("subscriptions")
+    .select("status,trial_end,current_period_end,cancel_at_period_end,stripe_customer_id")
+    .eq("user_id", user.id).maybeSingle();
+  if(error){
+    console.error(error);
+    paywallMessage.textContent = "Unable to verify subscription access. Please refresh and try again.";
+    paywallScreen.style.display = "flex";
+    appShell.style.display = "none";
+    return;
+  }
+  if(data && ["trialing","active"].includes(data.status)) showTracker(user);
+  else {
+    appShell.style.display = "none";
+    paywallScreen.style.display = "flex";
+    paywallMessage.textContent = "";
   }
 }
+
+async function invokeBillingFunction(name){
+  const { data:{ session } } = await supabaseClient.auth.getSession();
+  if(!session) throw new Error("Please sign in again.");
+  const response = await fetch(`${SUPABASE_URL}/functions/v1/${name}`,{
+    method:"POST",
+    headers:{"Authorization":`Bearer ${session.access_token}`,"apikey":SUPABASE_PUBLISHABLE_KEY,"Content-Type":"application/json"},
+    body:"{}"
+  });
+  const result=await response.json().catch(()=>({}));
+  if(!response.ok) throw new Error(result.error||"Billing request failed.");
+  if(!result.url) throw new Error("Stripe did not return a checkout URL.");
+  window.location.href=result.url;
+}
+
+startTrialBtn.addEventListener("click",async()=>{
+  startTrialBtn.disabled=true; paywallMessage.textContent="Opening secure Stripe Checkout...";
+  try{await invokeBillingFunction("create-checkout-session");}
+  catch(e){paywallMessage.textContent=e?.message||"Unable to start checkout.";startTrialBtn.disabled=false;}
+});
+manageBillingBtn.addEventListener("click",async()=>{
+  manageBillingBtn.disabled=true;
+  try{await invokeBillingFunction("create-customer-portal");}
+  catch(e){alert(e?.message||"Unable to open billing portal.");manageBillingBtn.disabled=false;}
+});
+paywallSignOut.addEventListener("click",async()=>{await supabaseClient.auth.signOut();showLoggedOut();});
 
 signInTab.addEventListener("click",()=>setAuthMode("signin"));
 signUpTab.addEventListener("click",()=>setAuthMode("signup"));
@@ -458,13 +536,31 @@ function alertTypeForFlight(f){
   return {label:"Tracked Flight",color:"#68737d"};
 }
 
+function selectedRegionObject(){
+  return airportRegions.find(r=>r.id===selectedRegion);
+}
+
+function flightMatchesSelectedRegion(f){
+  if(selectedRegion==="all") return true;
+  const selected=selectedRegionObject();
+  if(!selected) return false;
+
+  const ids=[f.region_id,f.destination_region_id,f.origin_region_id].filter(Boolean);
+  if(ids.includes(selectedRegion)) return true;
+
+  // Statewide California should also include the dedicated SoCal/NorCal views.
+  if(selectedRegion==="ca" && ids.some(id=>id==="socal"||id==="norcal")) return true;
+
+  // For state views, match any flight region whose configured state is the same.
+  const wantedStates=new Set(selected.states||[]);
+  return ids.some(id=>{
+    const r=airportRegions.find(x=>x.id===id);
+    return r && (r.states||[]).some(s=>wantedStates.has(s));
+  });
+}
+
 function filteredFlights(){
-  if(selectedRegion==="all") return allFlights;
-  return allFlights.filter(f =>
-    f.region_id===selectedRegion ||
-    f.destination_region_id===selectedRegion ||
-    f.origin_region_id===selectedRegion
-  );
+  return allFlights.filter(flightMatchesSelectedRegion);
 }
 
 function renderFlightMap(flights){
@@ -503,7 +599,11 @@ async function loadAirportRegions(){
     const data=await r.json();
     airportRegions=Array.isArray(data.regions)?data.regions:[];
     const select=document.getElementById("regionSelect");
-    select.innerHTML='<option value="all">All United States</option>'+airportRegions.map(r=>`<option value="${attr(r.id)}">${esc(r.name)}</option>`).join("");
+    const states=airportRegions.filter(r=>!r.special_view);
+    const specials=airportRegions.filter(r=>r.special_view);
+    select.innerHTML='<option value="all">United States — Main Page</option>'
+      +'<optgroup label="States">'+states.map(r=>`<option value="${attr(r.id)}">${esc(r.name)}</option>`).join("")+'</optgroup>'
+      +(specials.length?'<optgroup label="California Regional Views">'+specials.map(r=>`<option value="${attr(r.id)}">${esc(r.name)}</option>`).join("")+'</optgroup>':"");
     select.value=selectedRegion;
     renderAirportChips();
   }catch(e){
@@ -528,13 +628,51 @@ function renderAirportChips(){
   grid.innerHTML=(region.airports||[]).map(a=>`<span class="airport-chip">${esc(a.icao)} ${esc(a.name)}</span>`).join("");
 }
 
+function renderPageMode(){
+  const main=selectedRegion==="all";
+  const region=selectedRegionObject();
+  const name=main?"U.S.":(region?.name||"Selected Region");
+
+  document.getElementById("pageTitle").textContent=main?"U.S. Private Jet Tracker":`${name} Private Jet Tracker`;
+  document.getElementById("pageSubtitle").textContent=main
+    ?"flyExclusive aircraft across the United States · select a state below"
+    :`flyExclusive flights heading to, approaching, on the ground in, or departing ${name}`;
+
+  document.getElementById("mapTitle").textContent=main?"Live U.S. Flight Map":`Live ${name} Flight Map`;
+  document.getElementById("mapSubtitle").textContent=main
+    ?"Shows detected flyExclusive aircraft nationwide. Select a state to open its dedicated tracker."
+    :`This is the ${name} version of the tracker, using the same layout and flight logic as the original Southern California tracker.`;
+
+  document.getElementById("activeLabel").textContent="Relevant Flights";
+  document.getElementById("destinationLabel").textContent=main?"U.S. Destinations":`${name} Destinations`;
+  document.getElementById("groundLabel").textContent=main?"U.S. Departures":`${name} Departures`;
+  document.getElementById("groundSub").textContent="On ground with outbound route";
+  document.getElementById("possibleSub").textContent=main?"Across monitored U.S. airports":`Approaching ${name}`;
+
+  // Explanations live on the main page only.
+  document.getElementById("howItWorks").style.display=main?"block":"none";
+  document.getElementById("pageFooter").textContent=main?"U.S. Private Jet Tracker":`${name} Private Jet Tracker`;
+}
+
+function focusMapOnSelectedRegion(flights){
+  if(selectedRegion==="all" || flights.length) return;
+  const region=selectedRegionObject();
+  const pts=(region?.airports||[])
+    .map(a=>[Number(a.lat),Number(a.lon)])
+    .filter(p=>Number.isFinite(p[0])&&Number.isFinite(p[1]));
+  if(pts.length>1) flightMap.fitBounds(pts,{padding:[35,35],maxZoom:7});
+  else if(pts.length===1) flightMap.setView(pts[0],7);
+}
+
 function renderDashboard(){
+  renderPageMode();
   const flights=filteredFlights();
   document.getElementById("activeCount").textContent=flights.length;
   document.getElementById("destinationCount").textContent=flights.filter(f=>!!f.route_destination).length;
   document.getElementById("groundCount").textContent=flights.filter(f=>f.on_ground===true).length;
   document.getElementById("possibleCount").textContent=flights.filter(f=>!!f.possible_destination && !f.route_destination).length;
   renderFlightMap(flights);
+  focusMapOnSelectedRegion(flights);
   renderAirportChips();
   const list=document.getElementById("flightList");
   if(!flights.length){
@@ -601,7 +739,7 @@ async function loadFlights(){
   }
 }
 
-document.getElementById("regionSelect").addEventListener("change",e=>{selectedRegion=e.target.value;renderDashboard();});
+document.getElementById("regionSelect").addEventListener("change",e=>{selectedRegion=e.target.value;renderDashboard();window.scrollTo({top:0,behavior:"smooth"});});
 loadAirportRegions();
 
 </script>
