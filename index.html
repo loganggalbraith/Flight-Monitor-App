@@ -188,6 +188,42 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
   transform:rotate(-8deg);
   display:inline-block;
 }
+
+/* Private Jet Tracker brand emblem */
+.brand-emblem{
+  width:34px;
+  height:34px;
+  object-fit:cover;
+  border-radius:7px;
+  display:block;
+  flex:0 0 auto;
+}
+
+.auth-logo .brand-emblem{
+  width:48px;
+  height:48px;
+  margin:0 auto;
+  border-radius:10px;
+}
+
+.page-brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.page-brand .brand-emblem{
+  width:32px;
+  height:32px;
+  border-radius:7px;
+}
+
+@media(max-width:500px){
+  .page-brand .brand-emblem{
+    width:28px;
+    height:28px;
+  }
+}
 .hero-kicker{
   font-size:11px;
   letter-spacing:.30em;
@@ -372,7 +408,7 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
   <div class="auth-wrap">
     <section class="auth-hero">
       <div class="auth-topbrand">
-        <span class="auth-plane-mark">✈</span>
+        <img class="brand-emblem" src="/app-icon.png?v=2" alt="Private Jet Tracker plane emblem">
         <span>Private Jet Tracker</span>
       </div>
 
@@ -423,7 +459,7 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
 
     <section class="auth-panel">
       <div class="auth-card">
-        <div class="auth-logo">✈</div>
+        <div class="auth-logo"><img class="brand-emblem" src="/app-icon.png?v=2" alt="Private Jet Tracker plane emblem"></div>
         <h1>Private Jet Tracker</h1>
         <p>Sign in to access the live flight tracker, or create an account.</p>
 
@@ -478,7 +514,15 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
     </div>
   </div>
 
-<header><div class="container"><h1 id="pageTitle">U.S. Private Jet Tracker</h1><p id="pageSubtitle">flyExclusive aircraft across the United States</p></div></header>
+<header>
+  <div class="container">
+    <div class="page-brand">
+      <img class="brand-emblem" src="/app-icon.png?v=2" alt="Private Jet Tracker plane emblem">
+      <h1 id="pageTitle">U.S. Private Jet Tracker</h1>
+    </div>
+    <p id="pageSubtitle">flyExclusive aircraft across the United States</p>
+  </div>
+</header>
 <main class="container">
 
 <section class="region-bar">
