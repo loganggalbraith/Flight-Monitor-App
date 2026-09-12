@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-12T03:55:58.033876+00:00",
+  "last_updated": "2026-09-12T04:17:14.942898+00:00",
   "flight_count": 1,
   "region_counts": {
     "Southern California": 1
@@ -390,23 +390,23 @@
       "grounded_departure": false,
       "ground_airport": null,
       "ground_airport_name": null,
-      "latitude": 33.9324,
-      "longitude": -115.7375,
-      "altitude_meters": 9753.6,
-      "velocity_mps": 185.89,
-      "heading": 274.92,
-      "vertical_rate": 0,
+      "latitude": 33.8109,
+      "longitude": -117.7822,
+      "altitude_meters": 861.06,
+      "velocity_mps": 78.35,
+      "heading": 214.84,
+      "vertical_rate": -8.78,
       "on_ground": false,
-      "nearest_airport": "KPSP",
-      "nearest_airport_name": "Palm Springs",
-      "distance_to_nearest_airport_miles": 44.7,
-      "possible_destination": "KPSP",
-      "possible_destination_name": "Palm Springs",
+      "nearest_airport": "KSNA",
+      "nearest_airport_name": "Orange County",
+      "distance_to_nearest_airport_miles": 10.6,
+      "possible_destination": "KSNA",
+      "possible_destination_name": "Orange County",
       "possible_destination_region": "Southern California",
-      "possible_destination_distance_miles": 44.7,
-      "possible_destination_bearing": 261.1,
-      "possible_heading_difference": 13.8,
-      "last_seen": "2026-09-12T03:55:58.033735+00:00"
+      "possible_destination_distance_miles": 10.6,
+      "possible_destination_bearing": 207.9,
+      "possible_heading_difference": 6.9,
+      "last_seen": "2026-09-12T04:17:14.640104+00:00"
     }
   ],
   "seen_alerts": [
@@ -416,6 +416,7 @@
     "possible|JRE770|KSBA",
     "possible|JRE770|KVNY",
     "possible|JRE774|KPSP",
+    "possible|JRE774|KSNA",
     "possible|JRE803|KCNO",
     "possible|JRE803|KSBA",
     "possible|JRE803|KVNY",
