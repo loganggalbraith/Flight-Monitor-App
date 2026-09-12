@@ -189,40 +189,30 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
   display:inline-block;
 }
 
-/* Private Jet Tracker brand emblem */
-.brand-emblem{
+/* Private Jet Tracker plane emblem */
+.brand-plane{
   width:34px;
   height:34px;
-  object-fit:cover;
-  border-radius:7px;
+  object-fit:contain;
   display:block;
   flex:0 0 auto;
 }
 
-.auth-logo .brand-emblem{
+.auth-logo .brand-plane{
   width:48px;
   height:48px;
   margin:0 auto;
-  border-radius:10px;
 }
 
-.page-brand{
+.page-title-brand{
   display:flex;
   align-items:center;
   gap:10px;
 }
 
-.page-brand .brand-emblem{
-  width:32px;
-  height:32px;
-  border-radius:7px;
-}
-
-@media(max-width:500px){
-  .page-brand .brand-emblem{
-    width:28px;
-    height:28px;
-  }
+.page-title-brand .brand-plane{
+  width:34px;
+  height:34px;
 }
 .hero-kicker{
   font-size:11px;
@@ -408,7 +398,7 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
   <div class="auth-wrap">
     <section class="auth-hero">
       <div class="auth-topbrand">
-        <img class="brand-emblem" src="/app-icon.png?v=2" alt="Private Jet Tracker plane emblem">
+        <img class="brand-plane" src="/app-icon.png?v=3" alt="Private Jet Tracker plane emblem">
         <span>Private Jet Tracker</span>
       </div>
 
@@ -459,7 +449,7 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
 
     <section class="auth-panel">
       <div class="auth-card">
-        <div class="auth-logo"><img class="brand-emblem" src="/app-icon.png?v=2" alt="Private Jet Tracker plane emblem"></div>
+        <div class="auth-logo"><img class="brand-plane" src="/app-icon.png?v=3" alt="Private Jet Tracker plane emblem"></div>
         <h1>Private Jet Tracker</h1>
         <p>Sign in to access the live flight tracker, or create an account.</p>
 
@@ -516,8 +506,8 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
 
 <header>
   <div class="container">
-    <div class="page-brand">
-      <img class="brand-emblem" src="/app-icon.png?v=2" alt="Private Jet Tracker plane emblem">
+    <div class="page-title-brand">
+      <img class="brand-plane" src="/app-icon.png?v=3" alt="Private Jet Tracker plane emblem">
       <h1 id="pageTitle">U.S. Private Jet Tracker</h1>
     </div>
     <p id="pageSubtitle">flyExclusive aircraft across the United States</p>
