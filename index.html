@@ -23,3 +23,961 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f4f6f8;color:#20262d;font-family:Arial,Helvetica,sans-serif}
+.container{width:min(94%,1000px);margin:auto}
+header{background:#fff;border-bottom:1px solid #ddd;padding:22px 0}
+h1{margin:0;font-size:25px}
+header p{margin:6px 0 0;color:#68737d;font-size:13px}
+main{padding:20px 0 35px}
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.stat{background:#fff;border:1px solid #ddd;border-radius:7px;padding:15px}
+.stat-icon{display:none}.stat-number{font-size:24px;font-weight:700}
+.stat-label{font-size:10px;text-transform:uppercase;color:#68737d;margin-top:5px}
+.stat-sub{font-size:10px;color:#8a949d;margin-top:4px}.updated{font-size:12px;line-height:1.5}
+.flight-list{display:grid;gap:12px}
+.flight-card{display:grid;grid-template-columns:210px 1fr 170px;background:#fff;border:1px solid #ddd;border-radius:7px;overflow:hidden}
+.photo{min-height:165px;background:#e9edf0}.photo img{width:100%;height:100%;min-height:165px;object-fit:cover;display:block}
+.photo-placeholder{height:100%;min-height:165px;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;color:#8a949d;font-size:11px}
+.flight-main{padding:17px;display:grid;grid-template-columns:1.1fr 1fr;gap:18px}
+.status{font-size:10px;font-weight:700;text-transform:uppercase;color:#087f5b;margin-bottom:7px}
+.score-box{margin-top:14px;border:1px solid #ddd;border-radius:6px;padding:10px;background:#f8f9fa}
+.score-top{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.score-title{font-size:10px;text-transform:uppercase;color:#68737d;font-weight:700}
+.score-number{font-size:18px;font-weight:700}
+.score-bar{height:7px;background:#e1e5e8;border-radius:10px;overflow:hidden;margin-top:7px}
+.score-fill{height:100%;background:#5b6570;border-radius:10px}
+.score-reason{font-size:10px;color:#68737d;line-height:1.4;margin-top:7px}.status.possible{color:#986800}
+.callsign{font-size:24px;font-weight:700}.type{font-size:12px;color:#68737d;line-height:1.5;margin-top:3px}
+.route{display:flex;align-items:center;gap:12px;margin-top:16px}.airport-code{font-size:16px;font-weight:700}.route-arrow{color:#68737d}
+.route-label{font-size:9px;color:#8a949d;margin-top:3px}
+.metrics{border-left:1px solid #eee;padding-left:17px;display:grid;align-content:center;gap:9px}
+.metric{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px}.metric .ico{display:none}.metric .name{color:#68737d}.metric .val{font-weight:700}
+.actions{border-left:1px solid #eee;padding:16px;display:flex;flex-direction:column;justify-content:center;gap:9px}
+.btn{display:block;text-align:center;text-decoration:none;border:1px solid #333;border-radius:5px;padding:11px 8px;font-size:10px;font-weight:700;color:#222;background:#fff}
+.btn.gold{background:#222;color:#fff}
+.empty{background:#fff;border:1px solid #ddd;border-radius:7px;padding:32px;text-align:center;color:#68737d}
+.airports{margin-top:14px;background:#fff;border:1px solid #ddd;border-radius:7px;padding:15px}.airports-title{font-weight:700;font-size:15px;margin-bottom:10px}
+.airport-grid{display:flex;flex-wrap:wrap;gap:6px}.airport-chip{border:1px solid #ddd;border-radius:4px;padding:6px 8px;font-size:10px;color:#68737d}
+.map-panel{background:#fff;border:1px solid #ddd;border-radius:7px;padding:14px;margin-bottom:14px}
+.map-title{font-size:15px;font-weight:700;margin-bottom:4px}
+.map-sub{font-size:11px;color:#68737d;margin-bottom:10px;line-height:1.4}
+#flightMap{height:430px;width:100%;border-radius:6px;border:1px solid #ddd;overflow:hidden;position:relative}
+
+/* Leaflet layout fallback — keeps map tiles correctly clipped and positioned */
+.leaflet-container{overflow:hidden;position:relative;outline:0;background:#ddd}
+.leaflet-pane,.leaflet-tile,.leaflet-marker-icon,.leaflet-marker-shadow,
+.leaflet-tile-container,.leaflet-pane>svg,.leaflet-pane>canvas,
+.leaflet-zoom-box,.leaflet-image-layer,.leaflet-layer{
+  position:absolute;left:0;top:0
+}
+.leaflet-tile-container{pointer-events:none}
+.leaflet-tile{visibility:hidden}
+.leaflet-tile-loaded{visibility:inherit}
+.leaflet-container img.leaflet-tile{
+  max-width:none!important;
+  max-height:none!important;
+  width:256px!important;
+  height:256px!important;
+  padding:0!important;
+  margin:0!important
+}
+.leaflet-map-pane{z-index:2}
+.leaflet-tile-pane{z-index:200}
+.leaflet-overlay-pane{z-index:400}
+.leaflet-shadow-pane{z-index:500}
+.leaflet-marker-pane{z-index:600}
+.leaflet-tooltip-pane{z-index:650}
+.leaflet-popup-pane{z-index:700}
+.leaflet-control{position:relative;z-index:800;pointer-events:auto}
+.leaflet-top,.leaflet-bottom{position:absolute;z-index:1000;pointer-events:none}
+.leaflet-top{top:0}.leaflet-right{right:0}.leaflet-bottom{bottom:0}.leaflet-left{left:0}
+.leaflet-control-zoom a{
+  display:block;width:30px;height:30px;line-height:30px;text-align:center;
+  text-decoration:none;background:#fff;color:#222;border-bottom:1px solid #ccc
+}
+.leaflet-control-zoom{
+  margin:10px;border:1px solid #aaa;border-radius:4px;overflow:hidden;
+  box-shadow:0 1px 4px rgba(0,0,0,.2)
+}
+.leaflet-control-attribution{
+  background:rgba(255,255,255,.8);padding:2px 5px;font-size:9px
+}
+
+.map-legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;font-size:10px;color:#68737d}
+.legend-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:-1px}
+.legend-ca{background:#087f5b}.legend-possible{background:#986800}.legend-ground{background:#2f5f8f}
+.leaflet-popup-content{font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.45}
+.leaflet-popup-content strong{font-size:13px}
+.plane-marker{background:transparent;border:none}
+.plane-marker svg{display:block;width:18px;height:18px;filter:drop-shadow(0 1px 1px rgba(255,255,255,.9))}
+.alert-help{margin-top:14px;background:#fff;border:1px solid #ddd;border-radius:7px;padding:18px}
+.alert-help h2{font-size:16px;margin:0 0 14px}
+.alert-type{padding:12px 0;border-top:1px solid #eee}
+.alert-type:first-of-type{border-top:0;padding-top:0}
+.alert-type strong{display:block;font-size:13px;margin-bottom:4px}
+.alert-type p{margin:0;color:#68737d;font-size:12px;line-height:1.5}
+.refresh{width:100%;margin-top:10px;padding:11px;background:#fff;border:1px solid #bbb;border-radius:5px;font-weight:700;cursor:pointer}
+footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
+
+.region-bar{background:#fff;border:1px solid #ddd;border-radius:7px;padding:12px 14px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.region-bar label{font-size:11px;font-weight:700;color:#68737d;text-transform:uppercase;letter-spacing:.03em}
+.region-select{min-width:240px;border:1px solid #cfd5da;border-radius:5px;background:#fff;color:#20262d;padding:9px 10px;font-size:12px}
+.region-note{font-size:10px;color:#8a949d;margin-top:4px}
+@media(max-width:600px){.region-bar{display:block}.region-select{width:100%;min-width:0;margin-top:8px}}
+@media(max-width:800px){.summary{grid-template-columns:1fr 1fr}.flight-card{grid-template-columns:1fr}.photo{max-height:240px}.flight-main{grid-template-columns:1fr}.metrics,.actions{border-left:0;border-top:1px solid #eee}.actions{flex-direction:row}.btn{flex:1}}
+@media(max-width:500px){.summary{grid-template-columns:1fr}.actions{flex-direction:column}}
+
+/* Authentication */
+.auth-screen{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:26px;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(93,124,158,.18), transparent 34%),
+    linear-gradient(135deg,#0b1622 0%,#122233 48%,#1b2f43 100%);
+  overflow:auto;
+}
+.auth-wrap{
+  width:min(1180px,96vw);
+  min-height:720px;
+  display:grid;
+  grid-template-columns:1.08fr .92fr;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 28px 90px rgba(0,0,0,.34);
+  border:1px solid rgba(255,255,255,.08);
+}
+.auth-hero{
+  position:relative;
+  color:#fff;
+  padding:54px 58px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  background:
+    linear-gradient(180deg,rgba(8,18,28,.28),rgba(8,18,28,.78)),
+    radial-gradient(circle at 62% 38%,rgba(255,255,255,.10),transparent 28%),
+    linear-gradient(145deg,#162b3f 0%,#20384d 52%,#0f1c29 100%);
+}
+.auth-hero:after{
+  content:"";
+  position:absolute;
+  right:-80px;
+  bottom:42px;
+  width:430px;
+  height:430px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.12),rgba(255,255,255,0) 68%);
+  pointer-events:none;
+}
+.auth-topbrand{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.auth-plane-mark{
+  font-size:31px;
+  transform:rotate(-8deg);
+  display:inline-block;
+}
+.hero-kicker{
+  font-size:11px;
+  letter-spacing:.30em;
+  text-transform:uppercase;
+  color:#c7d2dc;
+  margin-bottom:16px;
+}
+.auth-hero h2{
+  margin:0;
+  font-size:58px;
+  line-height:.98;
+  letter-spacing:.01em;
+  max-width:520px;
+}
+.hero-copy{
+  font-size:19px;
+  line-height:1.55;
+  color:#d5dee6;
+  max-width:520px;
+  margin:22px 0 30px;
+}
+.hero-features{
+  display:grid;
+  gap:18px;
+  max-width:500px;
+}
+.hero-feature{
+  display:grid;
+  grid-template-columns:40px 1fr;
+  gap:12px;
+  align-items:start;
+}
+.hero-feature-icon{
+  width:34px;
+  height:34px;
+  border:1px solid rgba(255,255,255,.28);
+  border-radius:9px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:17px;
+}
+.hero-feature strong{display:block;font-size:14px;margin-bottom:3px}
+.hero-feature span{font-size:12px;line-height:1.45;color:#c7d2dc}
+.hero-bottom{
+  font-size:10px;
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  color:#d2dae1;
+}
+.auth-panel{
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:54px 46px;
+}
+.auth-card{
+  width:min(100%,480px);
+  background:#fff;
+}
+.auth-brand{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:#68737d;
+  margin-bottom:8px;
+}
+.auth-logo{
+  text-align:center;
+  font-size:34px;
+  margin-bottom:10px;
+}
+.auth-card h1{
+  font-size:30px;
+  margin:0 0 7px;
+  text-align:center;
+}
+.auth-card>p{
+  font-size:13px;
+  color:#68737d;
+  line-height:1.5;
+  margin:0 0 24px;
+  text-align:center;
+}
+.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:22px;background:#eef1f4;border-radius:8px;padding:4px}
+.auth-tab{
+  border:0;
+  background:transparent;
+  padding:11px;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+  color:#27313a;
+}
+.auth-tab.active{background:#102033;color:#fff}
+.auth-field{margin-bottom:14px}
+.auth-field label{display:block;font-size:11px;color:#27313a;font-weight:700;margin-bottom:7px}
+.auth-field input{
+  width:100%;
+  padding:13px 14px;
+  border:1px solid #cfd6dd;
+  border-radius:7px;
+  font-size:14px;
+  outline:none;
+  background:#fff;
+}
+.auth-field input:focus{border-color:#102033;box-shadow:0 0 0 3px rgba(16,32,51,.07)}
+.auth-submit{
+  width:100%;
+  padding:13px;
+  border:1px solid #102033;
+  border-radius:7px;
+  background:#102033;
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+  margin-top:4px;
+  font-size:13px;
+}
+.auth-submit:disabled{opacity:.55;cursor:not-allowed}
+.auth-message{min-height:18px;margin-top:12px;font-size:11px;line-height:1.45;color:#68737d}
+.auth-message.error{color:#b42318}
+.auth-message.success{color:#087f5b}
+.auth-note{
+  margin-top:18px;
+  padding:14px 15px;
+  border:1px solid #e2e6ea;
+  border-radius:8px;
+  background:#f6f8fa;
+  font-size:11px;
+  color:#68737d;
+  line-height:1.5;
+}
+.auth-note strong{color:#27313a}
+.app-shell{display:none}
+.user-bar{background:#fff;border-bottom:1px solid #eee}
+.user-bar .container{
+  min-height:38px;
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  gap:10px;
+  font-size:10px;
+  color:#68737d;
+}
+.signout-btn{
+  border:1px solid #bbb;
+  background:#fff;
+  border-radius:5px;
+  padding:6px 9px;
+  font-size:10px;
+  font-weight:700;
+  cursor:pointer;
+}
+@media(max-width:900px){
+  .auth-wrap{grid-template-columns:1fr;min-height:0}
+  .auth-hero{display:none}
+  .auth-panel{padding:34px 24px}
+}
+@media(max-width:520px){
+  .auth-screen{padding:0;background:#fff}
+  .auth-wrap{width:100%;border:0;border-radius:0;box-shadow:none}
+  .auth-panel{padding:30px 20px}
+}
+
+/* Subscription access */
+.paywall-screen{position:fixed;inset:0;z-index:99998;display:none;align-items:center;justify-content:center;padding:24px;background:#f4f6f8}
+.paywall-card{width:min(92vw,470px);background:#fff;border:1px solid #ddd;border-radius:10px;padding:30px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.08)}
+.paywall-card h2{margin:0 0 8px;font-size:25px}.paywall-card p{color:#68737d;font-size:13px;line-height:1.55;margin:0 0 18px}
+.paywall-price{font-size:30px;font-weight:700;margin:10px 0 2px}.paywall-price span{font-size:12px;color:#68737d;font-weight:400}
+.paywall-trial{font-size:12px;font-weight:700;color:#087f5b;margin-bottom:18px}.paywall-btn{width:100%;padding:13px;border:1px solid #222;border-radius:6px;background:#222;color:#fff;font-weight:700;cursor:pointer}
+.paywall-btn:disabled{opacity:.55;cursor:not-allowed}.paywall-link{margin-top:13px;border:0;background:transparent;color:#68737d;text-decoration:underline;cursor:pointer;font-size:11px}
+.paywall-message{min-height:18px;margin-top:12px;color:#b42318;font-size:11px}.billing-btn{border:1px solid #bbb;background:#fff;border-radius:5px;padding:6px 9px;font-size:10px;font-weight:700;cursor:pointer}
+</style>
+</head>
+<body>
+
+<div id="authScreen" class="auth-screen">
+  <div class="auth-wrap">
+    <section class="auth-hero">
+      <div class="auth-topbrand">
+        <span class="auth-plane-mark">✈</span>
+        <span>Private Jet Tracker</span>
+      </div>
+
+      <div>
+        <div class="hero-kicker">Real-Time Aviation Intelligence</div>
+        <h2>PRIVATE JET<br>TRACKER</h2>
+        <div class="hero-copy">
+          Track flyExclusive aircraft across the United States with nationwide, state, and regional views.
+        </div>
+
+        <div class="hero-features">
+          <div class="hero-feature">
+            <div class="hero-feature-icon">⌖</div>
+            <div>
+              <strong>Live Flight Tracking</strong>
+              <span>See detected aircraft positions and flight activity in real time.</span>
+            </div>
+          </div>
+
+          <div class="hero-feature">
+            <div class="hero-feature-icon">▥</div>
+            <div>
+              <strong>State &amp; Regional Views</strong>
+              <span>Switch between the full United States, individual states, and dedicated California regions.</span>
+            </div>
+          </div>
+
+          <div class="hero-feature">
+            <div class="hero-feature-icon">✈</div>
+            <div>
+              <strong>Grounded Aircraft</strong>
+              <span>See tracked aircraft that have landed or are positioned near monitored airports.</span>
+            </div>
+          </div>
+
+          <div class="hero-feature">
+            <div class="hero-feature-icon">☆</div>
+            <div>
+              <strong>Flight Opportunity Insights</strong>
+              <span>Review destination, approach, and repositioning indicators in one dashboard.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-bottom">More Than Flights · Opportunity Intelligence</div>
+    </section>
+
+    <section class="auth-panel">
+      <div class="auth-card">
+        <div class="auth-logo">✈</div>
+        <h1>Private Jet Tracker</h1>
+        <p>Sign in to access the live flight tracker, or create an account.</p>
+
+        <div class="auth-tabs">
+          <button id="signInTab" class="auth-tab active" type="button">Sign In</button>
+          <button id="signUpTab" class="auth-tab" type="button">Create Account</button>
+        </div>
+
+        <form id="authForm">
+          <div class="auth-field">
+            <label for="authEmail">Email</label>
+            <input id="authEmail" type="email" autocomplete="email" placeholder="you@example.com" required>
+          </div>
+
+          <div class="auth-field">
+            <label for="authPassword">Password</label>
+            <input id="authPassword" type="password" autocomplete="current-password" minlength="8" placeholder="Enter your password" required>
+          </div>
+
+          <button id="authSubmit" class="auth-submit" type="submit">Sign In</button>
+          <div id="authMessage" class="auth-message"></div>
+        </form>
+
+        <div class="auth-note">
+          <strong>New here?</strong><br>
+          Create an account to start your 7-day free trial and get full access to Private Jet Tracker.
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div id="paywallScreen" class="paywall-screen">
+  <div class="paywall-card">
+    <div class="auth-brand">Private Jet Tracker</div>
+    <h2>Full Access</h2>
+    <p>Track flyExclusive aircraft across the United States with dedicated state and regional flight views.</p>
+    <div class="paywall-price">$9.99 <span>/ month</span></div>
+    <div class="paywall-trial">Start with a 7-day free trial</div>
+    <button id="startTrialBtn" class="paywall-btn" type="button">Start Your 7-Day Free Trial</button>
+    <div id="paywallMessage" class="paywall-message"></div>
+    <button id="paywallSignOut" class="paywall-link" type="button">Sign out</button>
+  </div>
+</div>
+
+<div id="appShell" class="app-shell">
+  <div class="user-bar">
+    <div class="container">
+      <span id="signedInAs"></span>
+      <button id="manageBillingBtn" class="billing-btn" type="button">Manage Subscription</button>
+      <button id="signOutBtn" class="signout-btn" type="button">Sign Out</button>
+    </div>
+  </div>
+
+<header><div class="container"><h1 id="pageTitle">U.S. Private Jet Tracker</h1><p id="pageSubtitle">flyExclusive aircraft across the United States</p></div></header>
+<main class="container">
+
+<section class="region-bar">
+  <div>
+    <label for="regionSelect">Viewing Region</label>
+    <div class="region-note">Track nationwide or choose a state or regional view.</div>
+  </div>
+  <select id="regionSelect" class="region-select"><option value="all">All United States</option></select>
+</section>
+
+<section class="map-panel">
+  <div class="map-title" id="mapTitle">Live U.S. Flight Map</div>
+  <div class="map-sub" id="mapSubtitle">Shows detected flyExclusive aircraft nationwide. Select a state to open its dedicated tracker.</div>
+  <div id="flightMap"></div>
+  <div class="map-legend">
+    <span><span class="legend-dot legend-ca"></span>Identified destination</span>
+    <span><span class="legend-dot legend-possible"></span>Possible approach</span>
+    <span><span class="legend-dot legend-ground"></span>Grounded outbound route</span>
+    <span><span class="legend-dot" style="background:#5b6570"></span>Tracked / on ground</span>
+  </div>
+</section>
+
+<section class="summary">
+<div class="stat"><div class="stat-number" id="activeCount">0</div><div class="stat-label" id="activeLabel">Relevant Flights</div></div>
+<div class="stat"><div class="stat-number" id="destinationCount">0</div><div class="stat-label" id="destinationLabel">U.S. Destinations</div></div>
+<div class="stat"><div class="stat-number" id="groundCount">0</div><div class="stat-label" id="groundLabel">U.S. Departures</div><div class="stat-sub" id="groundSub">On ground with outbound route</div></div>
+<div class="stat"><div class="stat-number" id="possibleCount">0</div><div class="stat-label">Possible Approaches</div><div class="stat-sub" id="possibleSub">Heading-based estimate</div></div>
+</section>
+<div class="stat" style="margin-bottom:14px"><div class="updated"><strong>Last Updated</strong><br><span id="lastUpdated">Loading...</span><br><span class="stat-sub">Refreshes every 5 minutes</span></div></div>
+<section id="flightList" class="flight-list"><div class="empty">Loading flight data...</div></section>
+<section class="airports"><div class="airports-title" id="airportsTitle">Monitored Airports</div><div class="airport-grid" id="airportGrid"></div></section>
+
+<section class="alert-help" id="howItWorks">
+  <h2>How the tracker works</h2>
+  <div class="alert-type">
+    <strong>Destination Identified</strong>
+    <p>A flyExclusive flight has route information showing an airport in the selected state or region as its destination. The aircraft may still be far outside that state when it first appears.</p>
+  </div>
+  <div class="alert-type">
+    <strong>Possible Approach</strong>
+    <p>If a confirmed destination is unavailable, the tracker compares the aircraft's position and heading with monitored private-jet airports in the selected state or region. This is an estimate, not a confirmed destination.</p>
+  </div>
+  <div class="alert-type">
+    <strong>Departure Identified</strong>
+    <p>A flyExclusive aircraft is on the ground near a monitored airport and route information identifies that airport as the origin with another airport as its destination.</p>
+  </div>
+  <div class="alert-type">
+    <strong>Repositioning Opportunity Score</strong>
+    <p>The tracker can estimate the likelihood of another departure after an aircraft lands. This is a prediction only; it does not confirm that a flight is empty, available for booking, or available through Vaunt.</p>
+  </div>
+</section>
+
+<button class="refresh" onclick="loadFlights()">Refresh</button>
+</main>
+<footer id="pageFooter">U.S. Private Jet Tracker</footer>
+<script>
+const SUPABASE_URL = "https://nkqxfwdhmaxfvecfqisg.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_BWdmaDhtPNDjPf7NMvjsJg_09rxLpNO";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+let authMode = "signin";
+let trackerStarted = false;
+
+const authScreen = document.getElementById("authScreen");
+const appShell = document.getElementById("appShell");
+const signInTab = document.getElementById("signInTab");
+const signUpTab = document.getElementById("signUpTab");
+const authForm = document.getElementById("authForm");
+const authEmail = document.getElementById("authEmail");
+const authPassword = document.getElementById("authPassword");
+const authSubmit = document.getElementById("authSubmit");
+const authMessage = document.getElementById("authMessage");
+const signedInAs = document.getElementById("signedInAs");
+const signOutBtn = document.getElementById("signOutBtn");
+const paywallScreen = document.getElementById("paywallScreen");
+const startTrialBtn = document.getElementById("startTrialBtn");
+const paywallMessage = document.getElementById("paywallMessage");
+const paywallSignOut = document.getElementById("paywallSignOut");
+const manageBillingBtn = document.getElementById("manageBillingBtn");
+
+function setAuthMode(mode){
+  authMode = mode;
+  const signingIn = mode === "signin";
+  signInTab.classList.toggle("active", signingIn);
+  signUpTab.classList.toggle("active", !signingIn);
+  authSubmit.textContent = signingIn ? "Sign In" : "Create Account";
+  authPassword.autocomplete = signingIn ? "current-password" : "new-password";
+  authMessage.textContent = "";
+  authMessage.className = "auth-message";
+}
+
+function showAuthMessage(message, type=""){
+  authMessage.textContent = message;
+  authMessage.className = "auth-message" + (type ? " " + type : "");
+}
+
+function showLoggedOut(){
+  authScreen.style.display = "flex";
+  paywallScreen.style.display = "none";
+  appShell.style.display = "none";
+  signedInAs.textContent = "";
+}
+
+function showTracker(user){
+  authScreen.style.display = "none";
+  paywallScreen.style.display = "none";
+  appShell.style.display = "block";
+  signedInAs.textContent = user?.email ? "Signed in as " + user.email : "Signed in";
+  if(!trackerStarted){
+    trackerStarted = true;
+    initFlightMap();
+    loadFlights();
+    setInterval(loadFlights,300000);
+    setTimeout(()=>flightMap?.invalidateSize(),200);
+  } else setTimeout(()=>flightMap?.invalidateSize(),200);
+}
+
+async function showLoggedIn(user){
+  authScreen.style.display = "none";
+  signedInAs.textContent = user?.email ? "Signed in as " + user.email : "Signed in";
+  const { data, error } = await supabaseClient.from("subscriptions")
+    .select("status,trial_end,current_period_end,cancel_at_period_end,stripe_customer_id")
+    .eq("user_id", user.id).maybeSingle();
+  if(error){
+    console.error(error);
+    paywallMessage.textContent = "Unable to verify subscription access. Please refresh and try again.";
+    paywallScreen.style.display = "flex";
+    appShell.style.display = "none";
+    return;
+  }
+  if(data && ["trialing","active"].includes(data.status)) showTracker(user);
+  else {
+    appShell.style.display = "none";
+    paywallScreen.style.display = "flex";
+    paywallMessage.textContent = "";
+  }
+}
+
+async function invokeBillingFunction(name){
+  const { data:{ session } } = await supabaseClient.auth.getSession();
+  if(!session) throw new Error("Please sign in again.");
+  const response = await fetch(`${SUPABASE_URL}/functions/v1/${name}`,{
+    method:"POST",
+    headers:{"Authorization":`Bearer ${session.access_token}`,"apikey":SUPABASE_PUBLISHABLE_KEY,"Content-Type":"application/json"},
+    body:"{}"
+  });
+  const result=await response.json().catch(()=>({}));
+  if(!response.ok) throw new Error(result.error||"Billing request failed.");
+  if(!result.url) throw new Error("Stripe did not return a checkout URL.");
+  window.location.href=result.url;
+}
+
+startTrialBtn.addEventListener("click",async()=>{
+  startTrialBtn.disabled=true; paywallMessage.textContent="Opening secure Stripe Checkout...";
+  try{await invokeBillingFunction("create-checkout-session");}
+  catch(e){paywallMessage.textContent=e?.message||"Unable to start checkout.";startTrialBtn.disabled=false;}
+});
+manageBillingBtn.addEventListener("click",async()=>{
+  manageBillingBtn.disabled=true;
+  try{await invokeBillingFunction("create-customer-portal");}
+  catch(e){alert(e?.message||"Unable to open billing portal.");manageBillingBtn.disabled=false;}
+});
+paywallSignOut.addEventListener("click",async()=>{await supabaseClient.auth.signOut();showLoggedOut();});
+
+signInTab.addEventListener("click",()=>setAuthMode("signin"));
+signUpTab.addEventListener("click",()=>setAuthMode("signup"));
+
+authForm.addEventListener("submit", async (event)=>{
+  event.preventDefault();
+  const email = authEmail.value.trim();
+  const password = authPassword.value;
+
+  if(password.length < 8){
+    showAuthMessage("Password must be at least 8 characters.", "error");
+    return;
+  }
+
+  authSubmit.disabled = true;
+  showAuthMessage(authMode === "signin" ? "Signing in..." : "Creating account...");
+
+  try{
+    if(authMode === "signin"){
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      if(error) throw error;
+      showLoggedIn(data.user);
+    } else {
+      const { data, error } = await supabaseClient.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: window.location.origin + window.location.pathname
+        }
+      });
+      if(error) throw error;
+
+      if(data.session){
+        showLoggedIn(data.user);
+      } else {
+        showAuthMessage("Account created. Check your email and click the verification link, then come back and sign in.", "success");
+        setAuthMode("signin");
+        authEmail.value = email;
+      }
+    }
+  }catch(error){
+    showAuthMessage(error?.message || "Authentication failed. Please try again.", "error");
+  }finally{
+    authSubmit.disabled = false;
+  }
+});
+
+signOutBtn.addEventListener("click", async ()=>{
+  await supabaseClient.auth.signOut();
+  showLoggedOut();
+});
+
+supabaseClient.auth.onAuthStateChange((_event, session)=>{
+  if(session?.user) showLoggedIn(session.user);
+  else showLoggedOut();
+});
+
+(async ()=>{
+  const { data } = await supabaseClient.auth.getSession();
+  if(data.session?.user) showLoggedIn(data.session.user);
+  else showLoggedOut();
+})();
+
+const esc=v=>{const d=document.createElement("div");d.textContent=v==null?"":String(v);return d.innerHTML};
+const attr=v=>esc(v).replace(/"/g,"&quot;");
+const num=(v,s="")=>v==null||v===""||v==="—"?"—":(Number.isFinite(Number(v))?(Number.isInteger(Number(v))?Number(v):Number(v).toFixed(1)):esc(v))+s;
+
+let flightMap;
+let flightMarkerLayer;
+let allFlights=[];
+let airportRegions=[];
+let selectedRegion="all";
+
+const EMBEDDED_AIRPORT_REGIONS = [{"id":"al","name":"Alabama","states":["AL"],"airports":[{"icao":"KBHM","name":"Birmingham","lat":33.5629,"lon":-86.7535},{"icao":"KMGM","name":"Montgomery","lat":32.3006,"lon":-86.3939}]},{"id":"ak","name":"Alaska","states":["AK"],"airports":[{"icao":"PANC","name":"Anchorage","lat":61.1743,"lon":-149.9985},{"icao":"PAFA","name":"Fairbanks","lat":64.8151,"lon":-147.856}]},{"id":"az","name":"Arizona","states":["AZ"],"airports":[{"icao":"KPHX","name":"Phoenix Sky Harbor","lat":33.4342,"lon":-112.0116},{"icao":"KSDL","name":"Scottsdale","lat":33.6229,"lon":-111.9105},{"icao":"KIWA","name":"Phoenix-Mesa Gateway","lat":33.3078,"lon":-111.6555},{"icao":"KTUS","name":"Tucson","lat":32.1161,"lon":-110.941}]},{"id":"ar","name":"Arkansas","states":["AR"],"airports":[{"icao":"KLIT","name":"Little Rock","lat":34.7294,"lon":-92.2243},{"icao":"KXNA","name":"Northwest Arkansas","lat":36.2819,"lon":-94.3068}]},{"id":"ca","name":"California","states":["CA"],"airports":[{"icao":"KLAX","name":"Los Angeles","lat":33.9425,"lon":-118.4081},{"icao":"KVNY","name":"Van Nuys","lat":34.2098,"lon":-118.4899},{"icao":"KSNA","name":"Orange County","lat":33.6757,"lon":-117.8682},{"icao":"KONT","name":"Ontario","lat":34.056,"lon":-117.6012},{"icao":"KPSP","name":"Palm Springs","lat":33.8297,"lon":-116.5067},{"icao":"KCRQ","name":"Carlsbad","lat":33.1283,"lon":-117.28},{"icao":"KSAN","name":"San Diego","lat":32.7338,"lon":-117.1933},{"icao":"KSMO","name":"Santa Monica","lat":34.0158,"lon":-118.4513},{"icao":"KSBA","name":"Santa Barbara","lat":34.4262,"lon":-119.8404},{"icao":"KLGB","name":"Long Beach","lat":33.8177,"lon":-118.1516},{"icao":"KFUL","name":"Fullerton","lat":33.872,"lon":-117.9798},{"icao":"KPOC","name":"Brackett Field","lat":34.0917,"lon":-117.7817},{"icao":"KCNO","name":"Chino","lat":33.9747,"lon":-117.6366},{"icao":"KF70","name":"French Valley","lat":33.5742,"lon":-117.1285},{"icao":"KSFO","name":"San Francisco","lat":37.6213,"lon":-122.379},{"icao":"KOAK","name":"Oakland","lat":37.7213,"lon":-122.2207},{"icao":"KSJC","name":"San Jose","lat":37.3639,"lon":-121.9289},{"icao":"KSQL","name":"San Carlos","lat":37.5119,"lon":-122.2495},{"icao":"KPAO","name":"Palo Alto","lat":37.4611,"lon":-122.115},{"icao":"KAPC","name":"Napa","lat":38.2132,"lon":-122.2807},{"icao":"KSMF","name":"Sacramento","lat":38.6954,"lon":-121.5908},{"icao":"KMRY","name":"Monterey","lat":36.587,"lon":-121.843}]},{"id":"co","name":"Colorado","states":["CO"],"airports":[{"icao":"KDEN","name":"Denver","lat":39.8561,"lon":-104.6737},{"icao":"KAPA","name":"Centennial","lat":39.5701,"lon":-104.8493},{"icao":"KBJC","name":"Rocky Mountain Metro","lat":39.9088,"lon":-105.1172},{"icao":"KASE","name":"Aspen","lat":39.2232,"lon":-106.8688},{"icao":"KEGE","name":"Eagle County","lat":39.6426,"lon":-106.9177},{"icao":"KTEX","name":"Telluride","lat":37.9538,"lon":-107.9085}]},{"id":"ct","name":"Connecticut","states":["CT"],"airports":[{"icao":"KBDL","name":"Bradley","lat":41.9389,"lon":-72.6832},{"icao":"KHVN","name":"Tweed New Haven","lat":41.2637,"lon":-72.8868}]},{"id":"de","name":"Delaware","states":["DE"],"airports":[{"icao":"KILG","name":"Wilmington DE","lat":39.6787,"lon":-75.6065}]},{"id":"fl","name":"Florida","states":["FL"],"airports":[{"icao":"KMIA","name":"Miami","lat":25.7959,"lon":-80.287},{"icao":"KOPF","name":"Miami-Opa Locka","lat":25.907,"lon":-80.2784},{"icao":"KFLL","name":"Fort Lauderdale","lat":26.0726,"lon":-80.1527},{"icao":"KPBI","name":"Palm Beach","lat":26.6832,"lon":-80.0956},{"icao":"KFXE","name":"Fort Lauderdale Executive","lat":26.1973,"lon":-80.1707},{"icao":"KTPA","name":"Tampa","lat":27.9755,"lon":-82.5332},{"icao":"KPIE","name":"St. Pete-Clearwater","lat":27.9102,"lon":-82.6874},{"icao":"KMCO","name":"Orlando","lat":28.4312,"lon":-81.3081},{"icao":"KSFB","name":"Orlando Sanford","lat":28.7776,"lon":-81.2375},{"icao":"KJAX","name":"Jacksonville","lat":30.4941,"lon":-81.6879},{"icao":"KAPF","name":"Naples","lat":26.1526,"lon":-81.7753}]},{"id":"ga","name":"Georgia","states":["GA"],"airports":[{"icao":"KATL","name":"Atlanta","lat":33.6407,"lon":-84.4277},{"icao":"KPDK","name":"DeKalb-Peachtree","lat":33.8756,"lon":-84.302},{"icao":"KSAV","name":"Savannah","lat":32.1276,"lon":-81.2021}]},{"id":"hi","name":"Hawaii","states":["HI"],"airports":[{"icao":"PHNL","name":"Honolulu","lat":21.3187,"lon":-157.9225},{"icao":"PHOG","name":"Kahului","lat":20.8986,"lon":-156.4305},{"icao":"PHKO","name":"Kona","lat":19.7388,"lon":-156.0456}]},{"id":"id","name":"Idaho","states":["ID"],"airports":[{"icao":"KBOI","name":"Boise","lat":43.5644,"lon":-116.2228},{"icao":"KSUN","name":"Friedman Memorial","lat":43.5044,"lon":-114.2962}]},{"id":"il","name":"Illinois","states":["IL"],"airports":[{"icao":"KORD","name":"Chicago O'Hare","lat":41.9742,"lon":-87.9073},{"icao":"KMDW","name":"Chicago Midway","lat":41.7868,"lon":-87.7522},{"icao":"KPWK","name":"Chicago Executive","lat":42.1143,"lon":-87.9015},{"icao":"KUGN","name":"Waukegan National","lat":42.4222,"lon":-87.8679}]},{"id":"in","name":"Indiana","states":["IN"],"airports":[{"icao":"KIND","name":"Indianapolis","lat":39.7173,"lon":-86.2944},{"icao":"KTYQ","name":"Indianapolis Executive","lat":40.0307,"lon":-86.2514},{"icao":"KSBN","name":"South Bend","lat":41.7087,"lon":-86.3173}]},{"id":"ia","name":"Iowa","states":["IA"],"airports":[{"icao":"KDSM","name":"Des Moines","lat":41.534,"lon":-93.6631}]},{"id":"ks","name":"Kansas","states":["KS"],"airports":[{"icao":"KICT","name":"Wichita","lat":37.6499,"lon":-97.4331}]},{"id":"ky","name":"Kentucky","states":["KY"],"airports":[{"icao":"KSDF","name":"Louisville","lat":38.1744,"lon":-85.736},{"icao":"KLEX","name":"Lexington","lat":38.0365,"lon":-84.6059}]},{"id":"la","name":"Louisiana","states":["LA"],"airports":[{"icao":"KMSY","name":"New Orleans","lat":29.9934,"lon":-90.258},{"icao":"KBTR","name":"Baton Rouge","lat":30.5332,"lon":-91.1496},{"icao":"KSHV","name":"Shreveport","lat":32.4466,"lon":-93.8256}]},{"id":"me","name":"Maine","states":["ME"],"airports":[{"icao":"KPWM","name":"Portland ME","lat":43.6462,"lon":-70.3093}]},{"id":"md","name":"Maryland","states":["MD"],"airports":[{"icao":"KBWI","name":"Baltimore/Washington","lat":39.1754,"lon":-76.6684},{"icao":"KMTN","name":"Martin State","lat":39.3257,"lon":-76.4138}]},{"id":"ma","name":"Massachusetts","states":["MA"],"airports":[{"icao":"KBOS","name":"Boston Logan","lat":42.3656,"lon":-71.0096},{"icao":"KBED","name":"Hanscom Field","lat":42.47,"lon":-71.289},{"icao":"KACK","name":"Nantucket","lat":41.2531,"lon":-70.0602},{"icao":"KMVY","name":"Martha's Vineyard","lat":41.3931,"lon":-70.6143}]},{"id":"mi","name":"Michigan","states":["MI"],"airports":[{"icao":"KDTW","name":"Detroit Metro","lat":42.2162,"lon":-83.3554},{"icao":"KPTK","name":"Oakland County","lat":42.6655,"lon":-83.4201},{"icao":"KGRR","name":"Grand Rapids","lat":42.8808,"lon":-85.5228}]},{"id":"mn","name":"Minnesota","states":["MN"],"airports":[{"icao":"KMSP","name":"Minneapolis-St Paul","lat":44.8848,"lon":-93.2223},{"icao":"KFCM","name":"Flying Cloud","lat":44.8272,"lon":-93.4571}]},{"id":"ms","name":"Mississippi","states":["MS"],"airports":[{"icao":"KJAN","name":"Jackson","lat":32.3112,"lon":-90.0759},{"icao":"KGPT","name":"Gulfport-Biloxi","lat":30.4073,"lon":-89.0701}]},{"id":"mo","name":"Missouri","states":["MO"],"airports":[{"icao":"KSTL","name":"St. Louis","lat":38.7487,"lon":-90.37},{"icao":"KSUS","name":"Spirit of St. Louis","lat":38.6621,"lon":-90.652},{"icao":"KMCI","name":"Kansas City","lat":39.2976,"lon":-94.7139}]},{"id":"mt","name":"Montana","states":["MT"],"airports":[{"icao":"KBZN","name":"Bozeman","lat":45.7775,"lon":-111.153},{"icao":"KBIL","name":"Billings","lat":45.8077,"lon":-108.5429}]},{"id":"ne","name":"Nebraska","states":["NE"],"airports":[{"icao":"KOMA","name":"Omaha","lat":41.3032,"lon":-95.8941},{"icao":"KLNK","name":"Lincoln","lat":40.851,"lon":-96.7592}]},{"id":"nv","name":"Nevada","states":["NV"],"airports":[{"icao":"KLAS","name":"Las Vegas","lat":36.084,"lon":-115.1537},{"icao":"KHND","name":"Henderson","lat":35.9728,"lon":-115.1344},{"icao":"KVGT","name":"North Las Vegas","lat":36.2107,"lon":-115.1944},{"icao":"KRNO","name":"Reno","lat":39.4991,"lon":-119.7681}]},{"id":"nh","name":"New Hampshire","states":["NH"],"airports":[{"icao":"KMHT","name":"Manchester NH","lat":42.9326,"lon":-71.4357}]},{"id":"nj","name":"New Jersey","states":["NJ"],"airports":[{"icao":"KTEB","name":"Teterboro","lat":40.8501,"lon":-74.0608},{"icao":"KEWR","name":"Newark","lat":40.6895,"lon":-74.1745},{"icao":"KMMU","name":"Morristown","lat":40.7994,"lon":-74.4149},{"icao":"KCDW","name":"Essex County","lat":40.8752,"lon":-74.2814}]},{"id":"nm","name":"New Mexico","states":["NM"],"airports":[{"icao":"KABQ","name":"Albuquerque","lat":35.0402,"lon":-106.609},{"icao":"KSAF","name":"Santa Fe","lat":35.6171,"lon":-106.0894}]},{"id":"ny","name":"New York","states":["NY"],"airports":[{"icao":"KJFK","name":"New York JFK","lat":40.6413,"lon":-73.7781},{"icao":"KLGA","name":"LaGuardia","lat":40.7769,"lon":-73.874},{"icao":"KHPN","name":"Westchester County","lat":41.067,"lon":-73.7076},{"icao":"KFRG","name":"Republic","lat":40.7288,"lon":-73.4134},{"icao":"KBUF","name":"Buffalo","lat":42.9405,"lon":-78.7322},{"icao":"KALB","name":"Albany","lat":42.7483,"lon":-73.8017}]},{"id":"nc","name":"North Carolina","states":["NC"],"airports":[{"icao":"KCLT","name":"Charlotte","lat":35.214,"lon":-80.9431},{"icao":"KRDU","name":"Raleigh-Durham","lat":35.8776,"lon":-78.7875},{"icao":"KGSO","name":"Piedmont Triad","lat":36.0978,"lon":-79.9373},{"icao":"KILM","name":"Wilmington","lat":34.2706,"lon":-77.9026}]},{"id":"nd","name":"North Dakota","states":["ND"],"airports":[{"icao":"KFAR","name":"Fargo","lat":46.9207,"lon":-96.8158},{"icao":"KBIS","name":"Bismarck","lat":46.7727,"lon":-100.7467}]},{"id":"oh","name":"Ohio","states":["OH"],"airports":[{"icao":"KCMH","name":"John Glenn Columbus","lat":39.998,"lon":-82.8919},{"icao":"KOSU","name":"Ohio State University","lat":40.0798,"lon":-83.073},{"icao":"KLCK","name":"Rickenbacker","lat":39.8138,"lon":-82.9278},{"icao":"KCLE","name":"Cleveland Hopkins","lat":41.4117,"lon":-81.8498},{"icao":"KCGF","name":"Cuyahoga County","lat":41.5651,"lon":-81.4864},{"icao":"KCAK","name":"Akron-Canton","lat":40.9161,"lon":-81.4422},{"icao":"KCVG","name":"Cincinnati/Northern Kentucky","lat":39.0488,"lon":-84.6678},{"icao":"KLUK","name":"Cincinnati Lunken","lat":39.1033,"lon":-84.4186},{"icao":"KDAY","name":"Dayton","lat":39.9024,"lon":-84.2194}]},{"id":"ok","name":"Oklahoma","states":["OK"],"airports":[{"icao":"KOKC","name":"Oklahoma City","lat":35.3931,"lon":-97.6007},{"icao":"KTUL","name":"Tulsa","lat":36.1984,"lon":-95.8881}]},{"id":"or","name":"Oregon","states":["OR"],"airports":[{"icao":"KPDX","name":"Portland","lat":45.5898,"lon":-122.5951},{"icao":"KHIO","name":"Hillsboro","lat":45.5404,"lon":-122.9498}]},{"id":"pa","name":"Pennsylvania","states":["PA"],"airports":[{"icao":"KPHL","name":"Philadelphia","lat":39.8744,"lon":-75.2424},{"icao":"KPNE","name":"Northeast Philadelphia","lat":40.0819,"lon":-75.0106},{"icao":"KPIT","name":"Pittsburgh","lat":40.4915,"lon":-80.2329},{"icao":"KAGC","name":"Allegheny County","lat":40.3544,"lon":-79.9302}]},{"id":"ri","name":"Rhode Island","states":["RI"],"airports":[{"icao":"KPVD","name":"Providence","lat":41.724,"lon":-71.4282}]},{"id":"sc","name":"South Carolina","states":["SC"],"airports":[{"icao":"KCHS","name":"Charleston","lat":32.8986,"lon":-80.0405},{"icao":"KGMU","name":"Greenville Downtown","lat":34.8479,"lon":-82.3502}]},{"id":"sd","name":"South Dakota","states":["SD"],"airports":[{"icao":"KFSD","name":"Sioux Falls","lat":43.582,"lon":-96.7419},{"icao":"KRAP","name":"Rapid City","lat":44.0453,"lon":-103.0574}]},{"id":"tn","name":"Tennessee","states":["TN"],"airports":[{"icao":"KBNA","name":"Nashville","lat":36.1245,"lon":-86.6782},{"icao":"KMEM","name":"Memphis","lat":35.0424,"lon":-89.9767},{"icao":"KTYS","name":"Knoxville","lat":35.811,"lon":-83.994}]},{"id":"tx","name":"Texas","states":["TX"],"airports":[{"icao":"KDAL","name":"Dallas Love","lat":32.8471,"lon":-96.8518},{"icao":"KADS","name":"Addison","lat":32.9686,"lon":-96.8364},{"icao":"KDFW","name":"Dallas-Fort Worth","lat":32.8998,"lon":-97.0403},{"icao":"KAUS","name":"Austin","lat":30.1975,"lon":-97.6664},{"icao":"KSAT","name":"San Antonio","lat":29.5337,"lon":-98.4698},{"icao":"KHOU","name":"Houston Hobby","lat":29.6454,"lon":-95.2789},{"icao":"KIAH","name":"Houston Intercontinental","lat":29.9902,"lon":-95.3368}]},{"id":"ut","name":"Utah","states":["UT"],"airports":[{"icao":"KSLC","name":"Salt Lake City","lat":40.7899,"lon":-111.9791},{"icao":"KPVU","name":"Provo","lat":40.2192,"lon":-111.7234},{"icao":"KSGU","name":"St. George","lat":37.0364,"lon":-113.5103}]},{"id":"vt","name":"Vermont","states":["VT"],"airports":[{"icao":"KBTV","name":"Burlington","lat":44.4719,"lon":-73.1533}]},{"id":"va","name":"Virginia","states":["VA"],"airports":[{"icao":"KIAD","name":"Washington Dulles","lat":38.9531,"lon":-77.4565},{"icao":"KDCA","name":"Washington National","lat":38.8512,"lon":-77.0402},{"icao":"KRIC","name":"Richmond","lat":37.5052,"lon":-77.3197},{"icao":"KORF","name":"Norfolk","lat":36.8946,"lon":-76.2012}]},{"id":"wa","name":"Washington","states":["WA"],"airports":[{"icao":"KSEA","name":"Seattle-Tacoma","lat":47.4502,"lon":-122.3088},{"icao":"KBFI","name":"Boeing Field","lat":47.5299,"lon":-122.3019},{"icao":"KGEG","name":"Spokane","lat":47.6199,"lon":-117.5338}]},{"id":"wv","name":"West Virginia","states":["WV"],"airports":[{"icao":"KCRW","name":"Charleston WV","lat":38.3731,"lon":-81.5932}]},{"id":"wi","name":"Wisconsin","states":["WI"],"airports":[{"icao":"KMKE","name":"Milwaukee","lat":42.9472,"lon":-87.8966},{"icao":"KMSN","name":"Madison","lat":43.1399,"lon":-89.3375}]},{"id":"wy","name":"Wyoming","states":["WY"],"airports":[{"icao":"KJAC","name":"Jackson Hole","lat":43.6073,"lon":-110.7377},{"icao":"KCPR","name":"Casper","lat":42.908,"lon":-106.4644}]},{"id":"socal","name":"Southern California","states":["CA"],"airports":[{"icao":"KLAX","name":"Los Angeles","lat":33.9425,"lon":-118.4081},{"icao":"KVNY","name":"Van Nuys","lat":34.2098,"lon":-118.4899},{"icao":"KSNA","name":"Orange County","lat":33.6757,"lon":-117.8682},{"icao":"KONT","name":"Ontario","lat":34.056,"lon":-117.6012},{"icao":"KPSP","name":"Palm Springs","lat":33.8297,"lon":-116.5067},{"icao":"KCRQ","name":"Carlsbad","lat":33.1283,"lon":-117.28},{"icao":"KSAN","name":"San Diego","lat":32.7338,"lon":-117.1933},{"icao":"KSMO","name":"Santa Monica","lat":34.0158,"lon":-118.4513},{"icao":"KSBA","name":"Santa Barbara","lat":34.4262,"lon":-119.8404},{"icao":"KLGB","name":"Long Beach","lat":33.8177,"lon":-118.1516},{"icao":"KFUL","name":"Fullerton","lat":33.872,"lon":-117.9798},{"icao":"KPOC","name":"Brackett Field","lat":34.0917,"lon":-117.7817},{"icao":"KCNO","name":"Chino","lat":33.9747,"lon":-117.6366},{"icao":"KF70","name":"French Valley","lat":33.5742,"lon":-117.1285}],"special_view":true},{"id":"norcal","name":"Northern California","states":["CA"],"airports":[{"icao":"KSFO","name":"San Francisco","lat":37.6213,"lon":-122.379},{"icao":"KOAK","name":"Oakland","lat":37.7213,"lon":-122.2207},{"icao":"KSJC","name":"San Jose","lat":37.3639,"lon":-121.9289},{"icao":"KSQL","name":"San Carlos","lat":37.5119,"lon":-122.2495},{"icao":"KPAO","name":"Palo Alto","lat":37.4611,"lon":-122.115},{"icao":"KAPC","name":"Napa","lat":38.2132,"lon":-122.2807},{"icao":"KSMF","name":"Sacramento","lat":38.6954,"lon":-121.5908},{"icao":"KMRY","name":"Monterey","lat":36.587,"lon":-121.843}],"special_view":true}];
+
+function populateRegionSelect(){
+  const select=document.getElementById("regionSelect");
+  const states=airportRegions.filter(r=>!r.special_view);
+  const specials=airportRegions.filter(r=>r.special_view);
+  select.innerHTML='<option value="all">All United States</option>'
+    +'<optgroup label="States">'+states.map(r=>`<option value="${attr(r.id)}">${esc(r.name)}</option>`).join("")+'</optgroup>'
+    +(specials.length?'<optgroup label="California Regional Views">'+specials.map(r=>`<option value="${attr(r.id)}">${esc(r.name)}</option>`).join("")+'</optgroup>':"");
+  select.value=selectedRegion;
+}
+
+function initFlightMap(){
+  if(flightMap) return;
+  flightMap=L.map("flightMap",{zoomControl:true}).setView([39.5,-98.35],4);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
+    maxZoom:18,
+    attribution:"&copy; OpenStreetMap contributors"
+  }).addTo(flightMap);
+  flightMarkerLayer=L.layerGroup().addTo(flightMap);
+  setTimeout(()=>flightMap.invalidateSize(),150);
+  window.addEventListener("resize",()=>flightMap.invalidateSize());
+}
+
+function flightRegionId(f){
+  return f.region_id||f.destination_region_id||f.origin_region_id||"unassigned";
+}
+
+function alertTypeForFlight(f){
+  if(f.grounded_departure===true) return {label:"Grounded Outbound Route",color:"#2f5f8f"};
+  if(f.destination_region_id||f.route_destination) return {label:"Destination Identified",color:"#087f5b"};
+  if(f.possible_destination) return {label:"Possible Approach",color:"#986800"};
+  if(f.on_ground===true) return {label:"On Ground / Reposition Watch",color:"#5b6570"};
+  return {label:"Tracked Flight",color:"#68737d"};
+}
+
+function selectedRegionObject(){
+  return airportRegions.find(r=>r.id===selectedRegion);
+}
+
+function flightMatchesSelectedRegion(f){
+  if(selectedRegion==="all") return true;
+  const selected=selectedRegionObject();
+  if(!selected) return false;
+
+  const ids=[f.region_id,f.destination_region_id,f.origin_region_id].filter(Boolean);
+  if(ids.includes(selectedRegion)) return true;
+
+  // Statewide California should also include the dedicated SoCal/NorCal views.
+  if(selectedRegion==="ca" && ids.some(id=>id==="socal"||id==="norcal")) return true;
+
+  // For state views, match any flight region whose configured state is the same.
+  const wantedStates=new Set(selected.states||[]);
+  return ids.some(id=>{
+    const r=airportRegions.find(x=>x.id===id);
+    return r && (r.states||[]).some(s=>wantedStates.has(s));
+  });
+}
+
+function filteredFlights(){
+  return allFlights.filter(flightMatchesSelectedRegion);
+}
+
+function renderFlightMap(flights){
+  initFlightMap();
+  flightMarkerLayer.clearLayers();
+  const bounds=[];
+  flights.forEach(f=>{
+    const lat=Number(f.latitude), lon=Number(f.longitude);
+    if(!Number.isFinite(lat)||!Number.isFinite(lon)) return;
+    const call=f.callsign||f.flight||f.ident||"Unknown";
+    const type=f.aircraft_type||f.aircraft||f.model||"Aircraft type unavailable";
+    const reg=f.registration||f.tail_number||f.tail||"";
+    const origin=f.ground_airport||f.route_origin||f.origin||f.departure||"—";
+    const dest=f.route_destination||f.destination||f.arrival||f.possible_destination||"—";
+    const heading=Number(f.heading??f.track??0);
+    const fa=f.flightaware_url||("https://www.flightaware.com/live/flight/"+encodeURIComponent(call));
+    const alert=alertTypeForFlight(f);
+    const icon=L.divIcon({
+      className:"plane-marker",
+      html:`<div style="transform:rotate(${Number.isFinite(heading)?heading:0}deg);transform-origin:50% 50%"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="${alert.color}" d="M21.5 16.2l-8.2-3.9V6.6c0-1-.6-2.1-1.3-2.1s-1.3 1.1-1.3 2.1v5.7l-8.2 3.9v1.6l8.2-2.5v3.6l-2.1 1.4v1.2l3.4-.8 3.4.8v-1.2l-2.1-1.4v-3.6l8.2 2.5z"/></svg></div>`,
+      iconSize:[18,18],iconAnchor:[9,9]
+    });
+    const marker=L.marker([lat,lon],{icon}).addTo(flightMarkerLayer);
+    marker.bindPopup(`<strong>${esc(call)}</strong><br>${esc(type)}${reg?` · ${esc(reg)}`:""}<br><b>${esc(alert.label)}</b><br>${esc(origin)} → ${esc(dest)}<br>${esc(f.region_name||f.destination_region_name||"")}<br><a href="${attr(fa)}" target="_blank" rel="noopener noreferrer">View on FlightAware</a>`);
+    bounds.push([lat,lon]);
+  });
+  if(bounds.length>1) flightMap.fitBounds(bounds,{padding:[35,35],maxZoom:7});
+  else if(bounds.length===1) flightMap.setView(bounds[0],6);
+  else flightMap.setView([39.5,-98.35],4);
+}
+
+async function loadAirportRegions(){
+  // Populate the selector immediately so all regions are available even if airports.json
+  // is temporarily cached, missing, or slow to load.
+  airportRegions=EMBEDDED_AIRPORT_REGIONS.map(r=>({...r,airports:[...(r.airports||[])]}));
+  populateRegionSelect();
+  renderAirportChips();
+
+  try{
+    const r=await fetch("airports.json?t="+Date.now(),{cache:"no-store"});
+    if(!r.ok) throw new Error("Could not load airports.json");
+    const data=await r.json();
+    const loaded=Array.isArray(data.regions)?data.regions:[];
+
+    if(loaded.length){
+      const byId=new Map(loaded.map(r=>[r.id,r]));
+      airportRegions=EMBEDDED_AIRPORT_REGIONS.map(base=>({
+        ...base,
+        ...(byId.get(base.id)||{}),
+        states:(byId.get(base.id)?.states||base.states||[]),
+        airports:(byId.get(base.id)?.airports||[])
+      }));
+    }
+
+    populateRegionSelect();
+    renderAirportChips();
+    if(trackerStarted) renderDashboard();
+  }catch(e){
+    console.error("airports.json unavailable; continuing with embedded airport data.",e);
+    // Keep and display the embedded airport list instead of clearing it.
+    populateRegionSelect();
+    renderAirportChips();
+    if(trackerStarted) renderDashboard();
+  }
+}
+
+function renderAirportChips(){
+  const title=document.getElementById("airportsTitle");
+  const grid=document.getElementById("airportGrid");
+  if(!airportRegions.length) return;
+  if(selectedRegion==="all"){
+    const count=airportRegions.reduce((n,r)=>n+(Array.isArray(r.airports)?r.airports.length:0),0);
+    title.textContent=count
+      ? `Monitored Airports · ${count} currently indexed nationwide`
+      : "Monitored Regions";
+    grid.innerHTML=airportRegions.filter(r=>!r.special_view).map(r=>`<span class="airport-chip">${esc(r.name)}${(r.airports||[]).length?" · "+(r.airports||[]).length:""}</span>`).join("");
+    return;
+  }
+  const region=airportRegions.find(r=>r.id===selectedRegion);
+  if(!region){grid.innerHTML="";return;}
+  title.textContent=`Monitored Airports · ${region.name}`;
+  grid.innerHTML=(region.airports||[]).map(a=>`<span class="airport-chip">${esc(a.icao)} ${esc(a.name)}</span>`).join("");
+}
+
+function renderPageMode(){
+  const main=selectedRegion==="all";
+  const region=selectedRegionObject();
+  const name=main?"U.S.":(region?.name||"Selected Region");
+
+  document.getElementById("pageTitle").textContent=main?"U.S. Private Jet Tracker":`${name} Private Jet Tracker`;
+  document.getElementById("pageSubtitle").textContent=main
+    ?"flyExclusive aircraft across the United States · select a state below"
+    :`flyExclusive flights heading to, approaching, on the ground in, or departing ${name}`;
+
+  document.getElementById("mapTitle").textContent=main?"Live U.S. Flight Map":`Live ${name} Flight Map`;
+  document.getElementById("mapSubtitle").textContent=main
+    ?"Shows detected flyExclusive aircraft nationwide. Select a state to open its dedicated tracker."
+    :`This is the ${name} version of the tracker, using the same layout and flight logic as the original Southern California tracker.`;
+
+  document.getElementById("activeLabel").textContent="Relevant Flights";
+  document.getElementById("destinationLabel").textContent=main?"U.S. Destinations":`${name} Destinations`;
+  document.getElementById("groundLabel").textContent=main?"U.S. Departures":`${name} Departures`;
+  document.getElementById("groundSub").textContent="On ground with outbound route";
+  document.getElementById("possibleSub").textContent=main?"Across monitored U.S. airports":`Approaching ${name}`;
+
+  // Explanations live on the main page only.
+  document.getElementById("howItWorks").style.display=main?"block":"none";
+  document.getElementById("pageFooter").textContent=main?"U.S. Private Jet Tracker":`${name} Private Jet Tracker`;
+}
+
+function focusMapOnSelectedRegion(flights){
+  if(selectedRegion==="all" || flights.length) return;
+  const region=selectedRegionObject();
+  const pts=(region?.airports||[])
+    .map(a=>[Number(a.lat),Number(a.lon)])
+    .filter(p=>Number.isFinite(p[0])&&Number.isFinite(p[1]));
+  if(pts.length>1) flightMap.fitBounds(pts,{padding:[35,35],maxZoom:7});
+  else if(pts.length===1) flightMap.setView(pts[0],7);
+}
+
+function renderDashboard(){
+  renderPageMode();
+  const flights=filteredFlights();
+  document.getElementById("activeCount").textContent=flights.length;
+  document.getElementById("destinationCount").textContent=flights.filter(f=>!!f.route_destination).length;
+  document.getElementById("groundCount").textContent=flights.filter(f=>f.on_ground===true).length;
+  document.getElementById("possibleCount").textContent=flights.filter(f=>!!f.possible_destination && !f.route_destination).length;
+  renderFlightMap(flights);
+  focusMapOnSelectedRegion(flights);
+  renderAirportChips();
+  const list=document.getElementById("flightList");
+  if(!flights.length){
+    const name=selectedRegion==="all"?"the United States":(airportRegions.find(r=>r.id===selectedRegion)?.name||"this region");
+    list.innerHTML=`<div class="empty">No monitored flyExclusive aircraft are currently detected for ${esc(name)}.</div>`;
+    return;
+  }
+  list.innerHTML="";
+  flights.forEach(f=>{
+    const call=f.callsign||f.flight||f.ident||"Unknown";
+    const type=f.aircraft_type||f.aircraft||f.model||"Aircraft type unavailable";
+    const reg=f.registration||f.tail_number||f.tail||"";
+    const photo=f.photo_url||f.url_photo||f.aircraft_photo||"";
+    const origin=f.ground_airport||f.route_origin||f.origin||f.departure||"—";
+    const dest=f.route_destination||f.destination||f.arrival||f.possible_destination||"—";
+    const possible=!!f.possible_destination && !f.route_destination;
+    const nearest=f.nearest_airport||"—";
+    const dist=f.possible_destination_distance_miles??f.distance_to_nearest_airport_miles??f.distance??"—";
+    const heading=f.heading??f.track??"—";
+    const altm=f.altitude_meters;
+    const alt=f.altitude_ft??f.altitude??(altm!=null?Math.round(Number(altm)*3.28084):"—");
+    const vm=f.velocity_mps;
+    const mph=f.speed_mph??f.speed??(vm!=null?Math.round(Number(vm)*2.23694):"—");
+    const loc=f.region_name||f.destination_region_name||"En route";
+    const fa=f.flightaware_url||("https://www.flightaware.com/live/flight/"+encodeURIComponent(call));
+    const map=(f.latitude!=null&&f.longitude!=null)?`https://www.google.com/maps?q=${encodeURIComponent(f.latitude+","+f.longitude)}`:"";
+    const alert=alertTypeForFlight(f);
+    const card=document.createElement("article");card.className="flight-card";
+    card.innerHTML=`
+      <div class="photo">${photo?`<img src="${attr(photo)}" alt="${attr(call+" aircraft")}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="photo-placeholder" style="display:none">Aircraft image unavailable</div>`:`<div class="photo-placeholder">Aircraft image unavailable</div>`}</div>
+      <div class="flight-main">
+        <div>
+          <div class="status ${possible?"possible":""}">${esc(alert.label)}</div>
+          <div class="callsign">${esc(call)}</div>
+          <div class="type">${esc(type)}${reg?"<br><strong>"+esc(reg)+"</strong>":""}</div>
+          <div class="route"><div><div class="airport-code">${esc(origin)}</div><div class="route-label">Origin</div></div><div class="route-arrow">⟶</div><div><div class="airport-code">${esc(dest)}</div><div class="route-label">${possible?"Possible destination":"Destination"}</div></div></div>
+        </div>
+        <div class="metrics">
+          <div class="metric"><span class="name">Altitude</span><span class="val">${num(alt," ft")}</span></div>
+          <div class="metric"><span class="name">Speed</span><span class="val">${num(mph," mph")}</span></div>
+          <div class="metric"><span class="name">Heading</span><span class="val">${num(heading,"°")}</span></div>
+          <div class="metric"><span class="name">Region</span><span class="val">${esc(loc)}</span></div>
+          <div class="metric"><span class="name">Nearest</span><span class="val">${esc(nearest)} · ${num(dist," mi")}</span></div>
+        </div>
+      </div>
+      <div class="actions"><a class="btn gold" href="${attr(fa)}" target="_blank" rel="noopener noreferrer">↗ View on FlightAware</a>${map?`<a class="btn outline" href="${attr(map)}" target="_blank" rel="noopener noreferrer">▱ View on Map</a>`:""}</div>`;
+    list.appendChild(card);
+  });
+}
+
+async function loadFlights(){
+  const list=document.getElementById("flightList");
+  try{
+    const r=await fetch("flights.json?t="+Date.now());
+    if(!r.ok) throw new Error("Could not load flights.json");
+    const data=await r.json();
+    allFlights=Array.isArray(data)?data:(data.flights||data.aircraft||[]);
+    const update=data.last_updated||data.updated||data.generated_at;
+    document.getElementById("lastUpdated").textContent=update?new Date(update).toLocaleString():new Date().toLocaleString();
+    renderDashboard();
+  }catch(e){
+    console.error(e);list.innerHTML='<div class="empty">Flight data is not available yet. The monitor is waiting for flights.json.</div>';
+    document.getElementById("lastUpdated").textContent="Unable to load data";
+  }
+}
+
+document.getElementById("regionSelect").addEventListener("change",e=>{selectedRegion=e.target.value;renderDashboard();window.scrollTo({top:0,behavior:"smooth"});});
+loadAirportRegions();
+
+</script>
+
+</div>
+</body>
+</html>
