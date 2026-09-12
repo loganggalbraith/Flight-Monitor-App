@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-12T10:41:10.381549+00:00",
+  "last_updated": "2026-09-12T10:54:28.100218+00:00",
   "flight_count": 1,
   "region_counts": {
     "Unassigned / En Route": 1
@@ -75,23 +75,23 @@
       "grounded_departure": false,
       "ground_airport": null,
       "ground_airport_name": null,
-      "latitude": 34.8661,
-      "longitude": -85.5204,
-      "altitude_meters": 13167.36,
-      "velocity_mps": 154.22,
-      "heading": 238.64,
-      "vertical_rate": 3.25,
+      "latitude": 34.2443,
+      "longitude": -86.8139,
+      "altitude_meters": 13716,
+      "velocity_mps": 175.48,
+      "heading": 240.88,
+      "vertical_rate": 0,
       "on_ground": false,
       "nearest_airport": "KAVL",
       "nearest_airport_name": "Asheville Regional Airport",
-      "distance_to_nearest_airport_miles": 172.8,
+      "distance_to_nearest_airport_miles": 255.9,
       "possible_destination": null,
       "possible_destination_name": null,
       "possible_destination_region": null,
       "possible_destination_distance_miles": null,
       "possible_destination_bearing": null,
       "possible_heading_difference": null,
-      "last_seen": "2026-09-12T10:41:10.380072+00:00"
+      "last_seen": "2026-09-12T10:54:28.098542+00:00"
     }
   ],
   "seen_alerts": [
