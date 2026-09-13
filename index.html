@@ -40,6 +40,9 @@ main{padding:20px 0 35px}
 .photo-placeholder{height:100%;min-height:165px;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;color:#8a949d;font-size:11px}
 .flight-main{padding:17px;display:grid;grid-template-columns:1.1fr 1fr;gap:18px}
 .status{font-size:10px;font-weight:700;text-transform:uppercase;color:#087f5b;margin-bottom:7px}
+.status.landed{color:#2f5f8f}.status.likely{color:#986800}
+.watch-badge{display:inline-block;margin-top:10px;padding:6px 8px;border:1px solid #d7b46a;border-radius:5px;background:#fff8e8;color:#7a5a12;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+.photo-credit{padding:6px 8px;background:#f8f9fa;border-top:1px solid #e5e8eb;color:#8a949d;font-size:9px;line-height:1.35}.photo-credit a{color:#68737d}
 .score-box{margin-top:14px;border:1px solid #ddd;border-radius:6px;padding:10px;background:#f8f9fa}
 .score-top{display:flex;justify-content:space-between;gap:10px;align-items:center}
 .score-title{font-size:10px;text-transform:uppercase;color:#68737d;font-weight:700}
@@ -189,30 +192,40 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
   display:inline-block;
 }
 
-/* Private Jet Tracker plane emblem */
-.brand-plane{
+/* Private Jet Tracker brand emblem */
+.brand-emblem{
   width:34px;
   height:34px;
-  object-fit:contain;
+  object-fit:cover;
+  border-radius:7px;
   display:block;
   flex:0 0 auto;
 }
 
-.auth-logo .brand-plane{
+.auth-logo .brand-emblem{
   width:48px;
   height:48px;
   margin:0 auto;
+  border-radius:10px;
 }
 
-.page-title-brand{
+.page-brand{
   display:flex;
   align-items:center;
   gap:10px;
 }
 
-.page-title-brand .brand-plane{
-  width:34px;
-  height:34px;
+.page-brand .brand-emblem{
+  width:32px;
+  height:32px;
+  border-radius:7px;
+}
+
+@media(max-width:500px){
+  .page-brand .brand-emblem{
+    width:28px;
+    height:28px;
+  }
 }
 .hero-kicker{
   font-size:11px;
@@ -398,7 +411,7 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
   <div class="auth-wrap">
     <section class="auth-hero">
       <div class="auth-topbrand">
-        <img class="brand-plane" src="/app-icon.png?v=3" alt="Private Jet Tracker plane emblem">
+        <img class="brand-emblem" src="/app-icon.png?v=2" alt="Private Jet Tracker plane emblem">
         <span>Private Jet Tracker</span>
       </div>
 
@@ -449,7 +462,7 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
 
     <section class="auth-panel">
       <div class="auth-card">
-        <div class="auth-logo"><img class="brand-plane" src="/app-icon.png?v=3" alt="Private Jet Tracker plane emblem"></div>
+        <div class="auth-logo"><img class="brand-emblem" src="/app-icon.png?v=2" alt="Private Jet Tracker plane emblem"></div>
         <h1>Private Jet Tracker</h1>
         <p>Sign in to access the live flight tracker, or create an account.</p>
 
@@ -506,8 +519,8 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
 
 <header>
   <div class="container">
-    <div class="page-title-brand">
-      <img class="brand-plane" src="/app-icon.png?v=3" alt="Private Jet Tracker plane emblem">
+    <div class="page-brand">
+      <img class="brand-emblem" src="/app-icon.png?v=2" alt="Private Jet Tracker plane emblem">
       <h1 id="pageTitle">U.S. Private Jet Tracker</h1>
     </div>
     <p id="pageSubtitle">flyExclusive aircraft across the United States</p>
@@ -528,40 +541,40 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
   <div class="map-sub" id="mapSubtitle">Shows detected flyExclusive aircraft nationwide. Select a state to open its dedicated tracker.</div>
   <div id="flightMap"></div>
   <div class="map-legend">
-    <span><span class="legend-dot legend-ca"></span>Identified destination</span>
-    <span><span class="legend-dot legend-possible"></span>Possible approach</span>
-    <span><span class="legend-dot legend-ground"></span>Grounded outbound route</span>
-    <span><span class="legend-dot" style="background:#5b6570"></span>Tracked / on ground</span>
+    <span><span class="legend-dot" style="background:#68737d"></span>Airborne / live tracking</span>
+    <span><span class="legend-dot legend-ground"></span>Landed / pinned at airport</span>
+    <span><span class="legend-dot legend-possible"></span>Likely landed</span>
+    <span><span class="legend-dot legend-ca"></span>Filed destination available</span>
   </div>
 </section>
 
 <section class="summary">
-<div class="stat"><div class="stat-number" id="activeCount">0</div><div class="stat-label" id="activeLabel">Relevant Flights</div></div>
-<div class="stat"><div class="stat-number" id="destinationCount">0</div><div class="stat-label" id="destinationLabel">U.S. Destinations</div></div>
-<div class="stat"><div class="stat-number" id="groundCount">0</div><div class="stat-label" id="groundLabel">U.S. Departures</div><div class="stat-sub" id="groundSub">On ground with outbound route</div></div>
-<div class="stat"><div class="stat-number" id="possibleCount">0</div><div class="stat-label">Possible Approaches</div><div class="stat-sub" id="possibleSub">Heading-based estimate</div></div>
+<div class="stat"><div class="stat-number" id="activeCount">0</div><div class="stat-label" id="activeLabel">Tracked Aircraft</div></div>
+<div class="stat"><div class="stat-number" id="destinationCount">0</div><div class="stat-label" id="destinationLabel">Airborne</div></div>
+<div class="stat"><div class="stat-number" id="groundCount">0</div><div class="stat-label" id="groundLabel">Landed</div><div class="stat-sub" id="groundSub">Pinned until next takeoff</div></div>
+<div class="stat"><div class="stat-number" id="possibleCount">0</div><div class="stat-label">High Reposition Watch</div><div class="stat-sub" id="possibleSub">Landed aircraft being watched</div></div>
 </section>
-<div class="stat" style="margin-bottom:14px"><div class="updated"><strong>Last Updated</strong><br><span id="lastUpdated">Loading...</span><br><span class="stat-sub">Refreshes every 5 minutes</span></div></div>
+<div class="stat" style="margin-bottom:14px"><div class="updated"><strong>Last Updated</strong><br><span id="lastUpdated">Loading...</span><br><span class="stat-sub">Updates whenever the flight monitor refreshes</span></div></div>
 <section id="flightList" class="flight-list"><div class="empty">Loading flight data...</div></section>
 <section class="airports"><div class="airports-title" id="airportsTitle">Monitored Airports</div><div class="airport-grid" id="airportGrid"></div></section>
 
 <section class="alert-help" id="howItWorks">
   <h2>How the tracker works</h2>
   <div class="alert-type">
-    <strong>Destination Identified</strong>
-    <p>A flyExclusive flight has route information showing an airport in the selected state or region as its destination. The aircraft may still be far outside that state when it first appears.</p>
+    <strong>Live Airborne Tracking</strong>
+    <p>Airborne flyExclusive aircraft remain visible with live position, route, altitude, speed, heading, and aircraft details when available. Being headed toward a state does not create a Discord notification.</p>
   </div>
   <div class="alert-type">
-    <strong>Possible Approach</strong>
-    <p>If a confirmed destination is unavailable, the tracker compares the aircraft's position and heading with monitored private-jet airports in the selected state or region. This is an estimate, not a confirmed destination.</p>
+    <strong>Confirmed Landing</strong>
+    <p>When an aircraft transitions from airborne to on-ground near a monitored airport, the tracker records the landing and keeps that aircraft pinned at the airport even if OpenSky stops reporting it.</p>
   </div>
   <div class="alert-type">
-    <strong>Departure Identified</strong>
-    <p>A flyExclusive aircraft is on the ground near a monitored airport and route information identifies that airport as the origin with another airport as its destination.</p>
+    <strong>Likely Landing</strong>
+    <p>If OpenSky loses an aircraft very close to an airport while it is slow and descending, the monitor can conservatively label it Likely Landed rather than silently removing it.</p>
   </div>
   <div class="alert-type">
-    <strong>Repositioning Opportunity Score</strong>
-    <p>The tracker can estimate the likelihood of another departure after an aircraft lands. This is a prediction only; it does not confirm that a flight is empty, available for booking, or available through Vaunt.</p>
+    <strong>HIGH Repositioning Watch</strong>
+    <p>A landed aircraft is placed on HIGH Repositioning Watch until the same aircraft is detected airborne again. This is a watch status, not a guarantee that the next flight is empty or available for booking.</p>
   </div>
 </section>
 
@@ -778,11 +791,41 @@ function flightRegionId(f){
 }
 
 function alertTypeForFlight(f){
-  if(f.grounded_departure===true) return {label:"Grounded Outbound Route",color:"#2f5f8f"};
-  if(f.destination_region_id||f.route_destination) return {label:"Destination Identified",color:"#087f5b"};
-  if(f.possible_destination) return {label:"Possible Approach",color:"#986800"};
-  if(f.on_ground===true) return {label:"On Ground / Reposition Watch",color:"#5b6570"};
-  return {label:"Tracked Flight",color:"#68737d"};
+  const landed=f.status==="landed" || f.persistent_ground_record===true;
+  if(landed && f.landing_confidence==="likely") return {label:"Likely Landed · HIGH Repositioning Watch",color:"#986800",className:"likely"};
+  if(landed) return {label:"Landed · HIGH Repositioning Watch",color:"#2f5f8f",className:"landed"};
+  if(f.on_ground===true) return {label:"On Ground",color:"#5b6570",className:"landed"};
+  if(f.destination_region_id||f.route_destination) return {label:"Airborne · Filed Destination Available",color:"#087f5b",className:""};
+  if(f.possible_destination) return {label:"Airborne · Possible Approach",color:"#986800",className:"possible"};
+  return {label:"Airborne · Live Tracking",color:"#68737d",className:""};
+}
+
+function formatGroundTime(f){
+  const landedAt=f?.landed_at;
+  if(landedAt){
+    const t=new Date(landedAt).getTime();
+    if(Number.isFinite(t)){
+      const mins=Math.max(0,Math.floor((Date.now()-t)/60000));
+      if(mins<60) return `${mins} min`;
+      const hrs=Math.floor(mins/60), rem=mins%60;
+      if(hrs<24) return `${hrs}h ${rem}m`;
+      const days=Math.floor(hrs/24), hr=hrs%24;
+      return `${days}d ${hr}h`;
+    }
+  }
+  const mins=Number(f?.ground_time_minutes);
+  if(Number.isFinite(mins)){
+    if(mins<60) return `${Math.max(0,Math.floor(mins))} min`;
+    const hrs=Math.floor(mins/60), rem=Math.floor(mins%60);
+    return `${hrs}h ${rem}m`;
+  }
+  return "—";
+}
+
+function formatLocalTime(value){
+  if(!value) return "—";
+  const d=new Date(value);
+  return Number.isNaN(d.getTime())?"—":d.toLocaleString();
 }
 
 function selectedRegionObject(){
@@ -822,25 +865,22 @@ function renderFlightMap(flights){
     const call=f.callsign||f.flight||f.ident||"Unknown";
     const type=f.aircraft_type||f.aircraft||f.model||"Aircraft type unavailable";
     const reg=f.registration||f.tail_number||f.tail||"";
-    const origin=f.ground_airport||f.route_origin||f.origin||f.departure||"—";
-    const dest=f.route_destination||f.destination||f.arrival||f.possible_destination||"—";
-    const heading=Number(f.heading??f.track??0);
+    const landed=f.status==="landed" || f.persistent_ground_record===true;
+    const origin=f.route_origin||f.origin||f.departure||"—";
+    const dest=landed?(f.ground_airport||f.nearest_airport||f.route_destination||"—"):(f.route_destination||f.destination||f.arrival||f.possible_destination||"—");
+    const heading=landed?0:Number(f.heading??f.track??0);
     const fa=f.flightaware_url||("https://www.flightaware.com/live/flight/"+encodeURIComponent(call));
     const alert=alertTypeForFlight(f);
-    const icon=L.divIcon({
-      className:"plane-marker",
-      html:`<div style="transform:rotate(${Number.isFinite(heading)?heading:0}deg);transform-origin:50% 50%"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="${alert.color}" d="M21.5 16.2l-8.2-3.9V6.6c0-1-.6-2.1-1.3-2.1s-1.3 1.1-1.3 2.1v5.7l-8.2 3.9v1.6l8.2-2.5v3.6l-2.1 1.4v1.2l3.4-.8 3.4.8v-1.2l-2.1-1.4v-3.6l8.2 2.5z"/></svg></div>`,
-      iconSize:[18,18],iconAnchor:[9,9]
-    });
+    const icon=L.divIcon({className:"plane-marker",html:`<div style="transform:rotate(${Number.isFinite(heading)?heading:0}deg);transform-origin:50% 50%"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="${alert.color}" d="M21.5 16.2l-8.2-3.9V6.6c0-1-.6-2.1-1.3-2.1s-1.3 1.1-1.3 2.1v5.7l-8.2 3.9v1.6l8.2-2.5v3.6l-2.1 1.4v1.2l3.4-.8 3.4.8v-1.2l-2.1-1.4v-3.6l8.2 2.5z"/></svg></div>`,iconSize:[18,18],iconAnchor:[9,9]});
     const marker=L.marker([lat,lon],{icon}).addTo(flightMarkerLayer);
-    marker.bindPopup(`<strong>${esc(call)}</strong><br>${esc(type)}${reg?` · ${esc(reg)}`:""}<br><b>${esc(alert.label)}</b><br>${esc(origin)} → ${esc(dest)}<br>${esc(f.region_name||f.destination_region_name||"")}<br><a href="${attr(fa)}" target="_blank" rel="noopener noreferrer">View on FlightAware</a>`);
+    const landingDetails=landed?`<br><b>Landed:</b> ${esc(formatLocalTime(f.landed_at))}<br><b>On ground:</b> ${esc(formatGroundTime(f))}<br><b>Repositioning Watch:</b> HIGH`:"";
+    marker.bindPopup(`<strong>${esc(call)}</strong><br>${esc(type)}${reg?` · ${esc(reg)}`:""}<br><b>${esc(alert.label)}</b><br>${esc(origin)} → ${esc(dest)}<br>${esc(f.region_name||f.destination_region_name||"")}${landingDetails}<br><a href="${attr(fa)}" target="_blank" rel="noopener noreferrer">View on FlightAware</a>`);
     bounds.push([lat,lon]);
   });
   if(bounds.length>1) flightMap.fitBounds(bounds,{padding:[35,35],maxZoom:7});
   else if(bounds.length===1) flightMap.setView(bounds[0],6);
   else flightMap.setView([39.5,-98.35],4);
 }
-
 async function loadAirportRegions(){
   // Populate the selector immediately so all regions are available even if airports.json
   // is temporarily cached, missing, or slow to load.
@@ -901,19 +941,19 @@ function renderPageMode(){
 
   document.getElementById("pageTitle").textContent=main?"U.S. Private Jet Tracker":`${name} Private Jet Tracker`;
   document.getElementById("pageSubtitle").textContent=main
-    ?"flyExclusive aircraft across the United States · select a state below"
-    :`flyExclusive flights heading to, approaching, on the ground in, or departing ${name}`;
+    ?"flyExclusive aircraft across the United States · live aircraft plus persistent landed aircraft"
+    :`Live and landed flyExclusive aircraft associated with ${name}`;
 
   document.getElementById("mapTitle").textContent=main?"Live U.S. Flight Map":`Live ${name} Flight Map`;
   document.getElementById("mapSubtitle").textContent=main
-    ?"Shows detected flyExclusive aircraft nationwide. Select a state to open its dedicated tracker."
-    :`This is the ${name} version of the tracker, using the same layout and flight logic as the original Southern California tracker.`;
+    ?"Airborne aircraft use live coordinates. Landed aircraft remain pinned at their airport until takeoff is detected."
+    :`Airborne aircraft move with live coordinates; landed aircraft stay pinned in ${name} until they take off.`;
 
-  document.getElementById("activeLabel").textContent="Relevant Flights";
-  document.getElementById("destinationLabel").textContent=main?"U.S. Destinations":`${name} Destinations`;
-  document.getElementById("groundLabel").textContent=main?"U.S. Departures":`${name} Departures`;
-  document.getElementById("groundSub").textContent="On ground with outbound route";
-  document.getElementById("possibleSub").textContent=main?"Across monitored U.S. airports":`Approaching ${name}`;
+  document.getElementById("activeLabel").textContent="Tracked Aircraft";
+  document.getElementById("destinationLabel").textContent="Airborne";
+  document.getElementById("groundLabel").textContent="Landed";
+  document.getElementById("groundSub").textContent="Pinned until next takeoff";
+  document.getElementById("possibleSub").textContent="Landed aircraft being watched";
 
   // Explanations live on the main page only.
   document.getElementById("howItWorks").style.display=main?"block":"none";
@@ -933,62 +973,55 @@ function focusMapOnSelectedRegion(flights){
 function renderDashboard(){
   renderPageMode();
   const flights=filteredFlights();
+  const landedFlights=flights.filter(f=>f.status==="landed" || f.persistent_ground_record===true);
+  const airborneFlights=flights.filter(f=>!((f.status==="landed" || f.persistent_ground_record===true) || f.on_ground===true));
+  const highWatch=flights.filter(f=>f.repositioning_watch==="HIGH");
   document.getElementById("activeCount").textContent=flights.length;
-  document.getElementById("destinationCount").textContent=flights.filter(f=>!!f.route_destination).length;
-  document.getElementById("groundCount").textContent=flights.filter(f=>f.on_ground===true).length;
-  document.getElementById("possibleCount").textContent=flights.filter(f=>!!f.possible_destination && !f.route_destination).length;
+  document.getElementById("destinationCount").textContent=airborneFlights.length;
+  document.getElementById("groundCount").textContent=landedFlights.length;
+  document.getElementById("possibleCount").textContent=highWatch.length;
   renderFlightMap(flights);
   focusMapOnSelectedRegion(flights);
   renderAirportChips();
   const list=document.getElementById("flightList");
   if(!flights.length){
     const name=selectedRegion==="all"?"the United States":(airportRegions.find(r=>r.id===selectedRegion)?.name||"this region");
-    list.innerHTML=`<div class="empty">No monitored flyExclusive aircraft are currently detected for ${esc(name)}.</div>`;
+    list.innerHTML=`<div class="empty">No monitored flyExclusive aircraft are currently detected or saved as landed for ${esc(name)}.</div>`;
     return;
   }
+  const sorted=[...flights].sort((a,b)=>((b.status==="landed"||b.persistent_ground_record===true)?1:0)-((a.status==="landed"||a.persistent_ground_record===true)?1:0));
   list.innerHTML="";
-  flights.forEach(f=>{
+  sorted.forEach(f=>{
     const call=f.callsign||f.flight||f.ident||"Unknown";
     const type=f.aircraft_type||f.aircraft||f.model||"Aircraft type unavailable";
     const reg=f.registration||f.tail_number||f.tail||"";
     const photo=f.photo_url||f.url_photo||f.aircraft_photo||"";
-    const origin=f.ground_airport||f.route_origin||f.origin||f.departure||"—";
-    const dest=f.route_destination||f.destination||f.arrival||f.possible_destination||"—";
-    const possible=!!f.possible_destination && !f.route_destination;
-    const nearest=f.nearest_airport||"—";
-    const dist=f.possible_destination_distance_miles??f.distance_to_nearest_airport_miles??f.distance??"—";
-    const heading=f.heading??f.track??"—";
+    const photoPage=f.photo_page_url||f.planespotters_url||"";
+    const photographer=f.photo_photographer||"";
+    const photoSource=f.photo_source||"";
+    const landed=f.status==="landed" || f.persistent_ground_record===true;
+    const likely=landed && f.landing_confidence==="likely";
+    const origin=f.route_origin||f.origin||f.departure||"—";
+    const dest=landed?(f.ground_airport||f.nearest_airport||f.route_destination||"—"):(f.route_destination||f.destination||f.arrival||f.possible_destination||"—");
+    const possible=!landed && !!f.possible_destination && !f.route_destination;
+    const nearest=f.nearest_airport||f.ground_airport||"—";
+    const dist=landed?0:(f.possible_destination_distance_miles??f.distance_to_nearest_airport_miles??f.distance??"—");
+    const heading=landed?"—":(f.heading??f.track??"—");
     const altm=f.altitude_meters;
-    const alt=f.altitude_ft??f.altitude??(altm!=null?Math.round(Number(altm)*3.28084):"—");
+    const alt=landed?0:(f.altitude_ft??f.altitude??(altm!=null?Math.round(Number(altm)*3.28084):"—"));
     const vm=f.velocity_mps;
-    const mph=f.speed_mph??f.speed??(vm!=null?Math.round(Number(vm)*2.23694):"—");
+    const mph=landed?0:(f.speed_mph??f.speed??(vm!=null?Math.round(Number(vm)*2.23694):"—"));
     const loc=f.region_name||f.destination_region_name||"En route";
     const fa=f.flightaware_url||("https://www.flightaware.com/live/flight/"+encodeURIComponent(call));
     const map=(f.latitude!=null&&f.longitude!=null)?`https://www.google.com/maps?q=${encodeURIComponent(f.latitude+","+f.longitude)}`:"";
     const alert=alertTypeForFlight(f);
+    const photoCredit=(photoSource||photographer)?`<div class="photo-credit">${photoPage?`<a href="${attr(photoPage)}" target="_blank" rel="noopener noreferrer">`:``}${esc(photoSource||"Aircraft photo")}${photoPage?`</a>`:``}${photographer?` · ${esc(photographer)}`:""}</div>`:"";
+    const landedMetrics=landed?`<div class="metric"><span class="name">Status</span><span class="val">${likely?"Likely Landed":"Landed"}</span></div><div class="metric"><span class="name">Landed</span><span class="val">${esc(formatLocalTime(f.landed_at))}</span></div><div class="metric"><span class="name">On Ground</span><span class="val">${esc(formatGroundTime(f))}</span></div><div class="metric"><span class="name">Airport</span><span class="val">${esc(f.ground_airport||nearest)}</span></div><div class="metric"><span class="name">Region</span><span class="val">${esc(loc)}</span></div>`:`<div class="metric"><span class="name">Altitude</span><span class="val">${num(alt," ft")}</span></div><div class="metric"><span class="name">Speed</span><span class="val">${num(mph," mph")}</span></div><div class="metric"><span class="name">Heading</span><span class="val">${num(heading,"°")}</span></div><div class="metric"><span class="name">Region</span><span class="val">${esc(loc)}</span></div><div class="metric"><span class="name">Nearest</span><span class="val">${esc(nearest)} · ${num(dist," mi")}</span></div>`;
     const card=document.createElement("article");card.className="flight-card";
-    card.innerHTML=`
-      <div class="photo">${photo?`<img src="${attr(photo)}" alt="${attr(call+" aircraft")}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="photo-placeholder" style="display:none">Aircraft image unavailable</div>`:`<div class="photo-placeholder">Aircraft image unavailable</div>`}</div>
-      <div class="flight-main">
-        <div>
-          <div class="status ${possible?"possible":""}">${esc(alert.label)}</div>
-          <div class="callsign">${esc(call)}</div>
-          <div class="type">${esc(type)}${reg?"<br><strong>"+esc(reg)+"</strong>":""}</div>
-          <div class="route"><div><div class="airport-code">${esc(origin)}</div><div class="route-label">Origin</div></div><div class="route-arrow">⟶</div><div><div class="airport-code">${esc(dest)}</div><div class="route-label">${possible?"Possible destination":"Destination"}</div></div></div>
-        </div>
-        <div class="metrics">
-          <div class="metric"><span class="name">Altitude</span><span class="val">${num(alt," ft")}</span></div>
-          <div class="metric"><span class="name">Speed</span><span class="val">${num(mph," mph")}</span></div>
-          <div class="metric"><span class="name">Heading</span><span class="val">${num(heading,"°")}</span></div>
-          <div class="metric"><span class="name">Region</span><span class="val">${esc(loc)}</span></div>
-          <div class="metric"><span class="name">Nearest</span><span class="val">${esc(nearest)} · ${num(dist," mi")}</span></div>
-        </div>
-      </div>
-      <div class="actions"><a class="btn gold" href="${attr(fa)}" target="_blank" rel="noopener noreferrer">↗ View on FlightAware</a>${map?`<a class="btn outline" href="${attr(map)}" target="_blank" rel="noopener noreferrer">▱ View on Map</a>`:""}</div>`;
+    card.innerHTML=`<div class="photo">${photo?`<img src="${attr(photo)}" alt="${attr(call+" aircraft")}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="photo-placeholder" style="display:none">Aircraft image unavailable</div>`:`<div class="photo-placeholder">Aircraft image unavailable</div>`}${photoCredit}</div><div class="flight-main"><div><div class="status ${alert.className||""}">${esc(alert.label)}</div><div class="callsign">${esc(call)}</div><div class="type">${esc(type)}${reg?"<br><strong>"+esc(reg)+"</strong>":""}</div>${landed?`<div class="watch-badge">HIGH Repositioning Watch</div>`:""}<div class="route"><div><div class="airport-code">${esc(origin)}</div><div class="route-label">Origin</div></div><div class="route-arrow">⟶</div><div><div class="airport-code">${esc(dest)}</div><div class="route-label">${landed?"Landed at":(possible?"Possible destination":"Destination")}</div></div></div></div><div class="metrics">${landedMetrics}</div></div><div class="actions"><a class="btn gold" href="${attr(fa)}" target="_blank" rel="noopener noreferrer">↗ View on FlightAware</a>${photoPage?`<a class="btn outline" href="${attr(photoPage)}" target="_blank" rel="noopener noreferrer">▣ Aircraft Photo / Record</a>`:""}${map?`<a class="btn outline" href="${attr(map)}" target="_blank" rel="noopener noreferrer">▱ View on Map</a>`:""}</div>`;
     list.appendChild(card);
   });
 }
-
 async function loadFlights(){
   const list=document.getElementById("flightList");
   try{
