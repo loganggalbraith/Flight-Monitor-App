@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-14T09:18:59.142263+00:00",
+  "last_updated": "2026-09-14T09:45:46.723191+00:00",
   "flight_count": 1,
   "region_counts": {
     "Unassigned / En Route": 1
@@ -82,23 +82,23 @@
       "grounded_departure": false,
       "ground_airport": null,
       "ground_airport_name": null,
-      "latitude": 41.0878,
-      "longitude": -73.9249,
-      "altitude_meters": 3764.28,
-      "velocity_mps": 170.71,
-      "heading": 63.51,
-      "vertical_rate": 14.63,
+      "latitude": 41.4859,
+      "longitude": -70.8512,
+      "altitude_meters": 3375.66,
+      "velocity_mps": 148.39,
+      "heading": 56.31,
+      "vertical_rate": 0,
       "on_ground": false,
-      "nearest_airport": "KABE",
-      "nearest_airport_name": "Lehigh Valley International Airport",
-      "distance_to_nearest_airport_miles": 84.7,
+      "nearest_airport": "KPNE",
+      "nearest_airport_name": "Northeast Philadelphia Airport",
+      "distance_to_nearest_airport_miles": 238.2,
       "possible_destination": null,
       "possible_destination_name": null,
       "possible_destination_region": null,
       "possible_destination_distance_miles": null,
       "possible_destination_bearing": null,
       "possible_heading_difference": null,
-      "last_seen": "2026-09-14T09:18:59.142051+00:00"
+      "last_seen": "2026-09-14T09:45:46.722973+00:00"
     }
   ],
   "seen_alerts": [
