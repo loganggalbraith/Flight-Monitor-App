@@ -1,9 +1,7 @@
 {
-  "last_updated": "2026-09-14T09:45:46.723191+00:00",
-  "flight_count": 1,
-  "region_counts": {
-    "Unassigned / En Route": 1
-  },
+  "last_updated": "2026-09-14T10:17:07.372437+00:00",
+  "flight_count": 0,
+  "region_counts": {},
   "regions": [
     {
       "id": "socal",
@@ -62,45 +60,7 @@
       ]
     }
   ],
-  "flights": [
-    {
-      "callsign": "JRE701",
-      "icao24": "a9591e",
-      "registration": null,
-      "aircraft_type": "Unknown",
-      "photo_url": null,
-      "flightaware_url": "https://www.flightaware.com/live/flight/JRE701",
-      "route_origin": null,
-      "route_destination": null,
-      "region_id": "unassigned",
-      "region_name": "Unassigned / En Route",
-      "region_reason": "none",
-      "destination_region_id": null,
-      "destination_region_name": null,
-      "origin_region_id": null,
-      "origin_region_name": null,
-      "grounded_departure": false,
-      "ground_airport": null,
-      "ground_airport_name": null,
-      "latitude": 41.4859,
-      "longitude": -70.8512,
-      "altitude_meters": 3375.66,
-      "velocity_mps": 148.39,
-      "heading": 56.31,
-      "vertical_rate": 0,
-      "on_ground": false,
-      "nearest_airport": "KPNE",
-      "nearest_airport_name": "Northeast Philadelphia Airport",
-      "distance_to_nearest_airport_miles": 238.2,
-      "possible_destination": null,
-      "possible_destination_name": null,
-      "possible_destination_region": null,
-      "possible_destination_distance_miles": null,
-      "possible_destination_bearing": null,
-      "possible_heading_difference": null,
-      "last_seen": "2026-09-14T09:45:46.722973+00:00"
-    }
-  ],
+  "flights": [],
   "seen_alerts": [
     "possible|JRE223|KAGC",
     "possible|JRE223|KAVL",
