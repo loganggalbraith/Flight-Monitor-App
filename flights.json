@@ -1,7 +1,9 @@
 {
-  "last_updated": "2026-09-14T08:45:58.389861+00:00",
-  "flight_count": 0,
-  "region_counts": {},
+  "last_updated": "2026-09-14T09:18:59.142263+00:00",
+  "flight_count": 1,
+  "region_counts": {
+    "Unassigned / En Route": 1
+  },
   "regions": [
     {
       "id": "socal",
@@ -60,7 +62,45 @@
       ]
     }
   ],
-  "flights": [],
+  "flights": [
+    {
+      "callsign": "JRE701",
+      "icao24": "a9591e",
+      "registration": null,
+      "aircraft_type": "Unknown",
+      "photo_url": null,
+      "flightaware_url": "https://www.flightaware.com/live/flight/JRE701",
+      "route_origin": null,
+      "route_destination": null,
+      "region_id": "unassigned",
+      "region_name": "Unassigned / En Route",
+      "region_reason": "none",
+      "destination_region_id": null,
+      "destination_region_name": null,
+      "origin_region_id": null,
+      "origin_region_name": null,
+      "grounded_departure": false,
+      "ground_airport": null,
+      "ground_airport_name": null,
+      "latitude": 41.0878,
+      "longitude": -73.9249,
+      "altitude_meters": 3764.28,
+      "velocity_mps": 170.71,
+      "heading": 63.51,
+      "vertical_rate": 14.63,
+      "on_ground": false,
+      "nearest_airport": "KABE",
+      "nearest_airport_name": "Lehigh Valley International Airport",
+      "distance_to_nearest_airport_miles": 84.7,
+      "possible_destination": null,
+      "possible_destination_name": null,
+      "possible_destination_region": null,
+      "possible_destination_distance_miles": null,
+      "possible_destination_bearing": null,
+      "possible_heading_difference": null,
+      "last_seen": "2026-09-14T09:18:59.142051+00:00"
+    }
+  ],
   "seen_alerts": [
     "possible|JRE223|KAGC",
     "possible|JRE223|KAVL",
