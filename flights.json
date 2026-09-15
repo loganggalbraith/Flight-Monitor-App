@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-15T10:59:28.948075+00:00",
+  "last_updated": "2026-09-15T11:20:08.639086+00:00",
   "flight_count": 1,
   "region_counts": {
     "Unassigned / En Route": 1
@@ -82,23 +82,23 @@
       "grounded_departure": false,
       "ground_airport": null,
       "ground_airport_name": null,
-      "latitude": 32.8431,
-      "longitude": -96.5963,
-      "altitude_meters": 3596.64,
-      "velocity_mps": 156.22,
-      "heading": 76.28,
-      "vertical_rate": 18.53,
+      "latitude": 33.6482,
+      "longitude": -93.9369,
+      "altitude_meters": 13716,
+      "velocity_mps": 224.07,
+      "heading": 70.28,
+      "vertical_rate": -0.33,
       "on_ground": false,
-      "nearest_airport": "KAPA",
-      "nearest_airport_name": "Centennial Airport",
-      "distance_to_nearest_airport_miles": 653.4,
+      "nearest_airport": "KAVL",
+      "nearest_airport_name": "Asheville Regional Airport",
+      "distance_to_nearest_airport_miles": 659.8,
       "possible_destination": null,
       "possible_destination_name": null,
       "possible_destination_region": null,
       "possible_destination_distance_miles": null,
       "possible_destination_bearing": null,
       "possible_heading_difference": null,
-      "last_seen": "2026-09-15T10:59:28.947038+00:00"
+      "last_seen": "2026-09-15T11:20:08.637877+00:00"
     }
   ],
   "seen_alerts": [
