@@ -1,7 +1,9 @@
 {
-  "last_updated": "2026-09-16T03:20:00.624560+00:00",
-  "flight_count": 0,
-  "region_counts": {},
+  "last_updated": "2026-09-16T03:44:28.625128+00:00",
+  "flight_count": 1,
+  "region_counts": {
+    "Pennsylvania": 1
+  },
   "regions": [
     {
       "id": "socal",
@@ -60,7 +62,45 @@
       ]
     }
   ],
-  "flights": [],
+  "flights": [
+    {
+      "callsign": "JRE824",
+      "icao24": "ab4090",
+      "registration": null,
+      "aircraft_type": "Unknown",
+      "photo_url": null,
+      "flightaware_url": "https://www.flightaware.com/live/flight/JRE824",
+      "route_origin": null,
+      "route_destination": null,
+      "region_id": "pa",
+      "region_name": "Pennsylvania",
+      "region_reason": "possible_approach",
+      "destination_region_id": null,
+      "destination_region_name": null,
+      "origin_region_id": null,
+      "origin_region_name": null,
+      "grounded_departure": false,
+      "ground_airport": null,
+      "ground_airport_name": null,
+      "latitude": 41.2769,
+      "longitude": -74.8985,
+      "altitude_meters": 6880.86,
+      "velocity_mps": 162.4,
+      "heading": 293.72,
+      "vertical_rate": 6.5,
+      "on_ground": false,
+      "nearest_airport": "KAVP",
+      "nearest_airport_name": "Wilkes-Barre/Scranton International Airport",
+      "distance_to_nearest_airport_miles": 43.0,
+      "possible_destination": "KAVP",
+      "possible_destination_name": "Wilkes-Barre/Scranton International Airport",
+      "possible_destination_region": "Pennsylvania",
+      "possible_destination_distance_miles": 43.0,
+      "possible_destination_bearing": 275.9,
+      "possible_heading_difference": 17.8,
+      "last_seen": "2026-09-16T03:44:28.093647+00:00"
+    }
+  ],
   "seen_alerts": [
     "possible|JRE223|KAGC",
     "possible|JRE223|KAVL",
@@ -342,6 +382,7 @@
     "possible|JRE810|KVGT",
     "possible|JRE823|KEWN",
     "possible|JRE824|KAVL",
+    "possible|JRE824|KAVP",
     "possible|JRE824|KCLT",
     "possible|JRE824|KCXY",
     "possible|JRE824|KFAY",
