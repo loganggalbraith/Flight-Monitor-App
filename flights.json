@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-16T03:44:28.625128+00:00",
+  "last_updated": "2026-09-16T03:58:21.141873+00:00",
   "flight_count": 1,
   "region_counts": {
     "Pennsylvania": 1
@@ -82,23 +82,23 @@
       "grounded_departure": false,
       "ground_airport": null,
       "ground_airport_name": null,
-      "latitude": 41.2769,
-      "longitude": -74.8985,
-      "altitude_meters": 6880.86,
-      "velocity_mps": 162.4,
-      "heading": 293.72,
-      "vertical_rate": 6.5,
+      "latitude": 41.7777,
+      "longitude": -76.4403,
+      "altitude_meters": 11871.96,
+      "velocity_mps": 166.92,
+      "heading": 292.85,
+      "vertical_rate": 3.9,
       "on_ground": false,
       "nearest_airport": "KAVP",
       "nearest_airport_name": "Wilkes-Barre/Scranton International Airport",
-      "distance_to_nearest_airport_miles": 43.0,
-      "possible_destination": "KAVP",
-      "possible_destination_name": "Wilkes-Barre/Scranton International Airport",
+      "distance_to_nearest_airport_miles": 47.9,
+      "possible_destination": "KERI",
+      "possible_destination_name": "Erie International Airport",
       "possible_destination_region": "Pennsylvania",
-      "possible_destination_distance_miles": 43.0,
-      "possible_destination_bearing": 275.9,
-      "possible_heading_difference": 17.8,
-      "last_seen": "2026-09-16T03:44:28.093647+00:00"
+      "possible_destination_distance_miles": 193.1,
+      "possible_destination_bearing": 277.5,
+      "possible_heading_difference": 15.3,
+      "last_seen": "2026-09-16T03:58:20.885572+00:00"
     }
   ],
   "seen_alerts": [
@@ -385,6 +385,7 @@
     "possible|JRE824|KAVP",
     "possible|JRE824|KCLT",
     "possible|JRE824|KCXY",
+    "possible|JRE824|KERI",
     "possible|JRE824|KFAY",
     "possible|JRE824|KHKY",
     "possible|JRE824|KILM",
