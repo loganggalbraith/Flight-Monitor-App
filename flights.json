@@ -1,7 +1,9 @@
 {
-  "last_updated": "2026-09-16T10:44:22.601469+00:00",
-  "flight_count": 0,
-  "region_counts": {},
+  "last_updated": "2026-09-16T10:58:02.189091+00:00",
+  "flight_count": 1,
+  "region_counts": {
+    "Pennsylvania": 1
+  },
   "regions": [
     {
       "id": "socal",
@@ -60,7 +62,45 @@
       ]
     }
   ],
-  "flights": [],
+  "flights": [
+    {
+      "callsign": "JRE830",
+      "icao24": "ab5933",
+      "registration": null,
+      "aircraft_type": "Unknown",
+      "photo_url": null,
+      "flightaware_url": "https://www.flightaware.com/live/flight/JRE830",
+      "route_origin": null,
+      "route_destination": null,
+      "region_id": "pa",
+      "region_name": "Pennsylvania",
+      "region_reason": "possible_approach",
+      "destination_region_id": null,
+      "destination_region_name": null,
+      "origin_region_id": null,
+      "origin_region_name": null,
+      "grounded_departure": false,
+      "ground_airport": null,
+      "ground_airport_name": null,
+      "latitude": 36.048,
+      "longitude": -77.5348,
+      "altitude_meters": 7734.3,
+      "velocity_mps": 148.75,
+      "heading": 331.04,
+      "vertical_rate": 10.08,
+      "on_ground": false,
+      "nearest_airport": "KPGV",
+      "nearest_airport_name": "Pitt-Greenville Airport",
+      "distance_to_nearest_airport_miles": 29.7,
+      "possible_destination": "KAGC",
+      "possible_destination_name": "Allegheny County Airport",
+      "possible_destination_region": "Pennsylvania",
+      "possible_destination_distance_miles": 324.7,
+      "possible_destination_bearing": 337.1,
+      "possible_heading_difference": 6.1,
+      "last_seen": "2026-09-16T10:58:01.712291+00:00"
+    }
+  ],
   "seen_alerts": [
     "possible|JRE223|KAGC",
     "possible|JRE223|KAVL",
@@ -353,6 +393,7 @@
     "possible|JRE824|KLNS",
     "possible|JRE824|KMDT",
     "possible|JRE824|KPHL",
+    "possible|JRE830|KAGC",
     "possible|JRE830|KILM",
     "possible|JRE835|KAVL",
     "possible|JRE835|KCXP",
