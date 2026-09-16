@@ -1,8 +1,8 @@
 {
-  "last_updated": "2026-09-16T03:58:21.141873+00:00",
+  "last_updated": "2026-09-16T04:20:35.996873+00:00",
   "flight_count": 1,
   "region_counts": {
-    "Pennsylvania": 1
+    "Unassigned / En Route": 1
   },
   "regions": [
     {
@@ -72,9 +72,9 @@
       "flightaware_url": "https://www.flightaware.com/live/flight/JRE824",
       "route_origin": null,
       "route_destination": null,
-      "region_id": "pa",
-      "region_name": "Pennsylvania",
-      "region_reason": "possible_approach",
+      "region_id": "unassigned",
+      "region_name": "Unassigned / En Route",
+      "region_reason": "none",
       "destination_region_id": null,
       "destination_region_name": null,
       "origin_region_id": null,
@@ -82,23 +82,23 @@
       "grounded_departure": false,
       "ground_airport": null,
       "ground_airport_name": null,
-      "latitude": 41.7777,
-      "longitude": -76.4403,
-      "altitude_meters": 11871.96,
-      "velocity_mps": 166.92,
-      "heading": 292.85,
-      "vertical_rate": 3.9,
+      "latitude": 42.4557,
+      "longitude": -79.21,
+      "altitude_meters": 12192,
+      "velocity_mps": 184.89,
+      "heading": 278.96,
+      "vertical_rate": 0.98,
       "on_ground": false,
-      "nearest_airport": "KAVP",
-      "nearest_airport_name": "Wilkes-Barre/Scranton International Airport",
-      "distance_to_nearest_airport_miles": 47.9,
-      "possible_destination": "KERI",
-      "possible_destination_name": "Erie International Airport",
-      "possible_destination_region": "Pennsylvania",
-      "possible_destination_distance_miles": 193.1,
-      "possible_destination_bearing": 277.5,
-      "possible_heading_difference": 15.3,
-      "last_seen": "2026-09-16T03:58:20.885572+00:00"
+      "nearest_airport": "KERI",
+      "nearest_airport_name": "Erie International Airport",
+      "distance_to_nearest_airport_miles": 55.6,
+      "possible_destination": null,
+      "possible_destination_name": null,
+      "possible_destination_region": null,
+      "possible_destination_distance_miles": null,
+      "possible_destination_bearing": null,
+      "possible_heading_difference": null,
+      "last_seen": "2026-09-16T04:20:35.996456+00:00"
     }
   ],
   "seen_alerts": [
