@@ -1,8 +1,8 @@
 {
-  "last_updated": "2026-09-16T05:57:27.113605+00:00",
+  "last_updated": "2026-09-16T06:24:47.221971+00:00",
   "flight_count": 1,
   "region_counts": {
-    "Unassigned / En Route": 1
+    "Ohio": 1
   },
   "regions": [
     {
@@ -72,9 +72,9 @@
       "flightaware_url": "https://www.flightaware.com/live/flight/JRE810",
       "route_origin": null,
       "route_destination": null,
-      "region_id": "unassigned",
-      "region_name": "Unassigned / En Route",
-      "region_reason": "none",
+      "region_id": "oh",
+      "region_name": "Ohio",
+      "region_reason": "possible_approach",
       "destination_region_id": null,
       "destination_region_name": null,
       "origin_region_id": null,
@@ -82,23 +82,23 @@
       "grounded_departure": false,
       "ground_airport": null,
       "ground_airport_name": null,
-      "latitude": 41.2369,
-      "longitude": -93.9435,
+      "latitude": 41.7116,
+      "longitude": -89.339,
       "altitude_meters": 13106.4,
-      "velocity_mps": 233.04,
-      "heading": 83.41,
-      "vertical_rate": -1.3,
+      "velocity_mps": 245.31,
+      "heading": 83.74,
+      "vertical_rate": -0.98,
       "on_ground": false,
-      "nearest_airport": "KDEN",
-      "nearest_airport_name": "Denver International Airport",
-      "distance_to_nearest_airport_miles": 571.0,
-      "possible_destination": null,
-      "possible_destination_name": null,
-      "possible_destination_region": null,
-      "possible_destination_distance_miles": null,
-      "possible_destination_bearing": null,
-      "possible_heading_difference": null,
-      "last_seen": "2026-09-16T05:57:27.113559+00:00"
+      "nearest_airport": "KCMH",
+      "nearest_airport_name": "John Glenn Columbus International Airport",
+      "distance_to_nearest_airport_miles": 357.0,
+      "possible_destination": "KCMH",
+      "possible_destination_name": "John Glenn Columbus International Airport",
+      "possible_destination_region": "Ohio",
+      "possible_destination_distance_miles": 357.0,
+      "possible_destination_bearing": 107.2,
+      "possible_heading_difference": 23.5,
+      "last_seen": "2026-09-16T06:24:47.221932+00:00"
     }
   ],
   "seen_alerts": [
