@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-16T02:58:23.945914+00:00",
+  "last_updated": "2026-09-16T03:03:10.870035+00:00",
   "flight_count": 1,
   "region_counts": {
     "North Carolina": 1
@@ -82,23 +82,23 @@
       "grounded_departure": false,
       "ground_airport": null,
       "ground_airport_name": null,
-      "latitude": 35.5572,
-      "longitude": -77.6671,
-      "altitude_meters": 2727.96,
-      "velocity_mps": 152.82,
-      "heading": 145.56,
-      "vertical_rate": -16.26,
+      "latitude": 35.4753,
+      "longitude": -77.5902,
+      "altitude_meters": 1363.98,
+      "velocity_mps": 121.92,
+      "heading": 139.79,
+      "vertical_rate": -15.61,
       "on_ground": false,
       "nearest_airport": "KPGV",
       "nearest_airport_name": "Pitt-Greenville Airport",
-      "distance_to_nearest_airport_miles": 16.7,
+      "distance_to_nearest_airport_miles": 16.0,
       "possible_destination": "KEWN",
       "possible_destination_name": "Coastal Carolina Regional Airport",
       "possible_destination_region": "North Carolina",
-      "possible_destination_distance_miles": 48.6,
-      "possible_destination_bearing": 133.4,
-      "possible_heading_difference": 12.2,
-      "last_seen": "2026-09-16T02:58:23.439511+00:00"
+      "possible_destination_distance_miles": 41.5,
+      "possible_destination_bearing": 131.8,
+      "possible_heading_difference": 7.9,
+      "last_seen": "2026-09-16T03:03:10.869900+00:00"
     }
   ],
   "seen_alerts": [
