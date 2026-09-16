@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-16T06:24:47.221971+00:00",
+  "last_updated": "2026-09-16T06:49:32.287016+00:00",
   "flight_count": 1,
   "region_counts": {
     "Ohio": 1
@@ -82,23 +82,23 @@
       "grounded_departure": false,
       "ground_airport": null,
       "ground_airport_name": null,
-      "latitude": 41.7116,
-      "longitude": -89.339,
+      "latitude": 41.9863,
+      "longitude": -85.0626,
       "altitude_meters": 13106.4,
-      "velocity_mps": 245.31,
-      "heading": 83.74,
-      "vertical_rate": -0.98,
+      "velocity_mps": 239.17,
+      "heading": 86.42,
+      "vertical_rate": 0.65,
       "on_ground": false,
-      "nearest_airport": "KCMH",
-      "nearest_airport_name": "John Glenn Columbus International Airport",
-      "distance_to_nearest_airport_miles": 357.0,
-      "possible_destination": "KCMH",
-      "possible_destination_name": "John Glenn Columbus International Airport",
+      "nearest_airport": "KCLE",
+      "nearest_airport_name": "Cleveland Hopkins International Airport",
+      "distance_to_nearest_airport_miles": 170.4,
+      "possible_destination": "KCLE",
+      "possible_destination_name": "Cleveland Hopkins International Airport",
       "possible_destination_region": "Ohio",
-      "possible_destination_distance_miles": 357.0,
-      "possible_destination_bearing": 107.2,
-      "possible_heading_difference": 23.5,
-      "last_seen": "2026-09-16T06:24:47.221932+00:00"
+      "possible_destination_distance_miles": 170.4,
+      "possible_destination_bearing": 102.4,
+      "possible_heading_difference": 16.0,
+      "last_seen": "2026-09-16T06:49:32.286964+00:00"
     }
   ],
   "seen_alerts": [
