@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-16T07:44:26.641611+00:00",
+  "last_updated": "2026-09-16T07:58:50.308047+00:00",
   "flight_count": 1,
   "region_counts": {
     "Pennsylvania": 1
@@ -82,23 +82,23 @@
       "grounded_departure": false,
       "ground_airport": null,
       "ground_airport_name": null,
-      "latitude": 40.1473,
-      "longitude": -76.4064,
-      "altitude_meters": 6202.68,
-      "velocity_mps": 207.31,
-      "heading": 107.18,
-      "vertical_rate": -11.7,
+      "latitude": 39.8664,
+      "longitude": -75.267,
+      "altitude_meters": -38.1,
+      "velocity_mps": 60.28,
+      "heading": 74.66,
+      "vertical_rate": -2.6,
       "on_ground": false,
-      "nearest_airport": "KLNS",
-      "nearest_airport_name": "Lancaster Airport",
-      "distance_to_nearest_airport_miles": 6.1,
-      "possible_destination": "KLNS",
-      "possible_destination_name": "Lancaster Airport",
+      "nearest_airport": "KPHL",
+      "nearest_airport_name": "Philadelphia International Airport",
+      "distance_to_nearest_airport_miles": 1.4,
+      "possible_destination": "KPHL",
+      "possible_destination_name": "Philadelphia International Airport",
       "possible_destination_region": "Pennsylvania",
-      "possible_destination_distance_miles": 6.1,
-      "possible_destination_bearing": 106.9,
-      "possible_heading_difference": 0.3,
-      "last_seen": "2026-09-16T07:44:26.270620+00:00"
+      "possible_destination_distance_miles": 1.4,
+      "possible_destination_bearing": 67.0,
+      "possible_heading_difference": 7.6,
+      "last_seen": "2026-09-16T07:58:50.307990+00:00"
     }
   ],
   "seen_alerts": [
