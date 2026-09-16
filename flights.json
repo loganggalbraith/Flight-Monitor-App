@@ -1,9 +1,7 @@
 {
-  "last_updated": "2026-09-16T07:58:50.308047+00:00",
-  "flight_count": 1,
-  "region_counts": {
-    "Pennsylvania": 1
-  },
+  "last_updated": "2026-09-16T08:21:55.438859+00:00",
+  "flight_count": 0,
+  "region_counts": {},
   "regions": [
     {
       "id": "socal",
@@ -62,45 +60,7 @@
       ]
     }
   ],
-  "flights": [
-    {
-      "callsign": "JRE810",
-      "icao24": "ab0a35",
-      "registration": null,
-      "aircraft_type": "Unknown",
-      "photo_url": null,
-      "flightaware_url": "https://www.flightaware.com/live/flight/JRE810",
-      "route_origin": null,
-      "route_destination": null,
-      "region_id": "pa",
-      "region_name": "Pennsylvania",
-      "region_reason": "possible_approach",
-      "destination_region_id": null,
-      "destination_region_name": null,
-      "origin_region_id": null,
-      "origin_region_name": null,
-      "grounded_departure": false,
-      "ground_airport": null,
-      "ground_airport_name": null,
-      "latitude": 39.8664,
-      "longitude": -75.267,
-      "altitude_meters": -38.1,
-      "velocity_mps": 60.28,
-      "heading": 74.66,
-      "vertical_rate": -2.6,
-      "on_ground": false,
-      "nearest_airport": "KPHL",
-      "nearest_airport_name": "Philadelphia International Airport",
-      "distance_to_nearest_airport_miles": 1.4,
-      "possible_destination": "KPHL",
-      "possible_destination_name": "Philadelphia International Airport",
-      "possible_destination_region": "Pennsylvania",
-      "possible_destination_distance_miles": 1.4,
-      "possible_destination_bearing": 67.0,
-      "possible_heading_difference": 7.6,
-      "last_seen": "2026-09-16T07:58:50.307990+00:00"
-    }
-  ],
+  "flights": [],
   "seen_alerts": [
     "possible|JRE223|KAGC",
     "possible|JRE223|KAVL",
