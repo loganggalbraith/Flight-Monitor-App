@@ -1,8 +1,8 @@
 {
-  "last_updated": "2026-09-17T02:43:56.563167+00:00",
+  "last_updated": "2026-09-17T02:58:44.304701+00:00",
   "flight_count": 1,
   "region_counts": {
-    "Nevada": 1
+    "Unassigned / En Route": 1
   },
   "regions": [
     {
@@ -72,9 +72,9 @@
       "flightaware_url": "https://www.flightaware.com/live/flight/JRE824",
       "route_origin": null,
       "route_destination": null,
-      "region_id": "nv",
-      "region_name": "Nevada",
-      "region_reason": "possible_approach",
+      "region_id": "unassigned",
+      "region_name": "Unassigned / En Route",
+      "region_reason": "none",
       "destination_region_id": null,
       "destination_region_name": null,
       "origin_region_id": null,
@@ -82,23 +82,23 @@
       "grounded_departure": false,
       "ground_airport": null,
       "ground_airport_name": null,
-      "latitude": 38.7082,
-      "longitude": -116.4885,
+      "latitude": 38.2763,
+      "longitude": -118.2435,
       "altitude_meters": 13106.4,
-      "velocity_mps": 217.34,
-      "heading": 310.97,
+      "velocity_mps": 186.11,
+      "heading": 251.97,
       "vertical_rate": 0,
       "on_ground": false,
       "nearest_airport": "KCXP",
       "nearest_airport_name": "Carson Airport",
-      "distance_to_nearest_airport_miles": 177.6,
-      "possible_destination": "KCXP",
-      "possible_destination_name": "Carson Airport",
-      "possible_destination_region": "Nevada",
-      "possible_destination_distance_miles": 177.6,
-      "possible_destination_bearing": 281.9,
-      "possible_heading_difference": 29.1,
-      "last_seen": "2026-09-17T02:43:56.562751+00:00"
+      "distance_to_nearest_airport_miles": 102.3,
+      "possible_destination": null,
+      "possible_destination_name": null,
+      "possible_destination_region": null,
+      "possible_destination_distance_miles": null,
+      "possible_destination_bearing": null,
+      "possible_heading_difference": null,
+      "last_seen": "2026-09-17T02:58:44.304230+00:00"
     }
   ],
   "seen_alerts": [
