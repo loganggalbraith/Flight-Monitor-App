@@ -3,12 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Member Perks | Private Jet Tracker</title>
 
 <link rel="icon" type="image/png" sizes="32x32" href="/app-icon.png?v=3">
 <link rel="shortcut icon" type="image/png" href="/app-icon.png?v=3">
 <link rel="apple-touch-icon" sizes="180x180" href="/app-icon.png?v=3">
+
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="Private Jet Tracker">
 <meta name="theme-color" content="#000000">
@@ -17,281 +20,1176 @@
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f4f6f8;color:#20262d;font-family:Arial,Helvetica,sans-serif}
-.container{width:min(94%,1000px);margin:auto}
-header{background:#fff;border-bottom:1px solid #ddd;padding:22px 0}
-.header-row{display:flex;align-items:center;justify-content:space-between;gap:18px}
-.page-title-brand{display:flex;align-items:center;gap:10px}
-.brand-plane{width:34px;height:34px;object-fit:contain;display:block;flex:0 0 auto}
-h1{margin:0;font-size:25px}
-header p{margin:6px 0 0;color:#68737d;font-size:13px}
-.back-link{display:inline-block;text-decoration:none;border:1px solid #bbb;border-radius:5px;padding:9px 11px;font-size:11px;font-weight:700;color:#222;background:#fff}
-main{padding:20px 0 35px}
 
-.intro{background:#fff;border:1px solid #ddd;border-radius:7px;padding:24px;margin-bottom:14px}
-.intro-kicker{font-size:10px;text-transform:uppercase;color:#68737d;font-weight:700;letter-spacing:.06em;margin-bottom:8px}
-.intro h2{margin:0;font-size:27px;line-height:1.15}
-.intro p{margin:10px 0 0;color:#68737d;font-size:13px;line-height:1.6;max-width:850px}
-.tagline{margin-top:18px;font-size:17px;font-weight:700;color:#20262d}
-.status-box{margin-top:18px;border:1px solid #ddd;border-radius:6px;padding:11px 12px;background:#f8f9fa;color:#68737d;font-size:11px}
-.status-box.good{color:#087f5b;border-color:#b8dfd0;background:#f4fbf8}
+body{
+  margin:0;
+  background:#f4f6f8;
+  color:#20262d;
+  font-family:Arial,Helvetica,sans-serif
+}
 
-.filters{background:#fff;border:1px solid #ddd;border-radius:7px;padding:14px;margin-bottom:14px}
-.filter-grid{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:10px}
-input,select{width:100%;border:1px solid #cfd5da;border-radius:5px;background:#fff;color:#20262d;padding:10px;font-size:12px}
-input:focus,select:focus{outline:none;border-color:#7c8791}
-.results-meta{font-size:11px;color:#68737d;margin:0 0 10px}
+.container{
+  width:min(94%,1000px);
+  margin:auto
+}
 
-.perk-list{display:grid;gap:12px}
-.perk-card{display:grid;grid-template-columns:210px 1fr;background:#fff;border:1px solid #ddd;border-radius:7px;overflow:hidden}
-.perk-photo{min-height:185px;background:#e9edf0;display:flex;align-items:flex-end;padding:14px;background-size:cover;background-position:center}
-.category-badge{font-size:9px;font-weight:700;text-transform:uppercase;background:#fff;border:1px solid #ddd;border-radius:4px;padding:5px 7px}
-.perk-main{padding:17px}
-.perk-name{font-size:21px;font-weight:700;margin:0}
-.perk-place{font-size:11px;color:#68737d;margin-top:4px}
-.offer-box{margin-top:14px;border:1px solid #ddd;border-radius:6px;padding:10px;background:#f8f9fa}
-.offer-label{font-size:9px;text-transform:uppercase;color:#68737d;font-weight:700}
-.offer-value{font-size:15px;font-weight:700;margin-top:4px}
-.description{font-size:12px;color:#68737d;line-height:1.55;margin:14px 0 0}
-.details{display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;margin-top:14px}
-.detail{font-size:11px;line-height:1.45}
-.detail span{display:block;color:#8a949d;font-size:9px;text-transform:uppercase;margin-bottom:2px}
-.promo{display:inline-block;margin-top:13px;border:1px dashed #999;border-radius:5px;padding:7px 9px;font-size:11px;font-family:monospace;background:#fafafa}
-.actions{display:flex;gap:8px;margin-top:15px}
-.btn{display:inline-block;text-align:center;text-decoration:none;border:1px solid #333;border-radius:5px;padding:10px 12px;font-size:10px;font-weight:700;color:#222;background:#fff}
-.btn.primary{background:#222;color:#fff}
-.empty{background:#fff;border:1px solid #ddd;border-radius:7px;padding:38px 24px;text-align:center;color:#68737d}
-.empty .brand-plane{width:48px;height:48px;margin:0 auto 12px}
-.empty strong{display:block;color:#20262d;font-size:17px;margin-bottom:6px}
-.hidden{display:none!important}
-footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
+header{
+  background:#fff;
+  border-bottom:1px solid #ddd;
+  padding:22px 0
+}
+
+.header-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px
+}
+
+.page-title-brand{
+  display:flex;
+  align-items:center;
+  gap:10px
+}
+
+.brand-plane{
+  width:34px;
+  height:34px;
+  object-fit:contain;
+  display:block;
+  flex:0 0 auto
+}
+
+h1{
+  margin:0;
+  font-size:25px
+}
+
+header p{
+  margin:6px 0 0;
+  color:#68737d;
+  font-size:13px
+}
+
+.back-link{
+  display:inline-block;
+  text-decoration:none;
+  border:1px solid #bbb;
+  border-radius:5px;
+  padding:9px 11px;
+  font-size:11px;
+  font-weight:700;
+  color:#222;
+  background:#fff
+}
+
+main{
+  padding:20px 0 35px
+}
+
+.intro{
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:7px;
+  padding:24px;
+  margin-bottom:14px
+}
+
+.intro-kicker{
+  font-size:10px;
+  text-transform:uppercase;
+  color:#68737d;
+  font-weight:700;
+  letter-spacing:.06em;
+  margin-bottom:8px
+}
+
+.intro h2{
+  margin:0;
+  font-size:27px;
+  line-height:1.15
+}
+
+.intro p{
+  margin:10px 0 0;
+  color:#68737d;
+  font-size:13px;
+  line-height:1.6;
+  max-width:850px
+}
+
+.tagline{
+  margin-top:18px;
+  font-size:17px;
+  font-weight:700;
+  color:#20262d
+}
+
+.status-box{
+  margin-top:18px;
+  border:1px solid #ddd;
+  border-radius:6px;
+  padding:11px 12px;
+  background:#f8f9fa;
+  color:#68737d;
+  font-size:11px
+}
+
+.status-box.good{
+  color:#087f5b;
+  border-color:#b8dfd0;
+  background:#f4fbf8
+}
+
+.status-box.error{
+  color:#b42318;
+  border-color:#f0b8b5;
+  background:#fff7f6
+}
+
+.filters{
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:7px;
+  padding:14px;
+  margin-bottom:14px
+}
+
+.filter-grid{
+  display:grid;
+  grid-template-columns:2fr repeat(3,1fr);
+  gap:10px
+}
+
+input,select{
+  width:100%;
+  border:1px solid #cfd5da;
+  border-radius:5px;
+  background:#fff;
+  color:#20262d;
+  padding:10px;
+  font-size:12px
+}
+
+input:focus,select:focus{
+  outline:none;
+  border-color:#7c8791
+}
+
+.results-meta{
+  font-size:11px;
+  color:#68737d;
+  margin:0 0 10px
+}
+
+.perk-list{
+  display:grid;
+  gap:12px
+}
+
+.perk-card{
+  display:grid;
+  grid-template-columns:210px 1fr;
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:7px;
+  overflow:hidden
+}
+
+.perk-photo{
+  min-height:185px;
+  background:#e9edf0;
+  display:flex;
+  align-items:flex-end;
+  padding:14px;
+  background-size:cover;
+  background-position:center
+}
+
+.category-badge{
+  font-size:9px;
+  font-weight:700;
+  text-transform:uppercase;
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:4px;
+  padding:5px 7px
+}
+
+.perk-main{
+  padding:17px
+}
+
+.perk-name{
+  font-size:21px;
+  font-weight:700;
+  margin:0
+}
+
+.perk-place{
+  font-size:11px;
+  color:#68737d;
+  margin-top:4px
+}
+
+.offer-box{
+  margin-top:14px;
+  border:1px solid #ddd;
+  border-radius:6px;
+  padding:10px;
+  background:#f8f9fa
+}
+
+.offer-label{
+  font-size:9px;
+  text-transform:uppercase;
+  color:#68737d;
+  font-weight:700
+}
+
+.offer-value{
+  font-size:15px;
+  font-weight:700;
+  margin-top:4px
+}
+
+.description{
+  font-size:12px;
+  color:#68737d;
+  line-height:1.55;
+  margin:14px 0 0
+}
+
+.details{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px 20px;
+  margin-top:14px
+}
+
+.detail{
+  font-size:11px;
+  line-height:1.45
+}
+
+.detail span{
+  display:block;
+  color:#8a949d;
+  font-size:9px;
+  text-transform:uppercase;
+  margin-bottom:2px
+}
+
+.promo{
+  display:inline-block;
+  margin-top:13px;
+  border:1px dashed #999;
+  border-radius:5px;
+  padding:7px 9px;
+  font-size:11px;
+  font-family:monospace;
+  background:#fafafa
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+  margin-top:15px
+}
+
+.btn{
+  display:inline-block;
+  text-align:center;
+  text-decoration:none;
+  border:1px solid #333;
+  border-radius:5px;
+  padding:10px 12px;
+  font-size:10px;
+  font-weight:700;
+  color:#222;
+  background:#fff
+}
+
+.btn.primary{
+  background:#222;
+  color:#fff
+}
+
+.empty{
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:7px;
+  padding:38px 24px;
+  text-align:center;
+  color:#68737d
+}
+
+.empty .brand-plane{
+  width:48px;
+  height:48px;
+  margin:0 auto 12px
+}
+
+.empty strong{
+  display:block;
+  color:#20262d;
+  font-size:17px;
+  margin-bottom:6px
+}
+
+.hidden{
+  display:none!important
+}
+
+footer{
+  text-align:center;
+  color:#8a949d;
+  font-size:10px;
+  padding:15px 0 28px
+}
 
 @media(max-width:800px){
-  .filter-grid{grid-template-columns:1fr 1fr}
-  .perk-card{grid-template-columns:1fr}
-  .perk-photo{min-height:160px}
+  .filter-grid{
+    grid-template-columns:1fr 1fr
+  }
+
+  .perk-card{
+    grid-template-columns:1fr
+  }
+
+  .perk-photo{
+    min-height:160px
+  }
 }
+
 @media(max-width:520px){
-  .header-row{align-items:flex-start}
-  .filter-grid{grid-template-columns:1fr}
-  .details{grid-template-columns:1fr}
-  .actions{flex-direction:column}
-  .back-link{padding:8px 9px}
+  .header-row{
+    align-items:flex-start
+  }
+
+  .filter-grid{
+    grid-template-columns:1fr
+  }
+
+  .details{
+    grid-template-columns:1fr
+  }
+
+  .actions{
+    flex-direction:column
+  }
+
+  .back-link{
+    padding:8px 9px
+  }
 }
 </style>
 </head>
 
 <body>
+
 <header>
   <div class="container header-row">
+
     <div>
       <div class="page-title-brand">
-        <img class="brand-plane" src="/app-icon.png?v=3" alt="Private Jet Tracker plane emblem">
+        <img
+          class="brand-plane"
+          src="/app-icon.png?v=3"
+          alt="Private Jet Tracker plane emblem"
+        >
         <h1>Member Perks</h1>
       </div>
-      <p>Private Jet Tracker · preferred offers for spontaneous travel</p>
+
+      <p>
+        Private Jet Tracker · preferred offers for spontaneous travel
+      </p>
     </div>
-    <a class="back-link" href="index.html">Back to Tracker</a>
+
+    <a class="back-link" href="index.html">
+      Back to Tracker
+    </a>
+
   </div>
 </header>
 
 <main class="container">
-  <section class="intro">
-    <div class="intro-kicker">Private Jet Tracker Members</div>
-    <h2>Land today. Stay tonight.</h2>
-    <p>
-      Open-leg private flights can make an unexpected getaway possible with very little notice,
-      but last-minute travel can be harder and more expensive when hotels, dining, activities,
-      spas and other parts of the trip were not booked in advance. Member Perks connects
-      Private Jet Tracker members with participating businesses offering preferred rates and
-      special offers designed to make spontaneous travel easier.
-    </p>
-    <div class="tagline">Spontaneous travel shouldn’t come with a last-minute premium.</div>
-    <div id="status" class="status-box">Checking your membership…</div>
 
+  <section class="intro">
+
+    <div class="intro-kicker">
+      Private Jet Tracker Members
+    </div>
+
+    <h2>
+      Land today. Stay tonight.
+    </h2>
+
+    <p>
+      Open-leg private flights can make an unexpected getaway possible
+      with very little notice, but last-minute travel can be harder and
+      more expensive when hotels, dining, activities, spas and other
+      parts of the trip were not booked in advance. Member Perks connects
+      Private Jet Tracker members with participating businesses offering
+      preferred rates and special offers designed to make spontaneous
+      travel easier.
+    </p>
+
+    <div class="tagline">
+      Spontaneous travel shouldn’t come with a last-minute premium.
+    </div>
+
+    <div id="status" class="status-box">
+      Checking your membership…
+    </div>
 
   </section>
 
   <section id="app" class="hidden">
+
     <div class="filters">
+
       <div class="filter-grid">
-        <input id="search" type="search" placeholder="Search business, city or airport">
-        <select id="category"><option value="">All Categories</option></select>
-        <select id="state"><option value="">All States</option></select>
-        <select id="airport"><option value="">All Airports</option></select>
+
+        <input
+          id="search"
+          type="search"
+          placeholder="Search business, city or airport"
+        >
+
+        <select id="category">
+          <option value="">All Categories</option>
+        </select>
+
+        <select id="state">
+          <option value="">All States</option>
+        </select>
+
+        <select id="airport">
+          <option value="">All Airports</option>
+        </select>
+
       </div>
+
     </div>
 
     <div id="meta" class="results-meta"></div>
+
     <div id="grid" class="perk-list"></div>
+
   </section>
+
 </main>
 
-<footer>Private Jet Tracker · Member Perks</footer>
+<footer>
+  Private Jet Tracker · Member Perks
+</footer>
 
 <script>
-const SUPABASE_URL="https://nkqxfwdhmaxfvecfqisg.supabase.co";
-const SUPABASE_KEY="sb_publishable_BWdmaDhtPNDjPf7NMvjsJg_09rxLpNO";
-const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
-const $=id=>document.getElementById(id);
-const statusEl=$("status"),appEl=$("app"),gridEl=$("grid"),metaEl=$("meta");
-const searchEl=$("search"),categoryEl=$("category"),stateEl=$("state"),airportEl=$("airport");
-let perks=[];
+const SUPABASE_URL =
+  "https://nkqxfwdhmaxfvecfqisg.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_BWdmaDhtPNDjPf7NMvjsJg_09rxLpNO";
+
+const sb = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY,
+  {
+    auth:{
+      persistSession:true,
+      autoRefreshToken:true,
+      detectSessionInUrl:true
+    }
+  }
+);
+
+const $ = id => document.getElementById(id);
+
+const statusEl = $("status");
+const appEl = $("app");
+const gridEl = $("grid");
+const metaEl = $("meta");
+
+const searchEl = $("search");
+const categoryEl = $("category");
+const stateEl = $("state");
+const airportEl = $("airport");
+
+let perks = [];
+
+
+/* ------------------------------
+   HELPERS
+------------------------------ */
 
 function safeUrl(v){
-  if(!v)return null;
+
+  if(!v) return null;
+
   try{
-    const u=new URL(v);
-    return (u.protocol==="https:"||u.protocol==="http:")?u.href:null;
-  }catch{return null}
+
+    const u = new URL(v);
+
+    return (
+      u.protocol === "https:" ||
+      u.protocol === "http:"
+    )
+      ? u.href
+      : null;
+
+  }catch{
+
+    return null;
+
+  }
+
 }
-const categoryLabel=s=>(s||"other").replace(/\b\w/g,c=>c.toUpperCase());
-const uniqueSorted=a=>[...new Set(a.filter(Boolean).map(v=>String(v).trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+
+
+const categoryLabel = s =>
+  (s || "other")
+    .replace(/\b\w/g,c=>c.toUpperCase());
+
+
+const uniqueSorted = a =>
+  [...new Set(
+    a
+      .filter(Boolean)
+      .map(v=>String(v).trim())
+      .filter(Boolean)
+  )]
+  .sort((a,b)=>a.localeCompare(b));
+
 
 function addOption(select,value){
-  const o=document.createElement("option");o.value=value;o.textContent=value;select.appendChild(o);
-}
-function fillFilters(){
-  uniqueSorted(perks.map(p=>categoryLabel(p.category))).forEach(v=>addOption(categoryEl,v));
-  uniqueSorted(perks.map(p=>p.state)).forEach(v=>addOption(stateEl,v));
-  uniqueSorted(perks.map(p=>p.nearest_airport)).forEach(v=>addOption(airportEl,v));
-}
-function detail(parent,label,value){
-  if(!value)return;
-  const d=document.createElement("div");d.className="detail";
-  const s=document.createElement("span");s.textContent=label;
-  const t=document.createElement("div");t.textContent=value;
-  d.append(s,t);parent.appendChild(d);
-}
-function makeCard(p){
-  const card=document.createElement("article");card.className="perk-card";
 
-  const photo=document.createElement("div");photo.className="perk-photo";
-  const img=safeUrl(p.image_url);
-  if(img)photo.style.backgroundImage=`url("${img.replace(/"/g,"%22")}")`;
-  const badge=document.createElement("div");badge.className="category-badge";badge.textContent=categoryLabel(p.category);
+  const o = document.createElement("option");
+
+  o.value = value;
+  o.textContent = value;
+
+  select.appendChild(o);
+
+}
+
+
+function fillFilters(){
+
+  uniqueSorted(
+    perks.map(p=>categoryLabel(p.category))
+  ).forEach(v=>addOption(categoryEl,v));
+
+  uniqueSorted(
+    perks.map(p=>p.state)
+  ).forEach(v=>addOption(stateEl,v));
+
+  uniqueSorted(
+    perks.map(p=>p.nearest_airport)
+  ).forEach(v=>addOption(airportEl,v));
+
+}
+
+
+function detail(parent,label,value){
+
+  if(!value) return;
+
+  const d = document.createElement("div");
+  d.className = "detail";
+
+  const s = document.createElement("span");
+  s.textContent = label;
+
+  const t = document.createElement("div");
+  t.textContent = value;
+
+  d.append(s,t);
+
+  parent.appendChild(d);
+
+}
+
+
+/* ------------------------------
+   PERK CARD
+------------------------------ */
+
+function makeCard(p){
+
+  const card = document.createElement("article");
+  card.className = "perk-card";
+
+
+  const photo = document.createElement("div");
+  photo.className = "perk-photo";
+
+  const img = safeUrl(p.image_url);
+
+  if(img){
+    photo.style.backgroundImage =
+      `url("${img.replace(/"/g,"%22")}")`;
+  }
+
+
+  const badge = document.createElement("div");
+
+  badge.className = "category-badge";
+  badge.textContent = categoryLabel(p.category);
+
   photo.appendChild(badge);
 
-  const main=document.createElement("div");main.className="perk-main";
-  const name=document.createElement("h3");name.className="perk-name";name.textContent=p.business_name||"Member Partner";
-  const place=document.createElement("div");place.className="perk-place";
-  place.textContent=[p.city,p.state,p.nearest_airport].filter(Boolean).join(" · ")||"Private aviation destination";
+
+  const main = document.createElement("div");
+  main.className = "perk-main";
+
+
+  const name = document.createElement("h3");
+
+  name.className = "perk-name";
+  name.textContent =
+    p.business_name || "Member Partner";
+
+
+  const place = document.createElement("div");
+
+  place.className = "perk-place";
+
+  place.textContent =
+    [
+      p.city,
+      p.state,
+      p.nearest_airport
+    ]
+    .filter(Boolean)
+    .join(" · ")
+    ||
+    "Private aviation destination";
+
+
   main.append(name,place);
 
-  const offerText=p.discount_text||p.member_price||p.offer_title;
+
+  const offerText =
+    p.discount_text ||
+    p.member_price ||
+    p.offer_title;
+
+
   if(offerText){
-    const box=document.createElement("div");box.className="offer-box";
-    const l=document.createElement("div");l.className="offer-label";l.textContent="Member Offer";
-    const v=document.createElement("div");v.className="offer-value";v.textContent=offerText;
-    box.append(l,v);main.appendChild(box);
+
+    const box =
+      document.createElement("div");
+
+    box.className = "offer-box";
+
+
+    const l =
+      document.createElement("div");
+
+    l.className = "offer-label";
+    l.textContent = "Member Offer";
+
+
+    const v =
+      document.createElement("div");
+
+    v.className = "offer-value";
+    v.textContent = offerText;
+
+
+    box.append(l,v);
+
+    main.appendChild(box);
+
   }
+
 
   if(p.description){
-    const desc=document.createElement("p");desc.className="description";desc.textContent=p.description;
+
+    const desc =
+      document.createElement("p");
+
+    desc.className = "description";
+    desc.textContent = p.description;
+
     main.appendChild(desc);
+
   }
 
-  const details=document.createElement("div");details.className="details";
-  detail(details,"Nearest Airport",p.nearest_airport);
-  detail(details,"Member Rate",p.member_price);
-  detail(details,"Regular Rate",p.regular_price);
-  detail(details,"Booking Instructions",p.booking_instructions);
-  detail(details,"Valid Through",p.valid_through);
-  detail(details,"Terms",p.terms);
+
+  const details =
+    document.createElement("div");
+
+  details.className = "details";
+
+
+  detail(
+    details,
+    "Nearest Airport",
+    p.nearest_airport
+  );
+
+  detail(
+    details,
+    "Member Rate",
+    p.member_price
+  );
+
+  detail(
+    details,
+    "Regular Rate",
+    p.regular_price
+  );
+
+  detail(
+    details,
+    "Booking Instructions",
+    p.booking_instructions
+  );
+
+  detail(
+    details,
+    "Valid Through",
+    p.valid_through
+  );
+
+  detail(
+    details,
+    "Terms",
+    p.terms
+  );
+
+
   main.appendChild(details);
 
+
   if(p.promo_code){
-    const promo=document.createElement("div");promo.className="promo";promo.textContent=`Promo Code: ${p.promo_code}`;
+
+    const promo =
+      document.createElement("div");
+
+    promo.className = "promo";
+
+    promo.textContent =
+      `Promo Code: ${p.promo_code}`;
+
     main.appendChild(promo);
+
   }
 
-  const booking=safeUrl(p.booking_url),website=safeUrl(p.website_url);
-  if(booking||website){
-    const actions=document.createElement("div");actions.className="actions";
+
+  const booking =
+    safeUrl(p.booking_url);
+
+  const website =
+    safeUrl(p.website_url);
+
+
+  if(booking || website){
+
+    const actions =
+      document.createElement("div");
+
+    actions.className = "actions";
+
+
     if(website){
-      const a=document.createElement("a");a.className="btn";a.href=website;a.target="_blank";a.rel="noopener noreferrer";a.textContent="Website";actions.appendChild(a);
+
+      const a =
+        document.createElement("a");
+
+      a.className = "btn";
+      a.href = website;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.textContent = "Website";
+
+      actions.appendChild(a);
+
     }
+
+
     if(booking){
-      const a=document.createElement("a");a.className="btn primary";a.href=booking;a.target="_blank";a.rel="noopener noreferrer";a.textContent="Book Member Offer";actions.appendChild(a);
+
+      const a =
+        document.createElement("a");
+
+      a.className = "btn primary";
+      a.href = booking;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.textContent = "Book Member Offer";
+
+      actions.appendChild(a);
+
     }
+
+
     main.appendChild(actions);
+
   }
+
 
   card.append(photo,main);
+
   return card;
+
 }
+
+
+/* ------------------------------
+   FILTER + RENDER
+------------------------------ */
 
 function render(){
-  const q=searchEl.value.trim().toLowerCase(),cat=categoryEl.value,state=stateEl.value,airport=airportEl.value;
-  const filtered=perks.filter(p=>{
-    const hay=[p.business_name,p.city,p.state,p.nearest_airport,p.offer_title,p.description].filter(Boolean).join(" ").toLowerCase();
-    return (!q||hay.includes(q))
-      &&(!cat||categoryLabel(p.category)===cat)
-      &&(!state||p.state===state)
-      &&(!airport||p.nearest_airport===airport);
-  });
+
+  const q =
+    searchEl.value
+      .trim()
+      .toLowerCase();
+
+  const cat =
+    categoryEl.value;
+
+  const state =
+    stateEl.value;
+
+  const airport =
+    airportEl.value;
+
+
+  const filtered =
+    perks.filter(p=>{
+
+      const hay =
+        [
+          p.business_name,
+          p.city,
+          p.state,
+          p.nearest_airport,
+          p.offer_title,
+          p.description
+        ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+
+      return (
+        (!q || hay.includes(q))
+        &&
+        (!cat ||
+          categoryLabel(p.category) === cat)
+        &&
+        (!state ||
+          p.state === state)
+        &&
+        (!airport ||
+          p.nearest_airport === airport)
+      );
+
+    });
+
 
   gridEl.replaceChildren();
-  metaEl.textContent=`${filtered.length} member perk${filtered.length===1?"":"s"}`;
+
+
+  metaEl.textContent =
+    `${filtered.length} member perk${
+      filtered.length === 1 ? "" : "s"
+    }`;
+
 
   if(!filtered.length){
-    const e=document.createElement("div");e.className="empty";
-    const icon=document.createElement("img");icon.className="brand-plane";icon.src="/app-icon.png?v=3";icon.alt="";
-    const strong=document.createElement("strong");
-    strong.textContent=perks.length?"No perks match those filters.":"No approved perks are live yet.";
-    const text=document.createElement("div");
-    text.textContent=perks.length?"Try widening your search.":"New partner offers will appear here automatically after you approve them.";
-    e.append(icon,strong,text);gridEl.appendChild(e);return;
+
+    const e =
+      document.createElement("div");
+
+    e.className = "empty";
+
+
+    const icon =
+      document.createElement("img");
+
+    icon.className = "brand-plane";
+    icon.src = "/app-icon.png?v=3";
+    icon.alt = "";
+
+
+    const strong =
+      document.createElement("strong");
+
+    strong.textContent =
+      perks.length
+        ? "No perks match those filters."
+        : "No member perks are live yet.";
+
+
+    const text =
+      document.createElement("div");
+
+    text.textContent =
+      perks.length
+        ? "Try widening your search."
+        : "New partner offers will appear here automatically.";
+
+
+    e.append(
+      icon,
+      strong,
+      text
+    );
+
+    gridEl.appendChild(e);
+
+    return;
+
   }
-  filtered.forEach(p=>gridEl.appendChild(makeCard(p)));
+
+
+  filtered.forEach(
+    p=>gridEl.appendChild(makeCard(p))
+  );
+
 }
 
 
-async function init(){
-  const {data:{session},error:sessionError}=await sb.auth.getSession();
+/* ------------------------------
+   AUTH + MEMBERSHIP
+------------------------------ */
 
-  if(sessionError||!session){
-    statusEl.textContent="Sign in to your Private Jet Tracker account to view Member Perks.";
-    return;
-  }
+async function getFreshSession(){
 
-  const {data:subscription,error:subError}=await sb
-    .from("subscriptions")
-    .select("status, trial_end, current_period_end")
-    .eq("user_id",session.user.id)
-    .maybeSingle();
+  let {
+    data:{session},
+    error
+  } = await sb.auth.getSession();
 
-  if(subError){
-    console.error(subError);
-    statusEl.textContent="We couldn't verify your membership. Return to the tracker and try again.";
-    return;
-  }
-
-  if(!subscription||!["trialing","active"].includes(subscription.status)){
-    statusEl.textContent="Member Perks are available with an active membership or trial.";
-    return;
-  }
-
-  const {data,error}=await sb.from("member_perks_public").select("*")
-    .order("featured",{ascending:false}).order("created_at",{ascending:false});
 
   if(error){
-    console.error(error);
-    statusEl.textContent="Your membership is active, but the perks list couldn't be loaded.";
-    return;
+    console.error(
+      "getSession error:",
+      error
+    );
   }
 
-  perks=data||[];
-  statusEl.textContent="Membership verified · Member Perks unlocked.";
-  statusEl.classList.add("good");
-  appEl.classList.remove("hidden");
-  fillFilters();
-  render();
+
+  if(!session){
+    return null;
+  }
+
+
+  /*
+    Explicitly refresh the access token.
+
+    This prevents an old stored JWT from
+    immediately being used for protected
+    Supabase database requests.
+  */
+
+  const {
+    data:refreshData,
+    error:refreshError
+  } = await sb.auth.refreshSession();
+
+
+  if(refreshError){
+
+    console.error(
+      "Session refresh error:",
+      refreshError
+    );
+
+    return null;
+
+  }
+
+
+  return refreshData?.session || null;
+
 }
 
-[searchEl,categoryEl,stateEl,airportEl].forEach(el=>el.addEventListener(el===searchEl?"input":"change",render));
+
+/* ------------------------------
+   INITIALIZE PAGE
+------------------------------ */
+
+async function init(){
+
+  statusEl.textContent =
+    "Checking your membership…";
+
+  statusEl.classList.remove(
+    "good",
+    "error"
+  );
+
+
+  /*
+    STEP 1
+    Get a fresh authenticated session
+  */
+
+  const session =
+    await getFreshSession();
+
+
+  if(!session){
+
+    statusEl.textContent =
+      "Your session has expired. Return to the tracker and sign in again.";
+
+    statusEl.classList.add("error");
+
+    return;
+
+  }
+
+
+  /*
+    STEP 2
+    Verify subscription
+  */
+
+  const {
+    data:subscription,
+    error:subError
+  } = await sb
+    .from("subscriptions")
+    .select(
+      "status, trial_end, current_period_end"
+    )
+    .eq(
+      "user_id",
+      session.user.id
+    )
+    .maybeSingle();
+
+
+  if(subError){
+
+    console.error(
+      "Subscription lookup failed:",
+      subError
+    );
+
+    statusEl.textContent =
+      "We couldn't verify your membership. Return to the tracker and try again.";
+
+    statusEl.classList.add("error");
+
+    return;
+
+  }
+
+
+  if(
+    !subscription ||
+    !["trialing","active"]
+      .includes(subscription.status)
+  ){
+
+    statusEl.textContent =
+      "Member Perks are available with an active membership or trial.";
+
+    return;
+
+  }
+
+
+  /*
+    STEP 3
+    Load member perks
+  */
+
+  const {
+    data,
+    error
+  } = await sb
+    .from("member_perks_public")
+    .select("*")
+    .order(
+      "featured",
+      {ascending:false}
+    )
+    .order(
+      "created_at",
+      {ascending:false}
+    );
+
+
+  if(error){
+
+    console.error(
+      "Perks lookup failed:",
+      error
+    );
+
+    statusEl.textContent =
+      "Your membership is active, but the perks list couldn't be loaded.";
+
+    statusEl.classList.add("error");
+
+    return;
+
+  }
+
+
+  /*
+    STEP 4
+    Display perks
+  */
+
+  perks = data || [];
+
+
+  statusEl.textContent =
+    "Membership verified · Member Perks unlocked.";
+
+  statusEl.classList.add("good");
+
+
+  appEl.classList.remove("hidden");
+
+
+  fillFilters();
+
+  render();
+
+}
+
+
+/* ------------------------------
+   FILTER EVENTS
+------------------------------ */
+
+[
+  searchEl,
+  categoryEl,
+  stateEl,
+  airportEl
+]
+.forEach(el=>{
+
+  el.addEventListener(
+    el === searchEl
+      ? "input"
+      : "change",
+    render
+  );
+
+});
+
+
+/* ------------------------------
+   START
+------------------------------ */
+
 init();
+
 </script>
+
 </body>
 </html>
