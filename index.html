@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>U.S. Private Jet Tracker</title>
+<title>Private Jet Tracker</title>
+<link rel="icon" type="image/svg+xml" href="PJT_MASTER_emblem_black.svg">
+<link rel="apple-touch-icon" href="PJT_MASTER_emblem_black_transparent_7K.png">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -132,7 +134,7 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
   padding:28px;
   box-shadow:0 12px 40px rgba(0,0,0,.08);
 }
-.auth-brand{
+.brand-emblem{display:block;width:54px;height:54px;object-fit:contain;margin:0 0 12px}.header-brand{display:flex;align-items:center;gap:12px}.header-brand .brand-emblem{width:44px;height:44px;margin:0;flex:0 0 auto}.auth-brand{
   font-size:11px;
   font-weight:700;
   letter-spacing:.12em;
@@ -214,8 +216,9 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
 
 <div id="authScreen" class="auth-screen">
   <div class="auth-card">
+    <img class="brand-emblem" src="PJT_MASTER_emblem_black.svg" alt="Private Jet Tracker emblem">
     <div class="auth-brand">Private Aviation Intelligence</div>
-    <h1>SoCal Private Jet Tracker</h1>
+    <h1>Private Jet Tracker</h1>
     <p>Sign in to access the live flight monitor, or create an account.</p>
 
     <div class="auth-tabs">
@@ -252,7 +255,7 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
     </div>
   </div>
 
-<header><div class="container"><h1 id="pageTitle">U.S. Private Jet Tracker</h1><p id="pageSubtitle">flyExclusive aircraft across the United States</p></div></header>
+<header><div class="container"><div class="header-brand"><img class="brand-emblem" src="PJT_MASTER_emblem_black.svg" alt="Private Jet Tracker emblem"><div><h1 id="pageTitle">U.S. Private Jet Tracker</h1><p id="pageSubtitle">flyExclusive aircraft across the United States</p></div></div></div></header>
 <main class="container">
 <div class="top-nav"><button id="trackerTab" class="active" type="button">Flight Tracker</button><button id="tripTab" type="button">Trip Planner</button><button id="perksTab" type="button" onclick="window.location.href='perks.html'">Member Perks</button></div>
 <div id="trackerView" class="view-panel active">
@@ -314,7 +317,7 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
 <button class="refresh" onclick="loadFlights()">Refresh</button>
 </div>
 <div id="tripView" class="view-panel">
-<section class="trip-card"><h2>Trip Planner</h2><div class="trip-muted">Build one shared itinerary for the whole travel party. Hotels, restaurants, activities and airports can be placed on the trip map even when they are not member perks.</div><div class="trip-fields"><input id="tripName" placeholder="Trip name (e.g. Aspen Weekend)"><input id="tripStart" type="date"><input id="tripEnd" type="date"></div><div class="trip-actions"><button id="newTripBtn" class="trip-btn" type="button">New Trip</button><button id="saveTripBtn" class="trip-btn primary" type="button">Save Trip</button></div><div id="tripSetupNote" class="setup-note">Shared cloud trips need the included <strong>trip_planner_setup.sql</strong> installed in Supabase. Until then, this planner works locally in this browser.</div></section>
+<section class="trip-card"><h2>Trip Planner</h2><div class="trip-muted">Build one shared itinerary for the whole travel party. Hotels, restaurants, activities and airports can be placed on the trip map even when they are not member perks.</div><div class="trip-fields"><input id="tripName" placeholder="Trip name (e.g. Aspen Weekend)"><input id="tripStart" type="date"><input id="tripEnd" type="date"></div><div class="trip-actions"><button id="newTripBtn" class="trip-btn" type="button">New Trip</button><button id="saveTripBtn" class="trip-btn primary" type="button">Save Trip</button></div><div id="tripSetupNote" class="setup-note" style="display:none"></div></section>
 <div class="trip-grid">
 <section class="trip-card"><h2>Add to itinerary</h2><div class="trip-muted">Search for any real hotel, restaurant, attraction or airport. Select a result to save its address and map coordinates.</div><div class="trip-fields" style="grid-template-columns:130px 1fr"><select id="placeType"><option value="hotel">🏨 Hotel</option><option value="restaurant">🍽 Restaurant</option><option value="activity">🎟 Activity</option><option value="airport">✈ Airport</option><option value="transportation">🚗 Transportation</option></select><input id="placeSearch" placeholder="Search a place, e.g. The Little Nell Aspen"></div><div class="trip-actions"><button id="searchPlaceBtn" class="trip-btn primary" type="button">Find Place</button><button id="addManualBtn" class="trip-btn" type="button">Add without map location</button></div><div id="placeResults" class="place-results"></div><div id="itineraryList" class="itinerary-list"></div></section>
 <section class="trip-card"><h2>Trip Map</h2><div class="trip-muted">The map updates automatically as places are added or removed.</div><div id="tripMap"></div></section>
@@ -382,6 +385,7 @@ function showLoggedIn(user){
   } else {
     setTimeout(()=>flightMap?.invalidateSize(),200);
   }
+  setTimeout(()=>{ if(typeof loadLatestTrip==="function") loadLatestTrip(); },300);
 }
 
 signInTab.addEventListener("click",()=>setAuthMode("signin"));
@@ -699,16 +703,60 @@ function initTripMap(){if(tripMap)return;tripMap=L.map('tripMap').setView([39.5,
 function renderTripMap(){initTripMap();tripMarkers.clearLayers();const pts=[];tripState.items.filter(x=>Number.isFinite(x.lat)&&Number.isFinite(x.lon)).forEach(x=>{const m=L.marker([x.lat,x.lon]).addTo(tripMarkers);m.bindPopup(`<strong>${typeIcons[x.type]||'📍'} ${esc(x.name)}</strong><br>${esc(x.address||'')}${x.perk?'<br><span class="perk-badge">Member Perk</span>':''}`);pts.push([x.lat,x.lon]);});if(pts.length>1)tripMap.fitBounds(pts,{padding:[30,30],maxZoom:14});else if(pts.length===1)tripMap.setView(pts[0],14);}
 function renderItinerary(){const el=document.getElementById('itineraryList');if(!tripState.items.length){el.innerHTML='<div class="trip-muted">No itinerary items yet.</div>';renderTripMap();return;}el.innerHTML=tripState.items.map((x,i)=>`<div class="itin-item"><div class="itin-icon">${typeIcons[x.type]||'📍'}</div><div><div class="itin-title">${esc(x.name)}${x.perk?'<span class="perk-badge">Member Perk</span>':''}</div><div class="itin-meta">${esc(x.address||'No mapped address')}</div></div><button class="trip-btn" data-remove-item="${i}" type="button">Remove</button></div>`).join('');renderTripMap();}
 document.getElementById('itineraryList').addEventListener('click',e=>{const b=e.target.closest('[data-remove-item]');if(!b)return;tripState.items.splice(Number(b.dataset.removeItem),1);renderItinerary();});
-async function searchPlaces(){const q=document.getElementById('placeSearch').value.trim();if(!q)return;const box=document.getElementById('placeResults');box.style.display='block';box.innerHTML='<button class="place-result" disabled>Searching…</button>';try{const u='https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&addressdetails=1&q='+encodeURIComponent(q);const r=await fetch(u,{headers:{'Accept':'application/json'}});if(!r.ok)throw new Error('Search unavailable');const data=await r.json();box.innerHTML=data.length?data.map((x,i)=>`<button type="button" class="place-result" data-place="${i}"><strong>${esc(x.name||x.display_name.split(',')[0])}</strong><small>${esc(x.display_name)}</small></button>`).join(''):'<button class="place-result" disabled>No places found. Try adding the city/state.</button>';box._places=data;}catch(err){box.innerHTML='<button class="place-result" disabled>Place search is temporarily unavailable. You can still add the item without a map location.</button>';}}
+async function searchPlaces(){const q=document.getElementById('placeSearch').value.trim();if(!q)return;const box=document.getElementById('placeResults');box.style.display='block';box.innerHTML='<button class="place-result" disabled>Searching…</button>';try{const u='https://nominatim.openstreetmap.org/search?format=jsonv2&limit=8&addressdetails=1&countrycodes=us&q='+encodeURIComponent(q);const r=await fetch(u,{headers:{'Accept':'application/json'}});if(!r.ok)throw new Error('Search unavailable');const data=await r.json();box.innerHTML=data.length?data.map((x,i)=>`<button type="button" class="place-result" data-place="${i}"><strong>${esc(x.name||x.display_name.split(',')[0])}</strong><small>${esc(x.display_name)}</small></button>`).join(''):'<button class="place-result" disabled>No places found. Try adding the city/state.</button>';box._places=data;}catch(err){box.innerHTML='<button class="place-result" disabled>Place search is temporarily unavailable. You can still add the item without a map location.</button>';}}
 document.getElementById('searchPlaceBtn').addEventListener('click',searchPlaces);document.getElementById('placeSearch').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();searchPlaces();}});
 document.getElementById('placeResults').addEventListener('click',e=>{const b=e.target.closest('[data-place]');if(!b)return;const x=e.currentTarget._places[Number(b.dataset.place)];tripState.items.push({type:document.getElementById('placeType').value,name:x.name||x.display_name.split(',')[0],address:x.display_name,lat:Number(x.lat),lon:Number(x.lon),perk:false});e.currentTarget.style.display='none';document.getElementById('placeSearch').value='';renderItinerary();});
 document.getElementById('addManualBtn').addEventListener('click',()=>{const name=document.getElementById('placeSearch').value.trim();if(!name)return;tripState.items.push({type:document.getElementById('placeType').value,name,address:'',lat:null,lon:null,perk:false});document.getElementById('placeSearch').value='';renderItinerary();});
 function syncTripFields(){tripState.name=document.getElementById('tripName').value.trim();tripState.start=document.getElementById('tripStart').value;tripState.end=document.getElementById('tripEnd').value;}
 function localSave(){syncTripFields();localStorage.setItem('pjt_trip_draft',JSON.stringify(tripState));}
-async function saveTrip(){syncTripFields();const {data:{user}}=await supabaseClient.auth.getUser();if(!user){localSave();return;}try{const payload={owner_id:user.id,name:tripState.name||'My Trip',start_date:tripState.start||null,end_date:tripState.end||null};let trip;if(tripState.id){const r=await supabaseClient.from('trips').update(payload).eq('id',tripState.id).select().single();if(r.error)throw r.error;trip=r.data;}else{const r=await supabaseClient.from('trips').insert(payload).select().single();if(r.error)throw r.error;trip=r.data;tripState.id=trip.id;tripState.ownerId=user.id;}await supabaseClient.from('trip_items').delete().eq('trip_id',tripState.id);if(tripState.items.length){const rows=tripState.items.map((x,i)=>({trip_id:tripState.id,sort_order:i,item_type:x.type,name:x.name,address:x.address||null,latitude:x.lat,longitude:x.lon,is_perk:!!x.perk}));const r=await supabaseClient.from('trip_items').insert(rows);if(r.error)throw r.error;}localSave();document.getElementById('tripSetupNote').style.display='none';alert('Trip saved.');}catch(e){localSave();document.getElementById('tripSetupNote').style.display='block';}}
+function showTripStatus(message,type='info'){
+  const note=document.getElementById('tripSetupNote');
+  if(!message){note.style.display='none';note.textContent='';return;}
+  note.style.display='block';
+  note.innerHTML=message;
+  note.style.borderColor=type==='error'?'#ef9a9a':type==='success'?'#9fd5b4':'#f0c36a';
+  note.style.background=type==='error'?'#fff1f1':type==='success'?'#effaf3':'#fff8e6';
+}
+async function saveTrip(){
+  syncTripFields();
+  showTripStatus('Saving trip…');
+  const {data:{user},error:userError}=await supabaseClient.auth.getUser();
+  if(userError||!user){localSave();showTripStatus('<strong>Could not save:</strong> Your sign-in session is not active. Sign out and sign back in, then try again.','error');return false;}
+  try{
+    const payload={owner_id:user.id,name:tripState.name||'My Trip',start_date:tripState.start||null,end_date:tripState.end||null};
+    let trip;
+    if(tripState.id){
+      const r=await supabaseClient.from('trips').update(payload).eq('id',tripState.id).select().single();
+      if(r.error)throw r.error; trip=r.data;
+    }else{
+      const r=await supabaseClient.from('trips').insert(payload).select().single();
+      if(r.error)throw r.error; trip=r.data; tripState.id=trip.id; tripState.ownerId=trip.owner_id||user.id;
+    }
+    const del=await supabaseClient.from('trip_items').delete().eq('trip_id',tripState.id); if(del.error)throw del.error;
+    if(tripState.items.length){
+      const rows=tripState.items.map((x,i)=>({trip_id:tripState.id,sort_order:i,item_type:x.type,name:x.name,address:x.address||null,latitude:Number.isFinite(x.lat)?x.lat:null,longitude:Number.isFinite(x.lon)?x.lon:null,is_perk:!!x.perk}));
+      const r=await supabaseClient.from('trip_items').insert(rows); if(r.error)throw r.error;
+    }
+    localSave(); showTripStatus('<strong>Saved to your Private Jet Tracker account.</strong>','success'); return true;
+  }catch(e){console.error('TRIP SAVE ERROR:',e);localSave();showTripStatus('<strong>Could not save trip:</strong> '+esc(e?.message||'Unknown Supabase error')+(e?.code?' <span style="display:block;margin-top:4px">Code: '+esc(e.code)+'</span>':''),'error');return false;}
+}
 document.getElementById('saveTripBtn').addEventListener('click',saveTrip);
-document.getElementById('newTripBtn').addEventListener('click',()=>{Object.assign(tripState,{id:null,ownerId:null,name:'',start:'',end:'',items:[],members:[],packing:[]});document.getElementById('tripName').value='';document.getElementById('tripStart').value='';document.getElementById('tripEnd').value='';renderItinerary();renderMembers();renderPacking();localStorage.removeItem('pjt_trip_draft');});
-async function shareTrip(){const email=document.getElementById('shareEmail').value.trim().toLowerCase(),role=document.getElementById('shareRole').value;if(!email)return;if(!tripState.id){await saveTrip();if(!tripState.id){alert('Install trip_planner_setup.sql in Supabase before sharing trips.');return;}}try{const r=await supabaseClient.rpc('invite_trip_member',{p_trip_id:tripState.id,p_email:email,p_role:role});if(r.error)throw r.error;tripState.members.push({email,role});document.getElementById('shareEmail').value='';renderMembers();alert('Traveler added to this trip.');}catch(e){document.getElementById('tripSetupNote').style.display='block';alert('Sharing is not active yet. Install trip_planner_setup.sql in Supabase first.');}}
+document.getElementById('newTripBtn').addEventListener('click',()=>{Object.assign(tripState,{id:null,ownerId:null,name:'',start:'',end:'',items:[],members:[],packing:[]});document.getElementById('tripName').value='';document.getElementById('tripStart').value='';document.getElementById('tripEnd').value='';renderItinerary();renderMembers();renderPacking();localStorage.removeItem('pjt_trip_draft');showTripStatus('');});
+async function loadLatestTrip(){
+  const {data:{user}}=await supabaseClient.auth.getUser(); if(!user)return;
+  try{
+    const tr=await supabaseClient.from('trips').select('*').order('updated_at',{ascending:false}).limit(1).maybeSingle(); if(tr.error)throw tr.error; if(!tr.data)return;
+    const t=tr.data; const items=await supabaseClient.from('trip_items').select('*').eq('trip_id',t.id).order('sort_order'); if(items.error)throw items.error;
+    const members=await supabaseClient.from('trip_members').select('email,role').eq('trip_id',t.id); if(members.error)throw members.error;
+    Object.assign(tripState,{id:t.id,ownerId:t.owner_id,name:t.name||'',start:t.start_date||'',end:t.end_date||'',items:(items.data||[]).map(x=>({type:x.item_type,name:x.name,address:x.address||'',lat:x.latitude==null?null:Number(x.latitude),lon:x.longitude==null?null:Number(x.longitude),perk:!!x.is_perk})),members:members.data||[]});
+    document.getElementById('tripName').value=tripState.name;document.getElementById('tripStart').value=tripState.start;document.getElementById('tripEnd').value=tripState.end;renderItinerary();renderMembers();renderPacking();localSave();
+  }catch(e){console.error('TRIP LOAD ERROR:',e);showTripStatus('<strong>Could not load saved trip:</strong> '+esc(e?.message||'Unknown error'),'error');}
+}
+async function shareTrip(){
+ const email=document.getElementById('shareEmail').value.trim().toLowerCase(),role=document.getElementById('shareRole').value;if(!email)return;
+ if(!tripState.id){const ok=await saveTrip();if(!ok||!tripState.id)return;}
+ try{const r=await supabaseClient.rpc('invite_trip_member',{p_trip_id:tripState.id,p_email:email,p_role:role});if(r.error)throw r.error;const existing=tripState.members.find(x=>x.email===email);if(existing)existing.role=role;else tripState.members.push({email,role});document.getElementById('shareEmail').value='';renderMembers();localSave();showTripStatus('<strong>Traveler added to this trip.</strong>','success');}catch(e){console.error('TRIP SHARE ERROR:',e);showTripStatus('<strong>Could not invite traveler:</strong> '+esc(e?.message||'Unknown error'),'error');}
+}
 document.getElementById('shareTripBtn').addEventListener('click',shareTrip);
 function renderMembers(){const el=document.getElementById('memberList');el.innerHTML=tripState.members.map(x=>`<span class="member-chip">${esc(x.email)} · ${esc(x.role)}</span>`).join('')||'<div class="trip-muted" style="margin-top:8px">No additional travelers yet.</div>';}
 function generatePacking(){syncTripFields();const text=(tripState.items.map(x=>x.name+' '+x.type).join(' ')+' '+tripState.name).toLowerCase();let days=3;if(tripState.start&&tripState.end){const a=new Date(tripState.start+'T00:00:00Z'),b=new Date(tripState.end+'T00:00:00Z');days=Math.max(1,Math.round((b-a)/86400000)+1);}let list=['ID / wallet','Phone + charger','Medications',`${days} day${days===1?'':'s'} of clothing`,'Underwear + socks','Toiletries','Comfortable travel outfit'];if(/ski|snow|aspen|winter/.test(text))list.push('Warm jacket','Base layers','Gloves','Beanie','Warm socks','Waterproof boots');if(/ski|snowboard/.test(text))list.push('Ski pants','Goggles','Neck gaiter','Helmet or rental plan','SPF lip balm');if(/golf/.test(text))list.push('Golf shoes','Golf clothes','Golf glove');if(/hike|trail/.test(text))list.push('Hiking shoes','Daypack','Water bottle');if(/restaurant|dinner/.test(text))list.push('Dinner outfit','Dress shoes');tripState.packing=[...new Set(list)].map(name=>({name,checked:false}));renderPacking();localSave();}
