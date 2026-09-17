@@ -7,7 +7,24 @@
 <link rel="icon" type="image/svg+xml" href="app-icon.png">
 <link rel="apple-touch-icon" href="app-icon.png">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+const merchCart=[];
+function renderMerchCart(){
+  const el=document.getElementById('merchCart');
+  const total=merchCart.reduce((n,x)=>n+x.price*x.qty,0);
+  if(!merchCart.length)el.innerHTML='<div class="trip-muted">Your cart is empty.</div>';
+  else el.innerHTML=merchCart.map((x,i)=>`<div class="cart-row"><span>${esc(x.name)} <span class="trip-muted">${esc(x.option||'')}</span></span><span>× ${x.qty}</span><strong>${(x.price*x.qty).toLocaleString(undefined,{style:'currency',currency:'USD'})}</strong></div>`).join('');
+  document.getElementById('merchSubtotal').textContent=total.toLocaleString(undefined,{style:'currency',currency:'USD'});
+  document.getElementById('merchCheckout').disabled=true;
+}
+document.querySelectorAll('.add-merch').forEach(btn=>btn.addEventListener('click',()=>{
+  const card=btn.closest('.merch-card'),sel=card.querySelector('select'),qty=Math.max(1,Math.min(10,Number(card.querySelector('input[type=number]').value)||1));
+  merchCart.push({name:btn.dataset.name,price:Number(btn.dataset.price),qty,option:sel?sel.value:''});renderMerchCart();
+  document.getElementById('merchStatus').textContent='Added to cart. Checkout will activate after Stripe products are connected.';
+}));
+document.getElementById('clearMerchCart').addEventListener('click',()=>{merchCart.length=0;renderMerchCart();});
+
+</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box}
@@ -216,6 +233,20 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
 /* My Trips */
 .my-trips-card{background:#fff;border:1px solid #ddd;border-radius:7px;padding:14px;margin-bottom:14px}.my-trips-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.my-trips-head h2{font-size:18px;margin:0 0 4px}.trip-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}.saved-trip-card{border:1px solid #dfe3e6;border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.04);cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}.saved-trip-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.08)}.saved-trip-card.current{outline:2px solid #111}.saved-trip-photo{height:145px;background:linear-gradient(135deg,#e9edf0,#d7dde2);position:relative;overflow:hidden}.saved-trip-photo img{width:100%;height:100%;object-fit:cover;display:block}.current-trip-badge{position:absolute;left:9px;top:9px;background:#111;color:#fff;border-radius:999px;padding:5px 8px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.03em}.saved-trip-body{padding:11px}.saved-trip-name{font-size:14px;font-weight:700;margin-bottom:5px}.saved-trip-dates{font-size:10px;color:#68737d}.saved-trip-place{font-size:10px;color:#68737d;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.saved-trip-actions{display:flex;gap:6px;margin-top:10px}.saved-trip-actions button{flex:1;border:1px solid #cfd4d9;background:#fff;border-radius:5px;padding:7px;font-size:10px;font-weight:700;cursor:pointer}.saved-trip-actions .open-trip{background:#111;color:#fff;border-color:#111}.saved-trip-empty{grid-column:1/-1;border:1px dashed #cfd4d9;border-radius:7px;padding:24px;text-align:center;color:#68737d;font-size:11px}@media(max-width:760px){.trip-card-grid{grid-template-columns:1fr}.saved-trip-photo{height:180px}}
 
+/* Opened trip itinerary + budget */
+.opened-trip-bar{display:none;background:#111;color:#fff;border-radius:8px;padding:14px;margin-bottom:14px;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.opened-trip-bar.active{display:flex}.opened-trip-title{font-size:17px;font-weight:700}.opened-trip-meta{font-size:10px;color:#c9ced3;margin-top:3px}
+.opened-trip-actions{display:flex;gap:7px;flex-wrap:wrap}.opened-trip-actions button{border:1px solid #555;background:#fff;color:#111;border-radius:6px;padding:9px 11px;font-size:10px;font-weight:700;cursor:pointer}
+.budget-grid{display:grid;grid-template-columns:1.2fr repeat(3,1fr);gap:10px;margin-top:10px}.budget-box{border:1px solid #ddd;border-radius:7px;padding:12px;background:#fafbfc}.budget-label{font-size:9px;text-transform:uppercase;color:#68737d;font-weight:700}.budget-value{font-size:19px;font-weight:700;margin-top:4px}.budget-input{width:100%;border:1px solid #cfd4d9;border-radius:6px;padding:9px;font-size:14px;margin-top:5px}.budget-progress{height:8px;background:#e5e8eb;border-radius:99px;overflow:hidden;margin-top:10px}.budget-progress>div{height:100%;background:#555;max-width:100%}
+.itin-item{align-items:start}.itin-details{grid-column:2 / 4;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:4px}.itin-field label{display:block;font-size:8px;text-transform:uppercase;color:#7b858e;font-weight:700;margin-bottom:3px}.itin-field input,.itin-field select{width:100%;border:1px solid #d8dde1;border-radius:5px;padding:7px;font-size:11px;background:#fff}.itin-notes{grid-column:1/-1}
+.trip-open-only{display:none}.trip-open-only.active{display:block}
+@media(max-width:760px){.budget-grid{grid-template-columns:1fr 1fr}.itin-details{grid-template-columns:1fr 1fr}.opened-trip-actions{width:100%}.opened-trip-actions button{flex:1}}
+@media print{body{background:#fff}.user-bar,header,.top-nav,#trackerView,.my-trips-card,#tripEditorCard,.perk-picker,#placeResults,.trip-actions,.trip-open-hide,.opened-trip-actions,footer{display:none!important}#appShell,#tripView,.trip-open-only,.opened-trip-bar{display:block!important}.container{width:100%}.trip-card{border:0;padding:8px 0}.itin-item{break-inside:avoid}.budget-progress{border:1px solid #bbb}}
+
+
+/* Merch */
+.merch-hero{display:flex;justify-content:space-between;gap:16px;align-items:end;margin-bottom:14px}.merch-hero h2{font-size:18px;margin:0 0 4px}.merch-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.merch-card{background:#fff;border:1px solid #ddd;border-radius:8px;overflow:hidden}.merch-art{height:190px;background:#f2f3f4;display:flex;align-items:center;justify-content:center;position:relative}.merch-art .plane{font-size:34px;transform:rotate(-8deg)}.merch-art .product-shape{position:absolute;font-size:76px;opacity:.18}.merch-body{padding:14px}.merch-name{font-size:14px;font-weight:700}.merch-price{font-size:17px;font-weight:700;margin:6px 0}.merch-controls{display:grid;grid-template-columns:1fr 76px;gap:7px;margin-top:10px}.merch-controls select,.merch-controls input{width:100%;box-sizing:border-box;border:1px solid #cfd4d9;border-radius:6px;padding:9px;font-size:11px;background:#fff}.merch-cart{margin-top:14px}.cart-row{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;border-top:1px solid #eee;padding:9px 0;font-size:11px}.cart-total{display:flex;justify-content:space-between;font-size:15px;font-weight:700;border-top:1px solid #ccc;padding-top:12px;margin-top:4px}.merch-note{font-size:10px;color:#68737d;margin-top:8px;line-height:1.45}
+@media(max-width:760px){.merch-grid{grid-template-columns:1fr}.merch-hero{align-items:start;flex-direction:column}.merch-art{height:150px}}
 </style>
 </head>
 <body>
@@ -263,7 +294,7 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
 
 <header><div class="container"><div class="header-brand"><img class="brand-emblem" src="app-icon.png" alt="Private Jet Tracker emblem"><div><h1 id="pageTitle">U.S. Private Jet Tracker</h1><p id="pageSubtitle">flyExclusive aircraft across the United States</p></div></div></div></header>
 <main class="container">
-<div class="top-nav"><button id="trackerTab" class="active" type="button">Flight Tracker</button><button id="tripTab" type="button">Trip Planner</button><button id="perksTab" type="button" onclick="window.location.href='perks.html'">Member Perks</button></div>
+<div class="top-nav"><button id="trackerTab" class="active" type="button">Flight Tracker</button><button id="tripTab" type="button">Trip Planner</button><button id="perksTab" type="button" onclick="window.location.href='perks.html'">Member Perks</button><button id="merchTab" type="button">Merch</button></div>
 <div id="trackerView" class="view-panel active">
 
 <section class="region-bar">
@@ -322,16 +353,29 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
 
 <button class="refresh" onclick="loadFlights()">Refresh</button>
 </div>
+
+<div id="merchView" class="view-panel">
+  <div class="merch-hero"><div><h2>Private Jet Tracker Merch</h2><div class="trip-muted">Member gear featuring the Private Jet Tracker jet emblem.</div></div><div class="trip-muted">Secure checkout can be connected to Stripe when product prices and fulfillment are finalized.</div></div>
+  <div class="merch-grid">
+    <article class="merch-card" data-merch="sweatshirt"><div class="merch-art"><div class="product-shape">♟</div><div class="plane">✈</div></div><div class="merch-body"><div class="merch-name">PJT Sweatshirt</div><div class="trip-muted">Minimal Private Jet Tracker emblem sweatshirt.</div><div class="merch-price">$48.00</div><div class="merch-controls"><select aria-label="Sweatshirt size"><option>S</option><option>M</option><option>L</option><option>XL</option><option>2XL</option></select><input type="number" min="1" max="10" value="1" aria-label="Quantity"></div><div class="trip-actions"><button class="trip-btn primary add-merch" type="button" data-name="PJT Sweatshirt" data-price="48">Add to Cart</button></div></div></article>
+    <article class="merch-card" data-merch="hat"><div class="merch-art"><div class="product-shape">⌒</div><div class="plane">✈</div></div><div class="merch-body"><div class="merch-name">PJT Trucker Hat</div><div class="trip-muted">Adjustable branded trucker hat.</div><div class="merch-price">$28.00</div><div class="merch-controls"><select aria-label="Hat style"><option>Black</option><option>Black / White</option></select><input type="number" min="1" max="10" value="1" aria-label="Quantity"></div><div class="trip-actions"><button class="trip-btn primary add-merch" type="button" data-name="PJT Trucker Hat" data-price="28">Add to Cart</button></div></div></article>
+    <article class="merch-card" data-merch="tote"><div class="merch-art"><div class="product-shape">▱</div><div class="plane">✈</div></div><div class="merch-body"><div class="merch-name">PJT Tote</div><div class="trip-muted">Simple travel tote with jet emblem.</div><div class="merch-price">$22.00</div><div class="merch-controls"><select aria-label="Tote style"><option>Natural</option><option>Black</option></select><input type="number" min="1" max="10" value="1" aria-label="Quantity"></div><div class="trip-actions"><button class="trip-btn primary add-merch" type="button" data-name="PJT Tote" data-price="22">Add to Cart</button></div></div></article>
+  </div>
+  <section class="trip-card merch-cart"><h2>Cart</h2><div id="merchCart"><div class="trip-muted">Your cart is empty.</div></div><div class="cart-total"><span>Subtotal</span><span id="merchSubtotal">$0.00</span></div><div class="trip-actions"><button id="merchCheckout" class="trip-btn primary" type="button" disabled>Checkout</button><button id="clearMerchCart" class="trip-btn" type="button">Clear Cart</button></div><div id="merchStatus" class="merch-note">Checkout is intentionally disabled until your Stripe product/payment links are connected, so the site cannot accidentally take orders at placeholder prices.</div></section>
+</div>
+
 <div id="tripView" class="view-panel">
 <section class="my-trips-card"><div class="my-trips-head"><div><h2>My Trips</h2><div class="trip-muted">Your saved trips and travel plans. Open a trip to continue editing it.</div></div><button id="newTripTopBtn" class="trip-btn primary" type="button">+ New Trip</button></div><div id="savedTripsGrid" class="trip-card-grid"><div class="saved-trip-empty">Loading your trips…</div></div></section>
-<section class="trip-card"><h2>Trip Planner</h2><div class="trip-muted">Build one shared itinerary for the whole travel party. Hotels, restaurants, activities and airports can be placed on the trip map even when they are not member perks.</div><div class="trip-fields"><input id="tripName" placeholder="Trip name (e.g. Aspen Weekend)"><input id="tripStart" type="date"><input id="tripEnd" type="date"></div><div class="trip-actions"><button id="newTripBtn" class="trip-btn" type="button">New Trip</button><button id="saveTripBtn" class="trip-btn primary" type="button">Save Trip</button></div><div id="tripSetupNote" class="setup-note" style="display:none"></div></section>
+<section id="openedTripBar" class="opened-trip-bar"><div><div id="openedTripTitle" class="opened-trip-title">Trip Itinerary</div><div id="openedTripMeta" class="opened-trip-meta"></div></div><div class="opened-trip-actions"><button id="backToTripsBtn" type="button">← My Trips</button><button id="calendarTripBtn" type="button">📅 Add to Calendar</button><button id="printTripBtn" type="button">🖨 Print Itinerary</button><button id="shareTopBtn" type="button">Share Trip</button></div></section>
+<section id="budgetCard" class="trip-card trip-open-only"><h2>Trip Budget</h2><div class="trip-muted">Set a budget and add prices to itinerary items. Your running total updates automatically.</div><div class="budget-grid"><div class="budget-box"><div class="budget-label">Trip Budget</div><input id="tripBudget" class="budget-input" type="number" min="0" step="0.01" placeholder="$0.00"></div><div class="budget-box"><div class="budget-label">Running Total</div><div id="tripTotal" class="budget-value">$0</div></div><div class="budget-box"><div class="budget-label">Remaining</div><div id="tripRemaining" class="budget-value">—</div></div><div class="budget-box"><div class="budget-label">Member Perks</div><div id="perkSpend" class="budget-value">$0</div></div></div><div class="budget-progress"><div id="budgetProgress" style="width:0%"></div></div></section>
+<section id="tripEditorCard" class="trip-card"><h2>Trip Planner</h2><div class="trip-muted">Build one shared itinerary for the whole travel party. Hotels, restaurants, activities and airports can be placed on the trip map even when they are not member perks.</div><div class="trip-fields"><input id="tripName" placeholder="Trip name (e.g. Aspen Weekend)"><input id="tripStart" type="date"><input id="tripEnd" type="date"></div><div class="trip-actions"><button id="newTripBtn" class="trip-btn" type="button">New Trip</button><button id="saveTripBtn" class="trip-btn primary" type="button">Save Trip</button></div><div id="tripSetupNote" class="setup-note" style="display:none"></div></section>
 <div class="trip-grid">
 <section class="trip-card"><h2>Add to itinerary</h2><div class="trip-muted">Choose a Private Jet Tracker member perk or search for any hotel, restaurant, attraction or airport.</div><div class="perk-picker"><div class="perk-picker-head"><div><strong style="font-size:12px">Member Perks</strong><div class="trip-muted">Approved partner offers can be added directly to this trip.</div></div><button id="refreshPerksBtn" class="trip-btn" type="button">Refresh Perks</button></div><div class="perk-filters"><input id="perkSearch" placeholder="Search perks by business, city or airport"><select id="perkCategory"><option value="all">All perks</option><option value="hotel">Hotels</option><option value="restaurant">Restaurants</option><option value="activity">Activities</option><option value="gym">Gyms / Fitness</option><option value="spa">Spa / Wellness</option></select></div><div id="perkResults" class="perk-results"><div class="perk-empty">Loading member perks…</div></div></div><div style="border-top:1px solid #eee;margin:14px 0 10px;padding-top:12px"><strong style="font-size:12px">Search Anywhere</strong></div><div class="trip-fields" style="grid-template-columns:130px 1fr"><select id="placeType"><option value="hotel">🏨 Hotel</option><option value="restaurant">🍽 Restaurant</option><option value="activity">🎟 Activity</option><option value="airport">✈ Airport</option><option value="transportation">🚗 Transportation</option></select><input id="placeSearch" placeholder="Search a place, e.g. The Little Nell Aspen"></div><div class="trip-actions"><button id="searchPlaceBtn" class="trip-btn primary" type="button">Find Place</button><button id="addManualBtn" class="trip-btn" type="button">Add without map location</button></div><div id="placeResults" class="place-results"></div><div id="itineraryList" class="itinerary-list"></div></section>
 <section class="trip-card"><h2>Trip Map</h2><div class="trip-muted">The map updates automatically as places are added or removed.</div><div id="tripMap"></div></section>
 </div>
 <div class="trip-grid">
-<section class="trip-card"><h2>Travel Party & Sharing</h2><div class="trip-muted">Invite another Private Jet Tracker user by their account email. Choose whether they can only view the trip or help edit it.</div><div class="share-row"><input id="shareEmail" type="email" placeholder="traveler@example.com"><select id="shareRole"><option value="viewer">Can view</option><option value="editor">Can edit</option></select><button id="shareTripBtn" class="trip-btn primary" type="button">Invite</button></div><div id="memberList"></div></section>
-<section class="trip-card"><h2>My Packing List</h2><div class="trip-muted">Each traveler gets their own checklist. Generating yours does not change anyone else's list.</div><div class="trip-actions"><button id="generatePackingBtn" class="trip-btn primary" type="button">Generate Packing List</button></div><div id="packingList" class="packing-grid"></div></section>
+<section id="sharingCard" class="trip-card trip-open-only"><h2>Travel Party & Sharing</h2><div class="trip-muted">Invite another Private Jet Tracker user by their account email. Choose whether they can only view the trip or help edit it.</div><div class="share-row"><input id="shareEmail" type="email" placeholder="traveler@example.com"><select id="shareRole"><option value="viewer">Can view</option><option value="editor">Can edit</option></select><button id="shareTripBtn" class="trip-btn primary" type="button">Invite</button></div><div id="memberList"></div></section>
+<section class="trip-card trip-open-only"><h2>My Packing List</h2><div class="trip-muted">Each traveler gets their own checklist. Generating yours does not change anyone else's list.</div><div class="trip-actions"><button id="generatePackingBtn" class="trip-btn primary" type="button">Generate Packing List</button></div><div id="packingList" class="packing-grid"></div></section>
 </div>
 </div>
 </main>
@@ -701,29 +745,65 @@ loadAirportRegions();
 
 </div>
 <script>
-const tripState={id:null,ownerId:null,name:'',start:'',end:'',items:[],members:[],packing:[]};
+const tripState={id:null,ownerId:null,name:'',start:'',end:'',budget:null,items:[],members:[],packing:[]};
 let tripMap=null,tripMarkers=null;
 const typeIcons={hotel:'🏨',restaurant:'🍽',activity:'🎟',airport:'✈',transportation:'🚗'};
-function showView(which){const trip=which==='trip';document.getElementById('tripView').classList.toggle('active',trip);document.getElementById('trackerView').classList.toggle('active',!trip);document.getElementById('tripTab').classList.toggle('active',trip);document.getElementById('trackerTab').classList.toggle('active',!trip);if(trip){initTripMap();setTimeout(()=>tripMap.invalidateSize(),100);}}
-document.getElementById('tripTab').addEventListener('click',()=>showView('trip'));document.getElementById('trackerTab').addEventListener('click',()=>showView('tracker'));
+function showView(which){
+  const trip=which==='trip', merch=which==='merch', tracker=!trip&&!merch;
+  document.getElementById('tripView').classList.toggle('active',trip);
+  document.getElementById('merchView').classList.toggle('active',merch);
+  document.getElementById('trackerView').classList.toggle('active',tracker);
+  document.getElementById('tripTab').classList.toggle('active',trip);
+  document.getElementById('merchTab').classList.toggle('active',merch);
+  document.getElementById('trackerTab').classList.toggle('active',tracker);
+  if(trip){initTripMap();setTimeout(()=>tripMap.invalidateSize(),100);}
+}
+document.getElementById('tripTab').addEventListener('click',()=>showView('trip'));
+document.getElementById('merchTab').addEventListener('click',()=>showView('merch'));document.getElementById('trackerTab').addEventListener('click',()=>showView('tracker'));
 function initTripMap(){if(tripMap)return;tripMap=L.map('tripMap').setView([39.5,-98.35],4);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(tripMap);tripMarkers=L.layerGroup().addTo(tripMap);}
 function renderTripMap(){initTripMap();tripMarkers.clearLayers();const pts=[];tripState.items.filter(x=>Number.isFinite(x.lat)&&Number.isFinite(x.lon)).forEach(x=>{const m=L.marker([x.lat,x.lon]).addTo(tripMarkers);m.bindPopup(`<strong>${typeIcons[x.type]||'📍'} ${esc(x.name)}</strong><br>${esc(x.address||'')}${x.perk?'<br><span class="perk-badge">Member Perk</span>':''}`);pts.push([x.lat,x.lon]);});if(pts.length>1)tripMap.fitBounds(pts,{padding:[30,30],maxZoom:14});else if(pts.length===1)tripMap.setView(pts[0],14);}
-function renderItinerary(){const el=document.getElementById('itineraryList');if(!tripState.items.length){el.innerHTML='<div class="trip-muted">No itinerary items yet.</div>';renderTripMap();return;}el.innerHTML=tripState.items.map((x,i)=>`<div class="itin-item"><div class="itin-icon">${typeIcons[x.type]||'📍'}</div><div><div class="itin-title">${esc(x.name)}${x.perk?'<span class="perk-badge">Member Perk</span>':''}</div><div class="itin-meta">${esc(x.address||'No mapped address')}</div></div><button class="trip-btn" data-remove-item="${i}" type="button">Remove</button></div>`).join('');renderTripMap();}
-document.getElementById('itineraryList').addEventListener('click',e=>{const b=e.target.closest('[data-remove-item]');if(!b)return;tripState.items.splice(Number(b.dataset.removeItem),1);renderItinerary();});
+function itemDateFields(x,i){
+  const hotel=x.type==='hotel';
+  const startLabel=hotel?'Check-in date':'Date';
+  const timeLabel=hotel?'Check-in time':'Start time';
+  const endDateLabel=hotel?'Check-out date':'End date';
+  const endTimeLabel=hotel?'Check-out time':'End time';
+  return `<div class="itin-details">
+    <div class="itin-field"><label>${startLabel}</label><input type="date" data-item-field="startDate" data-i="${i}" value="${attr(x.startDate||'')}"></div>
+    <div class="itin-field"><label>${timeLabel}</label><input type="time" data-item-field="startTime" data-i="${i}" value="${attr(x.startTime||'')}"></div>
+    <div class="itin-field"><label>${endDateLabel}</label><input type="date" data-item-field="endDate" data-i="${i}" value="${attr(x.endDate||'')}"></div>
+    <div class="itin-field"><label>${endTimeLabel}</label><input type="time" data-item-field="endTime" data-i="${i}" value="${attr(x.endTime||'')}"></div>
+    <div class="itin-field"><label>Price</label><input type="number" min="0" step="0.01" data-item-field="price" data-i="${i}" value="${x.price??''}" placeholder="$0.00"></div>
+    <div class="itin-field"><label>Price type</label><select data-item-field="priceMode" data-i="${i}"><option value="total" ${x.priceMode!=='nightly'?'selected':''}>Total</option>${hotel?`<option value="nightly" ${x.priceMode==='nightly'?'selected':''}>Per night</option>`:''}</select></div>
+    <div class="itin-field itin-notes"><label>Confirmation / notes</label><input type="text" data-item-field="notes" data-i="${i}" value="${attr(x.notes||'')}" placeholder="Reservation number, meeting point, details…"></div>
+  </div>`;
+}
+function renderItinerary(){
+  const el=document.getElementById('itineraryList');
+  if(!tripState.items.length){el.innerHTML='<div class="trip-muted">No itinerary items yet.</div>';renderTripMap();updateBudget();return;}
+  const ordered=tripState.items.map((x,i)=>({x,i})).sort((a,b)=>String(a.x.startDate||'9999-12-31').localeCompare(String(b.x.startDate||'9999-12-31'))||String(a.x.startTime||'23:59').localeCompare(String(b.x.startTime||'23:59')));
+  el.innerHTML=ordered.map(({x,i})=>`<div class="itin-item"><div class="itin-icon">${typeIcons[x.type]||'📍'}</div><div><div class="itin-title">${esc(x.name)}${x.perk?'<span class="perk-badge">Member Perk</span>':''}</div><div class="itin-meta">${esc(x.address||'No mapped address')}${x.offer?'<br>'+esc(x.offer):''}</div></div><button class="trip-btn" data-remove-item="${i}" type="button">Remove</button>${itemDateFields(x,i)}</div>`).join('');
+  renderTripMap();updateBudget();
+}
+document.getElementById('itineraryList').addEventListener('click',e=>{const b=e.target.closest('[data-remove-item]');if(!b)return;tripState.items.splice(Number(b.dataset.removeItem),1);renderItinerary();localSave();});
+document.getElementById('itineraryList').addEventListener('input',e=>{const f=e.target.dataset.itemField;if(!f)return;const x=tripState.items[Number(e.target.dataset.i)];if(!x)return;x[f]=f==='price'?(e.target.value===''?null:Number(e.target.value)):e.target.value;updateBudget();localSave();});
+document.getElementById('itineraryList').addEventListener('change',e=>{const f=e.target.dataset.itemField;if(!f)return;const x=tripState.items[Number(e.target.dataset.i)];if(!x)return;x[f]=f==='price'?(e.target.value===''?null:Number(e.target.value)):e.target.value;renderItinerary();localSave();});
 let memberPerks=[];
 function normalizePerkType(category){const c=String(category||'').toLowerCase();if(c.includes('hotel')||c.includes('lodg'))return 'hotel';if(c.includes('restaurant')||c.includes('food')||c.includes('dining'))return 'restaurant';if(c.includes('gym')||c.includes('fitness')||c.includes('spa')||c.includes('wellness')||c.includes('activity'))return 'activity';return 'activity';}
 function perkDestinationHint(){const mapped=tripState.items.find(x=>x.address);return mapped?String(mapped.address).toLowerCase():'';}
 function renderMemberPerks(){const box=document.getElementById('perkResults');if(!box)return;const q=(document.getElementById('perkSearch')?.value||'').trim().toLowerCase();const cat=document.getElementById('perkCategory')?.value||'all';const hint=perkDestinationHint();let rows=memberPerks.filter(p=>{const pc=normalizePerkType(p.category);const catOk=cat==='all'||(cat==='gym'&&String(p.category||'').toLowerCase().includes('gym'))||(cat==='spa'&&String(p.category||'').toLowerCase().includes('spa'))||pc===cat;const hay=[p.business_name,p.city,p.state,p.nearest_airport,p.offer_title,p.category].join(' ').toLowerCase();return catOk&&(!q||hay.includes(q));});rows.sort((a,b)=>{const ah=[a.city,a.state,a.nearest_airport].join(' ').toLowerCase(),bh=[b.city,b.state,b.nearest_airport].join(' ').toLowerCase();return Number(Boolean(hint&&bh&&hint.includes(String(b.city||'').toLowerCase())))-Number(Boolean(hint&&ah&&hint.includes(String(a.city||'').toLowerCase())));});if(!rows.length){box.innerHTML='<div class="perk-empty">No member perks match this search yet.</div>';return;}box.innerHTML=rows.map(p=>`<div class="perk-option"><div>${p.image_url?`<img src="${attr(p.image_url)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`:'<div style="width:64px;height:54px;background:#eef1f3;border-radius:5px"></div>'}</div><div><div class="perk-option-name">${esc(p.business_name||'Member Perk')}</div><div class="perk-option-meta">${esc([p.city,p.state,p.nearest_airport].filter(Boolean).join(' · '))}</div>${p.offer_title||p.discount_text?`<div class="perk-option-offer">${esc(p.offer_title||p.discount_text)}</div>`:''}</div><button class="perk-add" type="button" data-add-perk="${attr(p.id)}">Add to Trip</button></div>`).join('');}
 async function loadMemberPerks(){const box=document.getElementById('perkResults');if(box)box.innerHTML='<div class="perk-empty">Loading member perks…</div>';try{const r=await supabaseClient.from('member_perks').select('id,category,business_name,offer_title,discount_text,city,state,nearest_airport,address,image_url,website_url,booking_url').eq('approved',true).eq('active',true).order('featured',{ascending:false}).order('business_name');if(r.error)throw r.error;memberPerks=r.data||[];renderMemberPerks();}catch(e){console.error('PERKS LOAD ERROR:',e);if(box)box.innerHTML='<div class="perk-empty">Could not load member perks right now.</div>';}}
 async function geocodePerk(perk){const query=perk.address||[perk.business_name,perk.city,perk.state].filter(Boolean).join(', ');if(!query)return {lat:null,lon:null,address:''};try{const u='https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=us&q='+encodeURIComponent(query);const r=await fetch(u,{headers:{Accept:'application/json'}});if(!r.ok)throw new Error('geocode');const d=await r.json();if(d[0])return {lat:Number(d[0].lat),lon:Number(d[0].lon),address:perk.address||d[0].display_name};}catch(e){}return {lat:null,lon:null,address:perk.address||[perk.city,perk.state].filter(Boolean).join(', ')};}
-async function addMemberPerk(id,button){const perk=memberPerks.find(p=>String(p.id)===String(id));if(!perk)return;if(button){button.disabled=true;button.textContent='Adding…';}const geo=await geocodePerk(perk);tripState.items.push({type:normalizePerkType(perk.category),name:perk.business_name||'Member Perk',address:geo.address,lat:geo.lat,lon:geo.lon,perk:true,perkId:perk.id,offer:perk.offer_title||perk.discount_text||''});renderItinerary();localSave();if(button){button.textContent='Added ✓';}setTimeout(renderMemberPerks,700);}
+async function addMemberPerk(id,button){const perk=memberPerks.find(p=>String(p.id)===String(id));if(!perk)return;if(button){button.disabled=true;button.textContent='Adding…';}const geo=await geocodePerk(perk);tripState.items.push({type:normalizePerkType(perk.category),name:perk.business_name||'Member Perk',address:geo.address,lat:geo.lat,lon:geo.lon,perk:true,perkId:perk.id,offer:perk.offer_title||perk.discount_text||'',startDate:'',startTime:'',endDate:'',endTime:'',price:null,priceMode:'total',notes:''});renderItinerary();localSave();if(button){button.textContent='Added ✓';}setTimeout(renderMemberPerks,700);}
 document.getElementById('perkResults').addEventListener('click',e=>{const b=e.target.closest('[data-add-perk]');if(b)addMemberPerk(b.dataset.addPerk,b);});document.getElementById('perkSearch').addEventListener('input',renderMemberPerks);document.getElementById('perkCategory').addEventListener('change',renderMemberPerks);document.getElementById('refreshPerksBtn').addEventListener('click',loadMemberPerks);loadMemberPerks();
 
 async function searchPlaces(){const q=document.getElementById('placeSearch').value.trim();if(!q)return;const box=document.getElementById('placeResults');box.style.display='block';box.innerHTML='<button class="place-result" disabled>Searching…</button>';try{const u='https://nominatim.openstreetmap.org/search?format=jsonv2&limit=8&addressdetails=1&countrycodes=us&q='+encodeURIComponent(q);const r=await fetch(u,{headers:{'Accept':'application/json'}});if(!r.ok)throw new Error('Search unavailable');const data=await r.json();box.innerHTML=data.length?data.map((x,i)=>`<button type="button" class="place-result" data-place="${i}"><strong>${esc(x.name||x.display_name.split(',')[0])}</strong><small>${esc(x.display_name)}</small></button>`).join(''):'<button class="place-result" disabled>No places found. Try adding the city/state.</button>';box._places=data;}catch(err){box.innerHTML='<button class="place-result" disabled>Place search is temporarily unavailable. You can still add the item without a map location.</button>';}}
 document.getElementById('searchPlaceBtn').addEventListener('click',searchPlaces);document.getElementById('placeSearch').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();searchPlaces();}});
-document.getElementById('placeResults').addEventListener('click',e=>{const b=e.target.closest('[data-place]');if(!b)return;const x=e.currentTarget._places[Number(b.dataset.place)];tripState.items.push({type:document.getElementById('placeType').value,name:x.name||x.display_name.split(',')[0],address:x.display_name,lat:Number(x.lat),lon:Number(x.lon),perk:false});e.currentTarget.style.display='none';document.getElementById('placeSearch').value='';renderItinerary();});
-document.getElementById('addManualBtn').addEventListener('click',()=>{const name=document.getElementById('placeSearch').value.trim();if(!name)return;tripState.items.push({type:document.getElementById('placeType').value,name,address:'',lat:null,lon:null,perk:false});document.getElementById('placeSearch').value='';renderItinerary();});
-function syncTripFields(){tripState.name=document.getElementById('tripName').value.trim();tripState.start=document.getElementById('tripStart').value;tripState.end=document.getElementById('tripEnd').value;}
+document.getElementById('placeResults').addEventListener('click',e=>{const b=e.target.closest('[data-place]');if(!b)return;const x=e.currentTarget._places[Number(b.dataset.place)];tripState.items.push({type:document.getElementById('placeType').value,name:x.name||x.display_name.split(',')[0],address:x.display_name,lat:Number(x.lat),lon:Number(x.lon),perk:false,startDate:'',startTime:'',endDate:'',endTime:'',price:null,priceMode:'total',notes:''});e.currentTarget.style.display='none';document.getElementById('placeSearch').value='';renderItinerary();});
+document.getElementById('addManualBtn').addEventListener('click',()=>{const name=document.getElementById('placeSearch').value.trim();if(!name)return;tripState.items.push({type:document.getElementById('placeType').value,name,address:'',lat:null,lon:null,perk:false,startDate:'',startTime:'',endDate:'',endTime:'',price:null,priceMode:'total',notes:''});document.getElementById('placeSearch').value='';renderItinerary();});
+function syncTripFields(){tripState.name=document.getElementById('tripName').value.trim();tripState.start=document.getElementById('tripStart').value;tripState.end=document.getElementById('tripEnd').value;const b=document.getElementById('tripBudget');tripState.budget=b&&b.value!==''?Number(b.value):null;}
+function itemCost(x){const p=Number(x.price);if(!Number.isFinite(p)||p<0)return 0;if(x.type==='hotel'&&x.priceMode==='nightly'&&x.startDate&&x.endDate){const a=new Date(x.startDate+'T00:00:00Z'),b=new Date(x.endDate+'T00:00:00Z');return p*Math.max(1,Math.round((b-a)/86400000));}return p;}
+function updateBudget(){const total=tripState.items.reduce((n,x)=>n+itemCost(x),0);const perk=tripState.items.filter(x=>x.perk).reduce((n,x)=>n+itemCost(x),0);const budget=Number(tripState.budget);document.getElementById('tripTotal').textContent=total.toLocaleString(undefined,{style:'currency',currency:'USD'});document.getElementById('perkSpend').textContent=perk.toLocaleString(undefined,{style:'currency',currency:'USD'});document.getElementById('tripRemaining').textContent=Number.isFinite(budget)&&budget>0?(budget-total).toLocaleString(undefined,{style:'currency',currency:'USD'}):'—';document.getElementById('budgetProgress').style.width=(Number.isFinite(budget)&&budget>0?Math.min(100,total/budget*100):0)+'%';}
 function localSave(){syncTripFields();localStorage.setItem('pjt_trip_draft',JSON.stringify(tripState));}
 function showTripStatus(message,type='info'){
   const note=document.getElementById('tripSetupNote');
@@ -739,7 +819,7 @@ async function saveTrip(){
   const {data:{user},error:userError}=await supabaseClient.auth.getUser();
   if(userError||!user){localSave();showTripStatus('<strong>Could not save:</strong> Your sign-in session is not active. Sign out and sign back in, then try again.','error');return false;}
   try{
-    const payload={owner_id:user.id,name:tripState.name||'My Trip',start_date:tripState.start||null,end_date:tripState.end||null};
+    const payload={owner_id:user.id,name:tripState.name||'My Trip',start_date:tripState.start||null,end_date:tripState.end||null,budget:Number.isFinite(Number(tripState.budget))?Number(tripState.budget):null};
     let trip;
     if(tripState.id){
       const r=await supabaseClient.from('trips').update(payload).eq('id',tripState.id).select().single();
@@ -750,7 +830,7 @@ async function saveTrip(){
     }
     const del=await supabaseClient.from('trip_items').delete().eq('trip_id',tripState.id); if(del.error)throw del.error;
     if(tripState.items.length){
-      const rows=tripState.items.map((x,i)=>({trip_id:tripState.id,sort_order:i,item_type:x.type,name:x.name,address:x.address||null,latitude:Number.isFinite(x.lat)?x.lat:null,longitude:Number.isFinite(x.lon)?x.lon:null,is_perk:!!x.perk}));
+      const rows=tripState.items.map((x,i)=>({trip_id:tripState.id,sort_order:i,item_type:x.type,name:x.name,address:x.address||null,latitude:Number.isFinite(x.lat)?x.lat:null,longitude:Number.isFinite(x.lon)?x.lon:null,is_perk:!!x.perk,start_date:x.startDate||null,start_time:x.startTime||null,end_date:x.endDate||null,end_time:x.endTime||null,price:Number.isFinite(Number(x.price))?Number(x.price):null,price_mode:x.priceMode||'total',notes:x.notes||null}));
       const r=await supabaseClient.from('trip_items').insert(rows); if(r.error)throw r.error;
     }
     localSave(); showTripStatus('<strong>Saved to your Private Jet Tracker account.</strong>','success'); await renderSavedTrips(); return true;
@@ -787,8 +867,8 @@ async function openTrip(tripId){
   try{
     const tr=await supabaseClient.from('trips').select('*').eq('id',tripId).single();if(tr.error)throw tr.error;
     const items=await fetchTripItems(tripId);const members=await supabaseClient.from('trip_members').select('email,role').eq('trip_id',tripId);if(members.error)throw members.error;
-    const t=tr.data;Object.assign(tripState,{id:t.id,ownerId:t.owner_id,name:t.name||'',start:t.start_date||'',end:t.end_date||'',items:items.map(x=>({type:x.item_type,name:x.name,address:x.address||'',lat:x.latitude==null?null:Number(x.latitude),lon:x.longitude==null?null:Number(x.longitude),perk:!!x.is_perk})),members:members.data||[],packing:[]});
-    document.getElementById('tripName').value=tripState.name;document.getElementById('tripStart').value=tripState.start;document.getElementById('tripEnd').value=tripState.end;renderItinerary();renderMembers();renderPacking();localSave();showTripStatus('');await renderSavedTrips();setTimeout(()=>document.getElementById('tripName').scrollIntoView({behavior:'smooth',block:'center'}),50);
+    const t=tr.data;Object.assign(tripState,{id:t.id,ownerId:t.owner_id,name:t.name||'',start:t.start_date||'',end:t.end_date||'',budget:t.budget==null?null:Number(t.budget),items:items.map(x=>({type:x.item_type,name:x.name,address:x.address||'',lat:x.latitude==null?null:Number(x.latitude),lon:x.longitude==null?null:Number(x.longitude),perk:!!x.is_perk,startDate:x.start_date||'',startTime:x.start_time?String(x.start_time).slice(0,5):'',endDate:x.end_date||'',endTime:x.end_time?String(x.end_time).slice(0,5):'',price:x.price==null?null:Number(x.price),priceMode:x.price_mode||'total',notes:x.notes||''})),members:members.data||[],packing:[]});
+    document.getElementById('tripName').value=tripState.name;document.getElementById('tripStart').value=tripState.start;document.getElementById('tripEnd').value=tripState.end;document.getElementById('tripBudget').value=tripState.budget??'';setOpenedTripUI(true);renderItinerary();renderMembers();renderPacking();localSave();showTripStatus('');await renderSavedTrips();setTimeout(()=>document.getElementById('openedTripBar').scrollIntoView({behavior:'smooth',block:'start'}),50);
   }catch(e){showTripStatus('<strong>Could not open trip:</strong> '+esc(e?.message||'Unknown error'),'error');}
 }
 async function deleteTrip(tripId){
@@ -796,14 +876,46 @@ async function deleteTrip(tripId){
   try{const r=await supabaseClient.from('trips').delete().eq('id',tripId);if(r.error)throw r.error;if(tripState.id===tripId)resetTrip();await renderSavedTrips();}
   catch(e){showTripStatus('<strong>Could not delete trip:</strong> '+esc(e?.message||'Unknown error'),'error');}
 }
-function resetTrip(){Object.assign(tripState,{id:null,ownerId:null,name:'',start:'',end:'',items:[],members:[],packing:[]});document.getElementById('tripName').value='';document.getElementById('tripStart').value='';document.getElementById('tripEnd').value='';renderItinerary();renderMembers();renderPacking();localStorage.removeItem('pjt_trip_draft');showTripStatus('');renderSavedTrips();}
-document.getElementById('savedTripsGrid').addEventListener('click',e=>{const open=e.target.closest('[data-open-trip]');if(open){openTrip(open.dataset.openTrip);return;}const del=e.target.closest('[data-delete-trip]');if(del){deleteTrip(del.dataset.deleteTrip);}});
+function resetTrip(){Object.assign(tripState,{id:null,ownerId:null,name:'',start:'',end:'',budget:null,items:[],members:[],packing:[]});document.getElementById('tripName').value='';document.getElementById('tripStart').value='';document.getElementById('tripEnd').value='';document.getElementById('tripBudget').value='';setOpenedTripUI(false);renderItinerary();renderMembers();renderPacking();localStorage.removeItem('pjt_trip_draft');showTripStatus('');renderSavedTrips();}
+document.getElementById('savedTripsGrid').addEventListener('click',e=>{const del=e.target.closest('[data-delete-trip]');if(del){deleteTrip(del.dataset.deleteTrip);return;}const open=e.target.closest('[data-open-trip]');const card=e.target.closest('[data-trip-card]');if(open||card)openTrip((open&&open.dataset.openTrip)||(card&&card.dataset.tripCard));});
 document.getElementById('newTripTopBtn').addEventListener('click',resetTrip);
 async function loadLatestTrip(){
   const {data:{user}}=await supabaseClient.auth.getUser(); if(!user)return;
-  try{const tr=await supabaseClient.from('trips').select('*').order('updated_at',{ascending:false}).limit(1).maybeSingle();if(tr.error)throw tr.error;if(tr.data)await openTrip(tr.data.id);else await renderSavedTrips();}
+  try{const tr=await supabaseClient.from('trips').select('*').order('updated_at',{ascending:false}).limit(1).maybeSingle();if(tr.error)throw tr.error;await renderSavedTrips();}
   catch(e){console.error('TRIP LOAD ERROR:',e);showTripStatus('<strong>Could not load saved trips:</strong> '+esc(e?.message||'Unknown error'),'error');}
 }
+
+function setOpenedTripUI(open){
+  document.getElementById('openedTripBar').classList.toggle('active',!!open);
+  document.querySelectorAll('.trip-open-only').forEach(x=>x.classList.toggle('active',!!open));
+  if(open){document.getElementById('openedTripTitle').textContent=tripState.name||'Trip Itinerary';document.getElementById('openedTripMeta').textContent=formatTripDates(tripState.start,tripState.end);}
+}
+document.getElementById('tripBudget').addEventListener('input',e=>{tripState.budget=e.target.value===''?null:Number(e.target.value);updateBudget();localSave();});
+document.getElementById('backToTripsBtn').addEventListener('click',()=>document.querySelector('.my-trips-card').scrollIntoView({behavior:'smooth',block:'start'}));
+document.getElementById('shareTopBtn').addEventListener('click',()=>document.getElementById('sharingCard').scrollIntoView({behavior:'smooth',block:'center'}));
+document.getElementById('printTripBtn').addEventListener('click',()=>window.print());
+function icsEscape(v){return String(v||'').replace(/\\/g,'\\\\').replace(/\n/g,'\\n').replace(/,/g,'\\,').replace(/;/g,'\\;');}
+function icsDate(d,t,end=false){if(!d)return '';if(!t)return d.replaceAll('-','');return d.replaceAll('-','')+'T'+t.replace(':','')+'00';}
+function downloadCalendar(){
+  if(!tripState.id){showTripStatus('<strong>Save the trip first</strong> before adding it to your calendar.','error');return;}
+  const events=tripState.items.filter(x=>x.startDate);
+  if(!events.length){showTripStatus('<strong>Add a date</strong> to at least one itinerary item before exporting the calendar.','error');return;}
+  const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Private Jet Tracker//Trip Itinerary//EN','CALSCALE:GREGORIAN','METHOD:PUBLISH'];
+  events.forEach((x,i)=>{
+    const allDay=!x.startTime;
+    let endDate=x.endDate||x.startDate,endTime=x.endTime||x.startTime;
+    if(allDay && !x.endDate){const d=new Date(x.startDate+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+1);endDate=d.toISOString().slice(0,10);}
+    lines.push('BEGIN:VEVENT','UID:'+icsEscape((tripState.id||'trip')+'-'+i+'@privatejettracker.info'),'DTSTAMP:'+new Date().toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,''));
+    lines.push((allDay?'DTSTART;VALUE=DATE:':'DTSTART:')+icsDate(x.startDate,x.startTime));
+    lines.push((allDay?'DTEND;VALUE=DATE:':'DTEND:')+icsDate(endDate,endTime));
+    lines.push('SUMMARY:'+icsEscape((typeIcons[x.type]||'')+' '+x.name),'LOCATION:'+icsEscape(x.address||''),'DESCRIPTION:'+icsEscape([x.notes,x.offer,x.price!=null?'Price: '+itemCost(x).toLocaleString(undefined,{style:'currency',currency:'USD'}):''].filter(Boolean).join('\n')));
+    lines.push('END:VEVENT');
+  });
+  lines.push('END:VCALENDAR');
+  const blob=new Blob([lines.join('\r\n')],{type:'text/calendar;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(tripState.name||'trip').replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'')+'-itinerary.ics';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
+}
+document.getElementById('calendarTripBtn').addEventListener('click',downloadCalendar);
+
 async function shareTrip(){
  const email=document.getElementById('shareEmail').value.trim().toLowerCase(),role=document.getElementById('shareRole').value;if(!email)return;
  if(!tripState.id){const ok=await saveTrip();if(!ok||!tripState.id)return;}
@@ -815,7 +927,7 @@ function generatePacking(){syncTripFields();const text=(tripState.items.map(x=>x
 document.getElementById('generatePackingBtn').addEventListener('click',generatePacking);
 function renderPacking(){const el=document.getElementById('packingList');el.innerHTML=tripState.packing.map((x,i)=>`<label class="packing-item"><input type="checkbox" data-pack="${i}" ${x.checked?'checked':''}> ${esc(x.name)}</label>`).join('')||'<div class="trip-muted">Generate a list after building the itinerary.</div>';}
 document.getElementById('packingList').addEventListener('change',e=>{if(!e.target.matches('[data-pack]'))return;tripState.packing[Number(e.target.dataset.pack)].checked=e.target.checked;localSave();});
-(function loadDraft(){try{const d=JSON.parse(localStorage.getItem('pjt_trip_draft')||'null');if(d)Object.assign(tripState,d);}catch(e){}document.getElementById('tripName').value=tripState.name||'';document.getElementById('tripStart').value=tripState.start||'';document.getElementById('tripEnd').value=tripState.end||'';renderItinerary();renderMembers();renderPacking();})();
+(function loadDraft(){try{const d=JSON.parse(localStorage.getItem('pjt_trip_draft')||'null');if(d)Object.assign(tripState,d);}catch(e){}document.getElementById('tripName').value=tripState.name||'';document.getElementById('tripStart').value=tripState.start||'';document.getElementById('tripEnd').value=tripState.end||'';document.getElementById('tripBudget').value=tripState.budget??'';setOpenedTripUI(!!tripState.id);renderItinerary();renderMembers();renderPacking();})();
 </script>
 </body>
 </html>
