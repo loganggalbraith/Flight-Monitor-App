@@ -307,7 +307,7 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
 
 <header><div class="container"><div class="header-brand"><img class="brand-emblem" src="app-icon.png" alt="Private Jet Tracker emblem"><div><h1 id="pageTitle">U.S. Private Jet Tracker</h1><p id="pageSubtitle">flyExclusive aircraft across the United States</p></div></div></div></header>
 <main class="container">
-<div class="top-nav"><button id="trackerTab" class="active" type="button">Flight Tracker</button><button id="tripTab" type="button">Trip Planner</button><button id="perksTab" type="button" onclick="window.location.href='perks.html'">Member Perks</button><button id="merchTab" type="button">Merch</button></div>
+<div class="top-nav"><button id="trackerTab" class="active" type="button">Flight Tracker</button><button id="tripTab" type="button">Trip Planner</button><button id="perksTab" type="button">Member Perks</button><button id="merchTab" type="button">Merch</button></div>
 <div id="trackerView" class="view-panel active">
 
 <section class="region-bar">
@@ -430,7 +430,8 @@ function showAuthMessage(message, type=""){
 }
 
 
-let vendorDemoMode=false;
+const pageParams = new URLSearchParams(window.location.search);
+let vendorDemoMode = pageParams.get("demo") === "1";
 function enterVendorDemo(){
   vendorDemoMode=true;
   authScreen.style.display="none";
@@ -477,6 +478,9 @@ function showLoggedIn(user){
 
 document.getElementById("vendorDemoBtn").addEventListener("click",enterVendorDemo);
 document.getElementById("exitVendorDemoBtn").addEventListener("click",exitVendorDemo);
+document.getElementById("perksTab").addEventListener("click",()=>{
+  window.location.href = vendorDemoMode ? "perks.html?demo=1" : "perks.html";
+});
 signInTab.addEventListener("click",()=>setAuthMode("signin"));
 signUpTab.addEventListener("click",()=>setAuthMode("signup"));
 
@@ -530,11 +534,19 @@ signOutBtn.addEventListener("click", async ()=>{
 });
 
 supabaseClient.auth.onAuthStateChange((_event, session)=>{
+  if(vendorDemoMode){
+    enterVendorDemo();
+    return;
+  }
   if(session?.user) showLoggedIn(session.user);
   else showLoggedOut();
 });
 
 (async ()=>{
+  if(vendorDemoMode){
+    enterVendorDemo();
+    return;
+  }
   const { data } = await supabaseClient.auth.getSession();
   if(data.session?.user) showLoggedIn(data.session.user);
   else showLoggedOut();
