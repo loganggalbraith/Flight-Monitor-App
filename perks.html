@@ -383,10 +383,36 @@ footer{
     padding:8px 9px
   }
 }
+
+.demo-banner{
+  display:none;
+  background:#fff4cf;
+  border-bottom:1px solid #e3cf83;
+  color:#4d421f
+}
+.demo-banner .container{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding-top:9px;
+  padding-bottom:9px;
+  font-size:11px
+}
+.demo-banner strong{font-weight:800}
+.demo-banner a{color:#4d421f;font-weight:700;text-decoration:none}
+
 </style>
 </head>
 
 <body>
+
+<div id="demoBanner" class="demo-banner">
+  <div class="container">
+    <div><strong>Vendor Demo Mode</strong> — This is how participating offers appear to Private Jet Tracker members.</div>
+    <a href="index.html?demo=1">Back to Demo</a>
+  </div>
+</div>
 
 <header>
   <div class="container header-row">
@@ -406,7 +432,7 @@ footer{
       </p>
     </div>
 
-    <a class="back-link" href="index.html">
+    <a id="backLink" class="back-link" href="index.html">
       Back to Tracker
     </a>
 
@@ -518,6 +544,14 @@ const stateEl = $("state");
 const airportEl = $("airport");
 
 let perks = [];
+
+const pageParams = new URLSearchParams(window.location.search);
+const vendorDemoMode = pageParams.get("demo") === "1";
+
+if(vendorDemoMode){
+  $("demoBanner").style.display = "block";
+  $("backLink").href = "index.html?demo=1";
+}
 
 
 /* ------------------------------
@@ -1012,6 +1046,41 @@ async function getFreshSession(){
 }
 
 
+async function loadPerksForDisplay(isDemo=false){
+
+  const {
+    data,
+    error
+  } = await sb
+    .from("member_perks_public")
+    .select("*")
+    .order("featured",{ascending:false})
+    .order("created_at",{ascending:false});
+
+  if(error){
+    console.error("Perks lookup failed:",error);
+    statusEl.textContent =
+      isDemo
+        ? "The Vendor Demo perks preview couldn't be loaded."
+        : "Your membership is active, but the perks list couldn't be loaded.";
+    statusEl.classList.add("error");
+    return;
+  }
+
+  perks = data || [];
+
+  statusEl.textContent =
+    isDemo
+      ? "Vendor Demo · Member Perks preview unlocked."
+      : "Membership verified · Member Perks unlocked.";
+
+  statusEl.classList.add("good");
+  appEl.classList.remove("hidden");
+  fillFilters();
+  render();
+}
+
+
 /* ------------------------------
    INITIALIZE PAGE
 ------------------------------ */
@@ -1026,6 +1095,11 @@ async function init(){
     "error"
   );
 
+
+  if(vendorDemoMode){
+    await loadPerksForDisplay(true);
+    return;
+  }
 
   /*
     STEP 1
@@ -1104,59 +1178,7 @@ async function init(){
     Load member perks
   */
 
-  const {
-    data,
-    error
-  } = await sb
-    .from("member_perks_public")
-    .select("*")
-    .order(
-      "featured",
-      {ascending:false}
-    )
-    .order(
-      "created_at",
-      {ascending:false}
-    );
-
-
-  if(error){
-
-    console.error(
-      "Perks lookup failed:",
-      error
-    );
-
-    statusEl.textContent =
-      "Your membership is active, but the perks list couldn't be loaded.";
-
-    statusEl.classList.add("error");
-
-    return;
-
-  }
-
-
-  /*
-    STEP 4
-    Display perks
-  */
-
-  perks = data || [];
-
-
-  statusEl.textContent =
-    "Membership verified · Member Perks unlocked.";
-
-  statusEl.classList.add("good");
-
-
-  appEl.classList.remove("hidden");
-
-
-  fillFilters();
-
-  render();
+  await loadPerksForDisplay(false);
 
 }
 
