@@ -1,8 +1,8 @@
 {
-  "last_updated": "2026-09-21T05:29:31.731304+00:00",
+  "last_updated": "2026-09-21T05:46:15.312254+00:00",
   "flight_count": 1,
   "region_counts": {
-    "Nevada": 1
+    "Southern California": 1
   },
   "regions": [
     {
@@ -72,8 +72,8 @@
       "flightaware_url": "https://www.flightaware.com/live/flight/JRE870",
       "route_origin": null,
       "route_destination": null,
-      "region_id": "nv",
-      "region_name": "Nevada",
+      "region_id": "socal",
+      "region_name": "Southern California",
       "region_reason": "possible_approach",
       "destination_region_id": null,
       "destination_region_name": null,
@@ -82,23 +82,23 @@
       "grounded_departure": false,
       "ground_airport": null,
       "ground_airport_name": null,
-      "latitude": 35.1866,
-      "longitude": -108.5287,
-      "altitude_meters": 12192,
-      "velocity_mps": 184.97,
-      "heading": 266.81,
-      "vertical_rate": 0,
+      "latitude": 35.0592,
+      "longitude": -110.6613,
+      "altitude_meters": 8450.58,
+      "velocity_mps": 201.51,
+      "heading": 247.17,
+      "vertical_rate": -6.18,
       "on_ground": false,
-      "nearest_airport": "KASE",
-      "nearest_airport_name": "Aspen/Pitkin County Airport",
-      "distance_to_nearest_airport_miles": 293.5,
-      "possible_destination": "KHND",
-      "possible_destination_name": "Henderson Executive Airport",
-      "possible_destination_region": "Nevada",
-      "possible_destination_distance_miles": 375.1,
-      "possible_destination_bearing": 280.2,
-      "possible_heading_difference": 13.4,
-      "last_seen": "2026-09-21T05:29:31.246247+00:00"
+      "nearest_airport": "KHND",
+      "nearest_airport_name": "Henderson Executive Airport",
+      "distance_to_nearest_airport_miles": 259.3,
+      "possible_destination": "KPSP",
+      "possible_destination_name": "Palm Springs International Airport",
+      "possible_destination_region": "Southern California",
+      "possible_destination_distance_miles": 343.7,
+      "possible_destination_bearing": 257.4,
+      "possible_heading_difference": 10.2,
+      "last_seen": "2026-09-21T05:46:15.177883+00:00"
     }
   ],
   "seen_alerts": [
@@ -924,6 +924,7 @@
     "possible|JRE870|KMDT",
     "possible|JRE870|KPGV",
     "possible|JRE870|KPNE",
+    "possible|JRE870|KPSP",
     "possible|JRE870|KVGT",
     "possible|JRE875|KAGC",
     "possible|JRE875|KAVL",
