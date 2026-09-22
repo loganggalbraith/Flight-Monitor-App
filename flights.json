@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-22T10:43:58.414160+00:00",
+  "last_updated": "2026-09-22T10:57:50.712444+00:00",
   "flight_count": 1,
   "region_counts": {
     "Unassigned / En Route": 1
@@ -86,7 +86,7 @@
       "longitude": -82.69,
       "altitude_meters": null,
       "velocity_mps": 0,
-      "heading": 351.56,
+      "heading": 354.38,
       "vertical_rate": null,
       "on_ground": true,
       "nearest_airport": "KCLT",
@@ -98,7 +98,7 @@
       "possible_destination_distance_miles": null,
       "possible_destination_bearing": null,
       "possible_heading_difference": null,
-      "last_seen": "2026-09-22T10:43:58.413999+00:00"
+      "last_seen": "2026-09-22T10:57:50.712305+00:00"
     }
   ],
   "seen_alerts": [
