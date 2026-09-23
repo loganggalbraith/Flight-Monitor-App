@@ -842,7 +842,26 @@ document.getElementById('tripTab').addEventListener('click',()=>showView('trip')
 document.getElementById('merchTab').addEventListener('click',()=>showView('merch'));document.getElementById('trackerTab').addEventListener('click',()=>showView('tracker'));
 function initTripMap(){if(tripMap)return;tripMap=L.map('tripMap').setView([39.5,-98.35],4);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(tripMap);tripMarkers=L.layerGroup().addTo(tripMap);}
 function tripMarkerLabel(n){let s='',x=n+1;while(x>0){x--;s=String.fromCharCode(65+(x%26))+s;x=Math.floor(x/26);}return s;}
-function renderTripMap(){initTripMap();tripMarkers.clearLayers();const pts=[];const mapped=tripState.items.map((x,i)=>({x,i})).filter(o=>Number.isFinite(o.x.lat)&&Number.isFinite(o.x.lon));mapped.forEach(({x},n)=>{const label=tripMarkerLabel(n);const icon=L.divIcon({className:'trip-letter-marker',html:`<div style="width:30px;height:30px;border-radius:50% 50% 50% 0;background:#111;color:#fff;border:2px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font:700 12px Arial,sans-serif;transform:rotate(-45deg)"><span style="transform:rotate(45deg)">${label}</span></div>`,iconSize:[30,30],iconAnchor:[15,30],popupAnchor:[0,-28]});const m=L.marker([x.lat,x.lon],{icon}).addTo(tripMarkers);m.bindPopup(`<strong>${label}. ${typeIcons[x.type]||'📍'} ${esc(x.name)}</strong><br>${esc(x.address||'')}${x.perk?'<br><span class="perk-badge">Member Perk</span>':''}`);pts.push([x.lat,x.lon]);});if(pts.length>1)tripMap.fitBounds(pts,{padding:[30,30],maxZoom:14});else if(pts.length===1)tripMap.setView(pts[0],14);}
+let tripMapGeocoding=false;
+async function geocodeMissingTripItems(){
+ if(tripMapGeocoding)return;
+ const missing=tripState.items.filter(x=>!Number.isFinite(x.lat)&&!Number.isFinite(x.lon)&&x.address&& !['No mapped address','Address not added'].includes(x.address));
+ if(!missing.length)return;
+ tripMapGeocoding=true;let changed=false;
+ try{
+  for(const x of missing){
+   try{
+    const q=[x.name,x.address].filter(Boolean).join(', ');
+    let rr=await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&addressdetails=1&q='+encodeURIComponent(q),{headers:{'Accept':'application/json'}});
+    let d=rr.ok?await rr.json():[];
+    if(!d[0]){rr=await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&addressdetails=1&q='+encodeURIComponent(x.address),{headers:{'Accept':'application/json'}});d=rr.ok?await rr.json():[];}
+    if(d[0]){x.lat=Number(d[0].lat);x.lon=Number(d[0].lon);if(Number.isFinite(x.lat)&&Number.isFinite(x.lon))changed=true;}
+   }catch(e){console.debug('Automatic itinerary geocoding failed',x.name,e);}
+  }
+ }finally{tripMapGeocoding=false;}
+ if(changed){localSave();renderTripMap();}
+}
+function renderTripMap(){initTripMap();tripMarkers.clearLayers();const pts=[];const mapped=tripState.items.map((x,i)=>({x,i})).filter(o=>Number.isFinite(o.x.lat)&&Number.isFinite(o.x.lon));mapped.forEach(({x},n)=>{const label=tripMarkerLabel(n);const icon=L.divIcon({className:'trip-letter-marker',html:`<div style="width:30px;height:30px;border-radius:50% 50% 50% 0;background:#111;color:#fff;border:2px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font:700 12px Arial,sans-serif;transform:rotate(-45deg)"><span style="transform:rotate(45deg)">${label}</span></div>`,iconSize:[30,30],iconAnchor:[15,30],popupAnchor:[0,-28]});const m=L.marker([x.lat,x.lon],{icon}).addTo(tripMarkers);m.bindPopup(`<strong>${label}. ${typeIcons[x.type]||'📍'} ${esc(x.name)}</strong><br>${esc(x.address||'')}${x.perk?'<br><span class="perk-badge">Member Perk</span>':''}`);pts.push([x.lat,x.lon]);});if(pts.length>1)tripMap.fitBounds(pts,{padding:[30,30],maxZoom:14});else if(pts.length===1)tripMap.setView(pts[0],14);geocodeMissingTripItems();}
 function itemDateFields(x,i){
   const hotel=x.type==='hotel'||x.type==='vacation_rental';
   const startLabel=hotel?'Check-in date':'Date';
