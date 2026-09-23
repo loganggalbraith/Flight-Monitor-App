@@ -12,22 +12,23 @@ const merchSlides=[...document.querySelectorAll('.merch-slide')],merchDots=[...d
 function showMerchSlide(i){merchSlideIndex=i;merchSlides.forEach((x,n)=>x.classList.toggle('active',n===i));merchDots.forEach((x,n)=>x.classList.toggle('active',n===i));}
 if(merchSlides.length>1)setInterval(()=>showMerchSlide((merchSlideIndex+1)%merchSlides.length),4500);
 merchDots.forEach((d,i)=>d.addEventListener('click',()=>showMerchSlide(i)));
-const merchCart=[];
-function renderMerchCart(){
-  const el=document.getElementById('merchCart');
-  const total=merchCart.reduce((n,x)=>n+x.price*x.qty,0);
-  if(!merchCart.length)el.innerHTML='<div class="trip-muted">Your cart is empty.</div>';
-  else el.innerHTML=merchCart.map((x,i)=>`<div class="cart-row"><span>${esc(x.name)} <span class="trip-muted">${esc(x.option||'')}</span></span><span>× ${x.qty}</span><strong>${(x.price*x.qty).toLocaleString(undefined,{style:'currency',currency:'USD'})}</strong></div>`).join('');
-  document.getElementById('merchSubtotal').textContent=total.toLocaleString(undefined,{style:'currency',currency:'USD'});
-  document.getElementById('merchCheckout').disabled=true;
-}
-document.querySelectorAll('.add-merch').forEach(btn=>btn.addEventListener('click',()=>{
-  const card=btn.closest('.merch-card'),sel=card.querySelector('select'),qty=Math.max(1,Math.min(10,Number(card.querySelector('input[type=number]').value)||1));
-  merchCart.push({name:btn.dataset.name,price:Number(btn.dataset.price),qty,option:sel?sel.value:''});renderMerchCart();
-  document.getElementById('merchStatus').textContent='Added to cart. Checkout will activate after Stripe products are connected.';
+const MERCH_CHECKOUT={
+ hat:'https://buy.stripe.com/7sY00i0NQ7xWdFJ4gL97G01',
+ sweatshirt:{
+  S:'https://buy.stripe.com/6oUcN468a7xWbxB4gL97G02',
+  M:'https://buy.stripe.com/dRm4gy9kmf0oeJN4gL97G03',
+  L:'https://buy.stripe.com/5kQfZg9km8C0eJN5kP97G04',
+  XL:'https://buy.stripe.com/4gM9AS402bOcgRV5kP97G05',
+  '2XL':'https://buy.stripe.com/00w3cudAC05u59d00v97G06'
+ }
+};
+document.querySelectorAll('.buy-merch').forEach(btn=>btn.addEventListener('click',()=>{
+ const card=btn.closest('.merch-card'),sel=card.querySelector('select');
+ if(btn.dataset.product==='sweatshirt'){
+  const size=sel?.value||'M';window.location.href=MERCH_CHECKOUT.sweatshirt[size];return;
+ }
+ window.location.href=MERCH_CHECKOUT.hat;
 }));
-document.getElementById('clearMerchCart').addEventListener('click',()=>{merchCart.length=0;renderMerchCart();});
-
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -398,10 +399,10 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
     <div class="merch-dots"><span class="merch-dot active"></span><span class="merch-dot"></span></div>
   </div>
   <div class="merch-grid">
-    <article class="merch-card" data-merch="hat"><div class="merch-art"><img src="merch-hat.jpg" alt="Black Private Jet Tracker trucker hat"></div><div class="merch-body"><div class="merch-name">PJT Trucker Hat</div><div class="trip-muted">Adjustable branded trucker hat.</div><div class="merch-price">$28.00</div><div class="merch-controls"><select aria-label="Hat style"><option>Black</option><option>Black / White</option></select><input type="number" min="1" max="10" value="1" aria-label="Quantity"></div><div class="trip-actions"><button class="trip-btn primary add-merch" type="button" data-name="PJT Trucker Hat" data-price="28">Add to Cart</button></div></div></article>
-    <article class="merch-card" data-merch="sweatshirt"><div class="merch-art"><img src="merch-hoodie.jpg" alt="Black Private Jet Tracker sweatshirt"></div><div class="merch-body"><div class="merch-name">PJT Sweatshirt</div><div class="trip-muted">Minimal Private Jet Tracker emblem sweatshirt.</div><div class="merch-price">$48.00</div><div class="merch-controls"><select aria-label="Sweatshirt size"><option>S</option><option>M</option><option>L</option><option>XL</option><option>2XL</option></select><input type="number" min="1" max="10" value="1" aria-label="Quantity"></div><div class="trip-actions"><button class="trip-btn primary add-merch" type="button" data-name="PJT Sweatshirt" data-price="48">Add to Cart</button></div></div></article>
+    <article class="merch-card" data-merch="hat"><div class="merch-art"><img src="merch-hat.jpg" alt="Black Private Jet Tracker trucker hat"></div><div class="merch-body"><div class="merch-name">PJT Trucker Hat</div><div class="trip-muted">Adjustable branded trucker hat.</div><div class="merch-price">$28.00</div><div class="merch-controls"><select aria-label="Hat style"><option>Black</option><option>Black / White</option></select><input type="number" min="1" max="10" value="1" aria-label="Quantity"></div><div class="trip-actions"><button class="trip-btn primary buy-merch" type="button" data-product="hat">Buy Hat — $28</button></div></div></article>
+    <article class="merch-card" data-merch="sweatshirt"><div class="merch-art"><img src="merch-hoodie.jpg" alt="Black Private Jet Tracker sweatshirt"></div><div class="merch-body"><div class="merch-name">PJT Sweatshirt</div><div class="trip-muted">Minimal Private Jet Tracker emblem sweatshirt.</div><div class="merch-price">$48.00</div><div class="merch-controls"><select aria-label="Sweatshirt size"><option>S</option><option>M</option><option>L</option><option>XL</option><option>2XL</option></select><input type="number" min="1" max="10" value="1" aria-label="Quantity"></div><div class="trip-actions"><button class="trip-btn primary buy-merch" type="button" data-product="sweatshirt">Buy Sweatshirt — $48</button></div></div></article>
   </div>
-  <section class="trip-card merch-cart"><h2>Cart</h2><div id="merchCart"><div class="trip-muted">Your cart is empty.</div></div><div class="cart-total"><span>Subtotal</span><span id="merchSubtotal">$0.00</span></div><div class="trip-actions"><button id="merchCheckout" class="trip-btn primary" type="button" disabled>Checkout</button><button id="clearMerchCart" class="trip-btn" type="button">Clear Cart</button></div><div id="merchStatus" class="merch-note">Checkout will be enabled when merchandise checkout is connected.</div></section>
+  <section class="trip-card merch-cart"><h2>Secure Checkout</h2><div class="trip-muted">Choose your hat style or sweatshirt size above, then continue to Stripe for secure one-time payment and shipping information.</div></section>
 </div>
 <div id="tripView" class="view-panel">
 <section class="my-trips-card"><div class="my-trips-head"><div><h2>My Trips</h2><div class="trip-muted">Your saved trips and travel plans. Open a trip to continue editing it.</div></div><button id="newTripTopBtn" class="trip-btn primary" type="button">+ New Trip</button></div><div id="savedTripsGrid" class="trip-card-grid"><div class="saved-trip-empty">Loading your trips…</div></div></section>
