@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-23T04:43:45.585046+00:00",
+  "last_updated": "2026-09-23T04:58:25.070191+00:00",
   "flight_count": 1,
   "region_counts": {
     "Nevada": 1
@@ -82,23 +82,23 @@
       "grounded_departure": false,
       "ground_airport": null,
       "ground_airport_name": null,
-      "latitude": 36.2227,
-      "longitude": -116.083,
+      "latitude": 37.3953,
+      "longitude": -117.4268,
       "altitude_meters": 13106.4,
-      "velocity_mps": 196.39,
-      "heading": 301.07,
-      "vertical_rate": 0.33,
+      "velocity_mps": 193.9,
+      "heading": 315.75,
+      "vertical_rate": -0.33,
       "on_ground": false,
       "nearest_airport": "KVGT",
       "nearest_airport_name": "North Las Vegas Airport",
-      "distance_to_nearest_airport_miles": 49.5,
+      "distance_to_nearest_airport_miles": 148.2,
       "possible_destination": "KCXP",
       "possible_destination_name": "Carson Airport",
       "possible_destination_region": "Nevada",
-      "possible_destination_distance_miles": 286.2,
-      "possible_destination_bearing": 316.9,
-      "possible_heading_difference": 15.8,
-      "last_seen": "2026-09-23T04:43:45.584308+00:00"
+      "possible_destination_distance_miles": 176.3,
+      "possible_destination_bearing": 315.5,
+      "possible_heading_difference": 0.3,
+      "last_seen": "2026-09-23T04:58:25.069399+00:00"
     }
   ],
   "seen_alerts": [
