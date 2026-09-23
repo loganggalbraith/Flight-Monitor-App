@@ -18,13 +18,13 @@ const MERCH_CHECKOUT={
   '2XL':'https://buy.stripe.com/00w3cudAC05u59d00v97G06'
  }
 };
-document.querySelectorAll('.buy-merch').forEach(btn=>btn.addEventListener('click',()=>{
- const card=btn.closest('.merch-card'),sel=card.querySelector('select');
- if(btn.dataset.product==='sweatshirt'){
-  const size=sel?.value||'M';window.location.href=MERCH_CHECKOUT.sweatshirt[size];return;
- }
- window.location.href=MERCH_CHECKOUT.hat;
-}));
+document.addEventListener('click',e=>{
+ const btn=e.target.closest('.buy-merch');if(!btn)return;
+ const card=btn.closest('.merch-card'),sel=card?.querySelector('select');
+ let url=MERCH_CHECKOUT.hat;
+ if(btn.dataset.product==='sweatshirt'){const size=sel?.value||'M';url=MERCH_CHECKOUT.sweatshirt[size];}
+ if(url){window.location.assign(url);}
+});
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
