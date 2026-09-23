@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-23T05:52:52.614105+00:00",
+  "last_updated": "2026-09-23T05:56:42.444718+00:00",
   "flight_count": 1,
   "region_counts": {
     "Unassigned / En Route": 1
@@ -82,23 +82,23 @@
       "grounded_departure": false,
       "ground_airport": null,
       "ground_airport_name": null,
-      "latitude": 40.9809,
-      "longitude": -122.7249,
-      "altitude_meters": 4587.24,
-      "velocity_mps": 156.7,
-      "heading": 304.84,
-      "vertical_rate": -7.8,
+      "latitude": 41.1567,
+      "longitude": -123.0515,
+      "altitude_meters": 3627.12,
+      "velocity_mps": 157.14,
+      "heading": 311.15,
+      "vertical_rate": 0,
       "on_ground": false,
       "nearest_airport": "KRTS",
       "nearest_airport_name": "Reno/Stead Airport",
-      "distance_to_nearest_airport_miles": 175.4,
+      "distance_to_nearest_airport_miles": 196.2,
       "possible_destination": null,
       "possible_destination_name": null,
       "possible_destination_region": null,
       "possible_destination_distance_miles": null,
       "possible_destination_bearing": null,
       "possible_heading_difference": null,
-      "last_seen": "2026-09-23T05:52:52.613397+00:00"
+      "last_seen": "2026-09-23T05:56:42.444138+00:00"
     }
   ],
   "seen_alerts": [
