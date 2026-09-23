@@ -241,7 +241,26 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
 .itin-item{align-items:start}.itin-details{grid-column:2 / 4;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:4px}.itin-field label{display:block;font-size:8px;text-transform:uppercase;color:#7b858e;font-weight:700;margin-bottom:3px}.itin-field input,.itin-field select{width:100%;border:1px solid #d8dde1;border-radius:5px;padding:7px;font-size:11px;background:#fff}.itin-notes{grid-column:1/-1}
 .trip-open-only{display:none}.trip-open-only.active{display:block}
 @media(max-width:760px){.budget-grid{grid-template-columns:1fr 1fr}.itin-details{grid-template-columns:1fr 1fr}.opened-trip-actions{width:100%}.opened-trip-actions button{flex:1}}
-@media print{body{background:#fff}.user-bar,header,.top-nav,#trackerView,.my-trips-card,#tripEditorCard,.perk-picker,#placeResults,.trip-actions,.trip-open-hide,.opened-trip-actions,footer{display:none!important}#appShell,#tripView,.trip-open-only,.opened-trip-bar{display:block!important}.container{width:100%}.trip-card{border:0;padding:8px 0}.itin-item{break-inside:avoid}.budget-progress{border:1px solid #bbb}}
+@media print{
+ @page{size:letter;margin:.42in .48in}
+ *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ body{background:#fff!important;color:#111;font-size:9pt}
+ .user-bar,header,.top-nav,#trackerView,.my-trips-card,#tripEditorCard,.perk-picker,#placeResults,.trip-actions,.trip-open-hide,.opened-trip-actions,footer,#sharingCard,#packingList,#tripMap,.trip-grid>section:has(#tripMap){display:none!important}
+ #appShell,#tripView,.trip-open-only,.opened-trip-bar{display:block!important}
+ .container{width:100%;max-width:none}
+ .opened-trip-bar{background:#fff!important;color:#111!important;border:0;border-bottom:2px solid #111;border-radius:0;padding:0 0 10px;margin:0 0 10px}
+ .opened-trip-title{font-size:22pt;letter-spacing:-.5px}.opened-trip-meta{color:#555!important;font-size:9pt;margin-top:3px}
+ .trip-card{border:0!important;box-shadow:none!important;padding:0;margin:0 0 10px;background:#fff!important}
+ .trip-card h2{font-size:11pt;margin:0 0 6px;padding-bottom:4px;border-bottom:1px solid #bbb}
+ .trip-muted{display:none!important}
+ #budgetCard{margin-bottom:12px}.budget-grid{display:flex!important;gap:12px;border:0}.budget-box{border:0!important;background:#fff!important;padding:0!important;min-width:90px}.budget-box:first-child{display:none}.budget-label{font-size:6.5pt}.budget-value{font-size:10pt;margin-top:1px}.budget-progress{display:none}
+ #itineraryList{display:block}.itin-item{display:grid!important;grid-template-columns:26px 1fr!important;gap:5px 8px!important;border:0!important;border-bottom:1px solid #ddd!important;border-radius:0!important;padding:7px 0!important;margin:0!important;break-inside:avoid;page-break-inside:avoid;background:#fff!important}
+ .itin-icon{grid-column:1;grid-row:1;font-size:14pt}.itin-item>div:nth-child(2){grid-column:2;grid-row:1}.itin-title{font-size:10pt!important;font-weight:700}.itin-meta{font-size:7.5pt!important;line-height:1.25;color:#555!important;margin-top:1px}
+ .itin-item>button{display:none!important}.itin-details{grid-column:2!important;display:flex!important;flex-wrap:wrap!important;gap:3px 14px!important;margin:2px 0 0!important}
+ .itin-field{min-width:70px}.itin-field label{font-size:6pt!important;margin-bottom:0!important}.itin-field input,.itin-field select{border:0!important;padding:0!important;font-size:7.5pt!important;background:transparent!important;appearance:none}
+ .itin-notes{flex-basis:100%}.itin-field:has([data-map-address]){display:none!important}
+ .perk-badge{font-size:6pt!important;padding:1px 4px!important}
+}
 
 
 /* Merch */
@@ -379,7 +398,7 @@ footer{text-align:center;color:#8a949d;font-size:10px;padding:15px 0 28px}
 
 <div id="tripView" class="view-panel">
 <section class="my-trips-card"><div class="my-trips-head"><div><h2>My Trips</h2><div class="trip-muted">Your saved trips and travel plans. Open a trip to continue editing it.</div></div><button id="newTripTopBtn" class="trip-btn primary" type="button">+ New Trip</button></div><div id="savedTripsGrid" class="trip-card-grid"><div class="saved-trip-empty">Loading your trips…</div></div></section>
-<section id="openedTripBar" class="opened-trip-bar"><div><div id="openedTripTitle" class="opened-trip-title">Trip Itinerary</div><div id="openedTripMeta" class="opened-trip-meta"></div></div><div class="opened-trip-actions"><button id="backToTripsBtn" type="button">← My Trips</button><button id="calendarTripBtn" type="button">📅 Add to Calendar</button><button id="printTripBtn" type="button">🖨 Print Itinerary</button><button id="shareTopBtn" type="button">Share Trip</button></div></section>
+<section id="openedTripBar" class="opened-trip-bar"><div><div id="openedTripTitle" class="opened-trip-title">Trip Itinerary</div><div id="openedTripMeta" class="opened-trip-meta"></div></div><div class="opened-trip-actions"><button id="backToTripsBtn" type="button">← My Trips</button><button id="calendarTripBtn" type="button">📅 Add to Calendar</button><button id="printTripBtn" type="button">⬇ Download Itinerary</button><button id="shareTopBtn" type="button">Share Trip</button></div></section>
 <section id="budgetCard" class="trip-card trip-open-only"><h2>Trip Budget</h2><div class="trip-muted">Set a budget and add prices to itinerary items. Your running total updates automatically.</div><div class="budget-grid"><div class="budget-box"><div class="budget-label">Trip Budget</div><input id="tripBudget" class="budget-input" type="number" min="0" step="0.01" placeholder="$0.00"></div><div class="budget-box"><div class="budget-label">Running Total</div><div id="tripTotal" class="budget-value">$0</div></div><div class="budget-box"><div class="budget-label">Remaining</div><div id="tripRemaining" class="budget-value">—</div></div><div class="budget-box"><div class="budget-label">Member Perks Spend</div><div id="perkSpend" class="budget-value">$0</div></div><div class="budget-box"><div class="budget-label">Non-Member Spend</div><div id="nonPerkSpend" class="budget-value">$0</div></div></div><div class="budget-progress"><div id="budgetProgress" style="width:0%"></div></div></section>
 <section id="tripEditorCard" class="trip-card"><h2>Trip Planner</h2><div class="trip-muted">Build one shared itinerary for the whole travel party. Hotels, restaurants, activities and airports can be placed on the trip map even when they are not member perks.</div><div class="trip-fields"><input id="tripName" placeholder="Trip name (e.g. Aspen Weekend)"><input id="tripDestination" placeholder="Destination (e.g. Aspen, Colorado)"><input id="tripStart" type="date"><input id="tripEnd" type="date"></div><div class="trip-actions"><button id="newTripBtn" class="trip-btn" type="button">New Trip</button><button id="saveTripBtn" class="trip-btn primary" type="button">Save Trip</button></div><div id="tripSetupNote" class="setup-note" style="display:none"></div></section>
 <div class="trip-grid">
