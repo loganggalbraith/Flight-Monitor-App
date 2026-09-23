@@ -1,0 +1,1604 @@
+{
+  "regions": [
+    {
+      "id": "al",
+      "name": "Alabama",
+      "states": [
+        "AL"
+      ],
+      "airports": [
+        {
+          "icao": "KBHM",
+          "name": "Birmingham-Shuttlesworth International"
+        },
+        {
+          "icao": "KHSV",
+          "name": "Huntsville International"
+        },
+        {
+          "icao": "KMGM",
+          "name": "Montgomery Regional"
+        },
+        {
+          "icao": "KBFM",
+          "name": "Mobile Downtown"
+        }
+      ]
+    },
+    {
+      "id": "ak",
+      "name": "Alaska",
+      "states": [
+        "AK"
+      ],
+      "airports": [
+        {
+          "icao": "PANC",
+          "name": "Ted Stevens Anchorage International"
+        },
+        {
+          "icao": "PAFA",
+          "name": "Fairbanks International"
+        },
+        {
+          "icao": "PAJN",
+          "name": "Juneau International"
+        }
+      ]
+    },
+    {
+      "id": "az",
+      "name": "Arizona",
+      "states": [
+        "AZ"
+      ],
+      "airports": [
+        {
+          "icao": "KPHX",
+          "name": "Phoenix Sky Harbor International"
+        },
+        {
+          "icao": "KSDL",
+          "name": "Scottsdale Airport"
+        },
+        {
+          "icao": "KIWA",
+          "name": "Phoenix-Mesa Gateway"
+        },
+        {
+          "icao": "KTUS",
+          "name": "Tucson International"
+        },
+        {
+          "icao": "KFLG",
+          "name": "Flagstaff Pulliam"
+        }
+      ]
+    },
+    {
+      "id": "ar",
+      "name": "Arkansas",
+      "states": [
+        "AR"
+      ],
+      "airports": [
+        {
+          "icao": "KLIT",
+          "name": "Bill and Hillary Clinton National"
+        },
+        {
+          "icao": "KROG",
+          "name": "Rogers Executive - Carter Field"
+        },
+        {
+          "icao": "KXNA",
+          "name": "Northwest Arkansas National"
+        },
+        {
+          "icao": "KHOT",
+          "name": "Memorial Field"
+        }
+      ]
+    },
+    {
+      "id": "ca",
+      "name": "California",
+      "states": [
+        "CA"
+      ],
+      "airports": [
+        {
+          "icao": "KLAX",
+          "name": "Los Angeles International"
+        },
+        {
+          "icao": "KVNY",
+          "name": "Van Nuys"
+        },
+        {
+          "icao": "KSNA",
+          "name": "John Wayne"
+        },
+        {
+          "icao": "KONT",
+          "name": "Ontario International"
+        },
+        {
+          "icao": "KPSP",
+          "name": "Palm Springs International"
+        },
+        {
+          "icao": "KCRQ",
+          "name": "McClellan-Palomar"
+        },
+        {
+          "icao": "KSAN",
+          "name": "San Diego International"
+        },
+        {
+          "icao": "KSBA",
+          "name": "Santa Barbara Municipal"
+        },
+        {
+          "icao": "KLGB",
+          "name": "Long Beach"
+        },
+        {
+          "icao": "KCNO",
+          "name": "Chino"
+        },
+        {
+          "icao": "KPOC",
+          "name": "Brackett Field"
+        },
+        {
+          "icao": "KSMO",
+          "name": "Santa Monica"
+        },
+        {
+          "icao": "KSFO",
+          "name": "San Francisco International"
+        },
+        {
+          "icao": "KOAK",
+          "name": "Oakland International"
+        },
+        {
+          "icao": "KSJC",
+          "name": "San Jose Mineta International"
+        },
+        {
+          "icao": "KAPC",
+          "name": "Napa County"
+        },
+        {
+          "icao": "KTRK",
+          "name": "Truckee Tahoe"
+        },
+        {
+          "icao": "KSQL",
+          "name": "San Carlos"
+        }
+      ]
+    },
+    {
+      "id": "co",
+      "name": "Colorado",
+      "states": [
+        "CO"
+      ],
+      "airports": [
+        {
+          "icao": "KDEN",
+          "name": "Denver International"
+        },
+        {
+          "icao": "KAPA",
+          "name": "Centennial"
+        },
+        {
+          "icao": "KBJC",
+          "name": "Rocky Mountain Metropolitan"
+        },
+        {
+          "icao": "KASE",
+          "name": "Aspen/Pitkin County"
+        },
+        {
+          "icao": "KEGE",
+          "name": "Eagle County Regional"
+        },
+        {
+          "icao": "KTEX",
+          "name": "Telluride Regional"
+        }
+      ]
+    },
+    {
+      "id": "ct",
+      "name": "Connecticut",
+      "states": [
+        "CT"
+      ],
+      "airports": [
+        {
+          "icao": "KBDR",
+          "name": "Igor I. Sikorsky Memorial"
+        },
+        {
+          "icao": "KHVN",
+          "name": "Tweed New Haven"
+        },
+        {
+          "icao": "KBDL",
+          "name": "Bradley International"
+        },
+        {
+          "icao": "KOXC",
+          "name": "Waterbury-Oxford"
+        }
+      ]
+    },
+    {
+      "id": "de",
+      "name": "Delaware",
+      "states": [
+        "DE"
+      ],
+      "airports": [
+        {
+          "icao": "KILG",
+          "name": "Wilmington"
+        },
+        {
+          "icao": "KGED",
+          "name": "Delaware Coastal"
+        }
+      ]
+    },
+    {
+      "id": "fl",
+      "name": "Florida",
+      "states": [
+        "FL"
+      ],
+      "airports": [
+        {
+          "icao": "KMIA",
+          "name": "Miami International"
+        },
+        {
+          "icao": "KOPF",
+          "name": "Miami-Opa Locka Executive"
+        },
+        {
+          "icao": "KFLL",
+          "name": "Fort Lauderdale-Hollywood International"
+        },
+        {
+          "icao": "KPBI",
+          "name": "Palm Beach International"
+        },
+        {
+          "icao": "KBCT",
+          "name": "Boca Raton"
+        },
+        {
+          "icao": "KFXE",
+          "name": "Fort Lauderdale Executive"
+        },
+        {
+          "icao": "KMCO",
+          "name": "Orlando International"
+        },
+        {
+          "icao": "KORL",
+          "name": "Orlando Executive"
+        },
+        {
+          "icao": "KTPA",
+          "name": "Tampa International"
+        },
+        {
+          "icao": "KSRQ",
+          "name": "Sarasota-Bradenton International"
+        },
+        {
+          "icao": "KJAX",
+          "name": "Jacksonville International"
+        },
+        {
+          "icao": "KAPF",
+          "name": "Naples Municipal"
+        },
+        {
+          "icao": "KEYW",
+          "name": "Key West International"
+        }
+      ]
+    },
+    {
+      "id": "ga",
+      "name": "Georgia",
+      "states": [
+        "GA"
+      ],
+      "airports": [
+        {
+          "icao": "KATL",
+          "name": "Hartsfield-Jackson Atlanta International"
+        },
+        {
+          "icao": "KPDK",
+          "name": "DeKalb-Peachtree"
+        },
+        {
+          "icao": "KFTY",
+          "name": "Fulton County - Brown Field"
+        },
+        {
+          "icao": "KSAV",
+          "name": "Savannah/Hilton Head International"
+        }
+      ]
+    },
+    {
+      "id": "hi",
+      "name": "Hawaii",
+      "states": [
+        "HI"
+      ],
+      "airports": [
+        {
+          "icao": "PHNL",
+          "name": "Daniel K. Inouye International"
+        },
+        {
+          "icao": "PHOG",
+          "name": "Kahului"
+        },
+        {
+          "icao": "PHKO",
+          "name": "Ellison Onizuka Kona International"
+        },
+        {
+          "icao": "PHLI",
+          "name": "Lihue"
+        }
+      ]
+    },
+    {
+      "id": "id",
+      "name": "Idaho",
+      "states": [
+        "ID"
+      ],
+      "airports": [
+        {
+          "icao": "KBOI",
+          "name": "Boise"
+        },
+        {
+          "icao": "KCOE",
+          "name": "Coeur d'Alene - Pappy Boyington Field"
+        },
+        {
+          "icao": "KSUN",
+          "name": "Friedman Memorial"
+        },
+        {
+          "icao": "KIDA",
+          "name": "Idaho Falls Regional"
+        }
+      ]
+    },
+    {
+      "id": "il",
+      "name": "Illinois",
+      "states": [
+        "IL"
+      ],
+      "airports": [
+        {
+          "icao": "KORD",
+          "name": "Chicago O'Hare International"
+        },
+        {
+          "icao": "KMDW",
+          "name": "Chicago Midway International"
+        },
+        {
+          "icao": "KPWK",
+          "name": "Chicago Executive"
+        },
+        {
+          "icao": "KDPA",
+          "name": "DuPage"
+        },
+        {
+          "icao": "KUGN",
+          "name": "Waukegan National"
+        },
+        {
+          "icao": "KSPI",
+          "name": "Abraham Lincoln Capital"
+        }
+      ]
+    },
+    {
+      "id": "in",
+      "name": "Indiana",
+      "states": [
+        "IN"
+      ],
+      "airports": [
+        {
+          "icao": "KIND",
+          "name": "Indianapolis International"
+        },
+        {
+          "icao": "KTYQ",
+          "name": "Indianapolis Executive"
+        },
+        {
+          "icao": "KBAK",
+          "name": "Columbus Municipal"
+        },
+        {
+          "icao": "KSBN",
+          "name": "South Bend International"
+        }
+      ]
+    },
+    {
+      "id": "ia",
+      "name": "Iowa",
+      "states": [
+        "IA"
+      ],
+      "airports": [
+        {
+          "icao": "KDSM",
+          "name": "Des Moines International"
+        },
+        {
+          "icao": "KCID",
+          "name": "Eastern Iowa"
+        },
+        {
+          "icao": "KIOW",
+          "name": "Iowa City Municipal"
+        },
+        {
+          "icao": "KALO",
+          "name": "Waterloo Regional"
+        }
+      ]
+    },
+    {
+      "id": "ks",
+      "name": "Kansas",
+      "states": [
+        "KS"
+      ],
+      "airports": [
+        {
+          "icao": "KICT",
+          "name": "Wichita Dwight D. Eisenhower National"
+        },
+        {
+          "icao": "KAAO",
+          "name": "Colonel James Jabara"
+        },
+        {
+          "icao": "KIXD",
+          "name": "New Century AirCenter"
+        },
+        {
+          "icao": "KFOE",
+          "name": "Topeka Regional"
+        }
+      ]
+    },
+    {
+      "id": "ky",
+      "name": "Kentucky",
+      "states": [
+        "KY"
+      ],
+      "airports": [
+        {
+          "icao": "KSDF",
+          "name": "Louisville Muhammad Ali International"
+        },
+        {
+          "icao": "KLOU",
+          "name": "Bowman Field"
+        },
+        {
+          "icao": "KLEX",
+          "name": "Blue Grass"
+        },
+        {
+          "icao": "KCVG",
+          "name": "Cincinnati/Northern Kentucky International"
+        }
+      ]
+    },
+    {
+      "id": "la",
+      "name": "Louisiana",
+      "states": [
+        "LA"
+      ],
+      "airports": [
+        {
+          "icao": "KMSY",
+          "name": "Louis Armstrong New Orleans International"
+        },
+        {
+          "icao": "KNEW",
+          "name": "Lakefront"
+        },
+        {
+          "icao": "KBTR",
+          "name": "Baton Rouge Metropolitan"
+        },
+        {
+          "icao": "KSHV",
+          "name": "Shreveport Regional"
+        }
+      ]
+    },
+    {
+      "id": "me",
+      "name": "Maine",
+      "states": [
+        "ME"
+      ],
+      "airports": [
+        {
+          "icao": "KPWM",
+          "name": "Portland International Jetport"
+        },
+        {
+          "icao": "KBGR",
+          "name": "Bangor International"
+        },
+        {
+          "icao": "KBHB",
+          "name": "Hancock County-Bar Harbor"
+        },
+        {
+          "icao": "KRKD",
+          "name": "Knox County Regional"
+        }
+      ]
+    },
+    {
+      "id": "md",
+      "name": "Maryland",
+      "states": [
+        "MD"
+      ],
+      "airports": [
+        {
+          "icao": "KBWI",
+          "name": "Baltimore/Washington International"
+        },
+        {
+          "icao": "KMTN",
+          "name": "Martin State"
+        },
+        {
+          "icao": "KFDK",
+          "name": "Frederick Municipal"
+        },
+        {
+          "icao": "KSBY",
+          "name": "Salisbury-Ocean City Wicomico Regional"
+        }
+      ]
+    },
+    {
+      "id": "ma",
+      "name": "Massachusetts",
+      "states": [
+        "MA"
+      ],
+      "airports": [
+        {
+          "icao": "KBOS",
+          "name": "Boston Logan International"
+        },
+        {
+          "icao": "KBED",
+          "name": "Laurence G. Hanscom Field"
+        },
+        {
+          "icao": "KACK",
+          "name": "Nantucket Memorial"
+        },
+        {
+          "icao": "KMVY",
+          "name": "Martha's Vineyard"
+        },
+        {
+          "icao": "KHYA",
+          "name": "Cape Cod Gateway"
+        }
+      ]
+    },
+    {
+      "id": "mi",
+      "name": "Michigan",
+      "states": [
+        "MI"
+      ],
+      "airports": [
+        {
+          "icao": "KDTW",
+          "name": "Detroit Metropolitan Wayne County"
+        },
+        {
+          "icao": "KPTK",
+          "name": "Oakland County International"
+        },
+        {
+          "icao": "KDET",
+          "name": "Coleman A. Young Municipal"
+        },
+        {
+          "icao": "KGRR",
+          "name": "Gerald R. Ford International"
+        },
+        {
+          "icao": "KTVC",
+          "name": "Cherry Capital"
+        }
+      ]
+    },
+    {
+      "id": "mn",
+      "name": "Minnesota",
+      "states": [
+        "MN"
+      ],
+      "airports": [
+        {
+          "icao": "KMSP",
+          "name": "Minneapolis-Saint Paul International"
+        },
+        {
+          "icao": "KFCM",
+          "name": "Flying Cloud"
+        },
+        {
+          "icao": "KSTP",
+          "name": "St. Paul Downtown"
+        },
+        {
+          "icao": "KRST",
+          "name": "Rochester International"
+        }
+      ]
+    },
+    {
+      "id": "ms",
+      "name": "Mississippi",
+      "states": [
+        "MS"
+      ],
+      "airports": [
+        {
+          "icao": "KJAN",
+          "name": "Jackson-Medgar Wiley Evers International"
+        },
+        {
+          "icao": "KGPT",
+          "name": "Gulfport-Biloxi International"
+        },
+        {
+          "icao": "KGLH",
+          "name": "Mid-Delta Regional"
+        }
+      ]
+    },
+    {
+      "id": "mo",
+      "name": "Missouri",
+      "states": [
+        "MO"
+      ],
+      "airports": [
+        {
+          "icao": "KSTL",
+          "name": "St. Louis Lambert International"
+        },
+        {
+          "icao": "KSUS",
+          "name": "Spirit of St. Louis"
+        },
+        {
+          "icao": "KMCI",
+          "name": "Kansas City International"
+        },
+        {
+          "icao": "KMKC",
+          "name": "Charles B. Wheeler Downtown"
+        },
+        {
+          "icao": "KSGF",
+          "name": "Springfield-Branson National"
+        }
+      ]
+    },
+    {
+      "id": "mt",
+      "name": "Montana",
+      "states": [
+        "MT"
+      ],
+      "airports": [
+        {
+          "icao": "KBZN",
+          "name": "Bozeman Yellowstone International"
+        },
+        {
+          "icao": "KBIL",
+          "name": "Billings Logan International"
+        },
+        {
+          "icao": "KGPI",
+          "name": "Glacier Park International"
+        },
+        {
+          "icao": "KMSO",
+          "name": "Missoula Montana"
+        }
+      ]
+    },
+    {
+      "id": "ne",
+      "name": "Nebraska",
+      "states": [
+        "NE"
+      ],
+      "airports": [
+        {
+          "icao": "KOMA",
+          "name": "Eppley Airfield"
+        },
+        {
+          "icao": "KLNK",
+          "name": "Lincoln"
+        },
+        {
+          "icao": "KGRI",
+          "name": "Central Nebraska Regional"
+        }
+      ]
+    },
+    {
+      "id": "nv",
+      "name": "Nevada",
+      "states": [
+        "NV"
+      ],
+      "airports": [
+        {
+          "icao": "KLAS",
+          "name": "Harry Reid International"
+        },
+        {
+          "icao": "KHND",
+          "name": "Henderson Executive"
+        },
+        {
+          "icao": "KVGT",
+          "name": "North Las Vegas"
+        },
+        {
+          "icao": "KRNO",
+          "name": "Reno-Tahoe International"
+        },
+        {
+          "icao": "KCXP",
+          "name": "Carson City"
+        }
+      ]
+    },
+    {
+      "id": "nh",
+      "name": "New Hampshire",
+      "states": [
+        "NH"
+      ],
+      "airports": [
+        {
+          "icao": "KMHT",
+          "name": "Manchester-Boston Regional"
+        },
+        {
+          "icao": "KASH",
+          "name": "Nashua"
+        },
+        {
+          "icao": "KPSM",
+          "name": "Portsmouth International at Pease"
+        },
+        {
+          "icao": "KLEB",
+          "name": "Lebanon Municipal"
+        }
+      ]
+    },
+    {
+      "id": "nj",
+      "name": "New Jersey",
+      "states": [
+        "NJ"
+      ],
+      "airports": [
+        {
+          "icao": "KEWR",
+          "name": "Newark Liberty International"
+        },
+        {
+          "icao": "KTEB",
+          "name": "Teterboro"
+        },
+        {
+          "icao": "KMMU",
+          "name": "Morristown Municipal"
+        },
+        {
+          "icao": "KCDW",
+          "name": "Essex County"
+        },
+        {
+          "icao": "KACY",
+          "name": "Atlantic City International"
+        }
+      ]
+    },
+    {
+      "id": "nm",
+      "name": "New Mexico",
+      "states": [
+        "NM"
+      ],
+      "airports": [
+        {
+          "icao": "KABQ",
+          "name": "Albuquerque International Sunport"
+        },
+        {
+          "icao": "KSAF",
+          "name": "Santa Fe Regional"
+        },
+        {
+          "icao": "KROW",
+          "name": "Roswell Air Center"
+        }
+      ]
+    },
+    {
+      "id": "ny",
+      "name": "New York",
+      "states": [
+        "NY"
+      ],
+      "airports": [
+        {
+          "icao": "KJFK",
+          "name": "John F. Kennedy International"
+        },
+        {
+          "icao": "KLGA",
+          "name": "LaGuardia"
+        },
+        {
+          "icao": "KHPN",
+          "name": "Westchester County"
+        },
+        {
+          "icao": "KFRG",
+          "name": "Republic"
+        },
+        {
+          "icao": "KISP",
+          "name": "Long Island MacArthur"
+        },
+        {
+          "icao": "KFOK",
+          "name": "Francis S. Gabreski"
+        },
+        {
+          "icao": "KALB",
+          "name": "Albany International"
+        },
+        {
+          "icao": "KBUF",
+          "name": "Buffalo Niagara International"
+        },
+        {
+          "icao": "KROC",
+          "name": "Frederick Douglass Greater Rochester"
+        }
+      ]
+    },
+    {
+      "id": "nc",
+      "name": "North Carolina",
+      "states": [
+        "NC"
+      ],
+      "airports": [
+        {
+          "icao": "KCLT",
+          "name": "Charlotte Douglas International"
+        },
+        {
+          "icao": "KJQF",
+          "name": "Concord-Padgett Regional"
+        },
+        {
+          "icao": "KRDU",
+          "name": "Raleigh-Durham International"
+        },
+        {
+          "icao": "KGSO",
+          "name": "Piedmont Triad International"
+        },
+        {
+          "icao": "KAVL",
+          "name": "Asheville Regional"
+        },
+        {
+          "icao": "KILM",
+          "name": "Wilmington International"
+        },
+        {
+          "icao": "KINT",
+          "name": "Smith Reynolds"
+        },
+        {
+          "icao": "KBUY",
+          "name": "Burlington-Alamance Regional"
+        },
+        {
+          "icao": "KHKY",
+          "name": "Hickory Regional"
+        },
+        {
+          "icao": "KFAY",
+          "name": "Fayetteville Regional"
+        },
+        {
+          "icao": "KEWN",
+          "name": "Coastal Carolina Regional"
+        },
+        {
+          "icao": "KPGV",
+          "name": "Pitt-Greenville"
+        }
+      ]
+    },
+    {
+      "id": "nd",
+      "name": "North Dakota",
+      "states": [
+        "ND"
+      ],
+      "airports": [
+        {
+          "icao": "KFAR",
+          "name": "Hector International"
+        },
+        {
+          "icao": "KBIS",
+          "name": "Bismarck Municipal"
+        },
+        {
+          "icao": "KGFK",
+          "name": "Grand Forks International"
+        },
+        {
+          "icao": "KMOT",
+          "name": "Minot International"
+        }
+      ]
+    },
+    {
+      "id": "oh",
+      "name": "Ohio",
+      "states": [
+        "OH"
+      ],
+      "airports": [
+        {
+          "icao": "KCLE",
+          "name": "Cleveland Hopkins International"
+        },
+        {
+          "icao": "KBKL",
+          "name": "Burke Lakefront"
+        },
+        {
+          "icao": "KCGF",
+          "name": "Cuyahoga County"
+        },
+        {
+          "icao": "KCAK",
+          "name": "Akron-Canton"
+        },
+        {
+          "icao": "KCMH",
+          "name": "John Glenn Columbus International"
+        },
+        {
+          "icao": "KOSU",
+          "name": "Ohio State University"
+        },
+        {
+          "icao": "KLCK",
+          "name": "Rickenbacker International"
+        },
+        {
+          "icao": "KDAY",
+          "name": "James M. Cox Dayton International"
+        },
+        {
+          "icao": "KLUK",
+          "name": "Cincinnati Municipal - Lunken Field"
+        }
+      ]
+    },
+    {
+      "id": "ok",
+      "name": "Oklahoma",
+      "states": [
+        "OK"
+      ],
+      "airports": [
+        {
+          "icao": "KOKC",
+          "name": "Will Rogers World"
+        },
+        {
+          "icao": "KPWA",
+          "name": "Wiley Post"
+        },
+        {
+          "icao": "KTUL",
+          "name": "Tulsa International"
+        },
+        {
+          "icao": "KRVS",
+          "name": "Tulsa Riverside"
+        }
+      ]
+    },
+    {
+      "id": "or",
+      "name": "Oregon",
+      "states": [
+        "OR"
+      ],
+      "airports": [
+        {
+          "icao": "KPDX",
+          "name": "Portland International"
+        },
+        {
+          "icao": "KHIO",
+          "name": "Portland-Hillsboro"
+        },
+        {
+          "icao": "KTTD",
+          "name": "Portland-Troutdale"
+        },
+        {
+          "icao": "KEUG",
+          "name": "Eugene"
+        },
+        {
+          "icao": "KRDM",
+          "name": "Redmond Municipal"
+        }
+      ]
+    },
+    {
+      "id": "pa",
+      "name": "Pennsylvania",
+      "states": [
+        "PA"
+      ],
+      "airports": [
+        {
+          "icao": "KPHL",
+          "name": "Philadelphia International"
+        },
+        {
+          "icao": "KPNE",
+          "name": "Northeast Philadelphia"
+        },
+        {
+          "icao": "KABE",
+          "name": "Lehigh Valley International"
+        },
+        {
+          "icao": "KRDG",
+          "name": "Reading Regional"
+        },
+        {
+          "icao": "KLNS",
+          "name": "Lancaster"
+        },
+        {
+          "icao": "KMDT",
+          "name": "Harrisburg International"
+        },
+        {
+          "icao": "KCXY",
+          "name": "Capital City"
+        },
+        {
+          "icao": "KPIT",
+          "name": "Pittsburgh International"
+        },
+        {
+          "icao": "KAGC",
+          "name": "Allegheny County"
+        },
+        {
+          "icao": "KERI",
+          "name": "Erie International"
+        },
+        {
+          "icao": "KAVP",
+          "name": "Wilkes-Barre/Scranton International"
+        },
+        {
+          "icao": "KUNV",
+          "name": "University Park"
+        }
+      ]
+    },
+    {
+      "id": "ri",
+      "name": "Rhode Island",
+      "states": [
+        "RI"
+      ],
+      "airports": [
+        {
+          "icao": "KPVD",
+          "name": "Rhode Island T. F. Green International"
+        },
+        {
+          "icao": "KOQU",
+          "name": "Quonset State"
+        },
+        {
+          "icao": "KWST",
+          "name": "Westerly State"
+        }
+      ]
+    },
+    {
+      "id": "sc",
+      "name": "South Carolina",
+      "states": [
+        "SC"
+      ],
+      "airports": [
+        {
+          "icao": "KCHS",
+          "name": "Charleston International"
+        },
+        {
+          "icao": "KJZI",
+          "name": "Charleston Executive"
+        },
+        {
+          "icao": "KCAE",
+          "name": "Columbia Metropolitan"
+        },
+        {
+          "icao": "KGMU",
+          "name": "Greenville Downtown"
+        },
+        {
+          "icao": "KGSP",
+          "name": "Greenville-Spartanburg International"
+        },
+        {
+          "icao": "KHXD",
+          "name": "Hilton Head"
+        }
+      ]
+    },
+    {
+      "id": "sd",
+      "name": "South Dakota",
+      "states": [
+        "SD"
+      ],
+      "airports": [
+        {
+          "icao": "KFSD",
+          "name": "Sioux Falls Regional"
+        },
+        {
+          "icao": "KRAP",
+          "name": "Rapid City Regional"
+        },
+        {
+          "icao": "KABR",
+          "name": "Aberdeen Regional"
+        }
+      ]
+    },
+    {
+      "id": "tn",
+      "name": "Tennessee",
+      "states": [
+        "TN"
+      ],
+      "airports": [
+        {
+          "icao": "KBNA",
+          "name": "Nashville International"
+        },
+        {
+          "icao": "KMQY",
+          "name": "Smyrna"
+        },
+        {
+          "icao": "KMEM",
+          "name": "Memphis International"
+        },
+        {
+          "icao": "KTYS",
+          "name": "McGhee Tyson"
+        },
+        {
+          "icao": "KCHA",
+          "name": "Chattanooga Metropolitan"
+        }
+      ]
+    },
+    {
+      "id": "tx",
+      "name": "Texas",
+      "states": [
+        "TX"
+      ],
+      "airports": [
+        {
+          "icao": "KDFW",
+          "name": "Dallas/Fort Worth International"
+        },
+        {
+          "icao": "KDAL",
+          "name": "Dallas Love Field"
+        },
+        {
+          "icao": "KADS",
+          "name": "Addison"
+        },
+        {
+          "icao": "KAFW",
+          "name": "Perot Field Fort Worth Alliance"
+        },
+        {
+          "icao": "KIAH",
+          "name": "George Bush Intercontinental"
+        },
+        {
+          "icao": "KHOU",
+          "name": "William P. Hobby"
+        },
+        {
+          "icao": "KDWH",
+          "name": "David Wayne Hooks Memorial"
+        },
+        {
+          "icao": "KAUS",
+          "name": "Austin-Bergstrom International"
+        },
+        {
+          "icao": "KSAT",
+          "name": "San Antonio International"
+        },
+        {
+          "icao": "KSSF",
+          "name": "Stinson Municipal"
+        },
+        {
+          "icao": "KELP",
+          "name": "El Paso International"
+        }
+      ]
+    },
+    {
+      "id": "ut",
+      "name": "Utah",
+      "states": [
+        "UT"
+      ],
+      "airports": [
+        {
+          "icao": "KSLC",
+          "name": "Salt Lake City International"
+        },
+        {
+          "icao": "KPVU",
+          "name": "Provo"
+        },
+        {
+          "icao": "KHCR",
+          "name": "Heber Valley"
+        },
+        {
+          "icao": "KSGU",
+          "name": "St. George Regional"
+        }
+      ]
+    },
+    {
+      "id": "vt",
+      "name": "Vermont",
+      "states": [
+        "VT"
+      ],
+      "airports": [
+        {
+          "icao": "KBTV",
+          "name": "Patrick Leahy Burlington International"
+        },
+        {
+          "icao": "KRUT",
+          "name": "Rutland Southern Vermont Regional"
+        },
+        {
+          "icao": "KMPV",
+          "name": "Edward F. Knapp State"
+        }
+      ]
+    },
+    {
+      "id": "va",
+      "name": "Virginia",
+      "states": [
+        "VA"
+      ],
+      "airports": [
+        {
+          "icao": "KIAD",
+          "name": "Washington Dulles International"
+        },
+        {
+          "icao": "KDCA",
+          "name": "Ronald Reagan Washington National"
+        },
+        {
+          "icao": "KHEF",
+          "name": "Manassas Regional"
+        },
+        {
+          "icao": "KJYO",
+          "name": "Leesburg Executive"
+        },
+        {
+          "icao": "KRIC",
+          "name": "Richmond International"
+        },
+        {
+          "icao": "KORF",
+          "name": "Norfolk International"
+        },
+        {
+          "icao": "KCHO",
+          "name": "Charlottesville-Albemarle"
+        },
+        {
+          "icao": "KSHD",
+          "name": "Shenandoah Valley Regional"
+        }
+      ]
+    },
+    {
+      "id": "wa",
+      "name": "Washington",
+      "states": [
+        "WA"
+      ],
+      "airports": [
+        {
+          "icao": "KSEA",
+          "name": "Seattle-Tacoma International"
+        },
+        {
+          "icao": "KBFI",
+          "name": "Boeing Field/King County International"
+        },
+        {
+          "icao": "KPAE",
+          "name": "Seattle Paine Field International"
+        },
+        {
+          "icao": "KRNT",
+          "name": "Renton Municipal"
+        },
+        {
+          "icao": "KGEG",
+          "name": "Spokane International"
+        },
+        {
+          "icao": "KBLI",
+          "name": "Bellingham International"
+        }
+      ]
+    },
+    {
+      "id": "wv",
+      "name": "West Virginia",
+      "states": [
+        "WV"
+      ],
+      "airports": [
+        {
+          "icao": "KCRW",
+          "name": "West Virginia International Yeager"
+        },
+        {
+          "icao": "KCKB",
+          "name": "North Central West Virginia"
+        },
+        {
+          "icao": "KHTS",
+          "name": "Tri-State"
+        }
+      ]
+    },
+    {
+      "id": "wi",
+      "name": "Wisconsin",
+      "states": [
+        "WI"
+      ],
+      "airports": [
+        {
+          "icao": "KMKE",
+          "name": "Milwaukee Mitchell International"
+        },
+        {
+          "icao": "KUES",
+          "name": "Waukesha County"
+        },
+        {
+          "icao": "KMSN",
+          "name": "Dane County Regional"
+        },
+        {
+          "icao": "KGRB",
+          "name": "Green Bay Austin Straubel International"
+        },
+        {
+          "icao": "KRHI",
+          "name": "Rhinelander-Oneida County"
+        }
+      ]
+    },
+    {
+      "id": "wy",
+      "name": "Wyoming",
+      "states": [
+        "WY"
+      ],
+      "airports": [
+        {
+          "icao": "KJAC",
+          "name": "Jackson Hole"
+        },
+        {
+          "icao": "KCYS",
+          "name": "Cheyenne Regional"
+        },
+        {
+          "icao": "KCPR",
+          "name": "Casper-Natrona County International"
+        },
+        {
+          "icao": "KLAR",
+          "name": "Laramie Regional"
+        }
+      ]
+    },
+    {
+      "id": "socal",
+      "name": "Southern California",
+      "states": [
+        "CA"
+      ],
+      "special_view": true,
+      "airports": [
+        {
+          "icao": "KLAX",
+          "name": "Los Angeles International",
+          "lat": 33.9416,
+          "lon": -118.4085
+        },
+        {
+          "icao": "KVNY",
+          "name": "Van Nuys",
+          "lat": 34.2098,
+          "lon": -118.4899
+        },
+        {
+          "icao": "KSNA",
+          "name": "John Wayne",
+          "lat": 33.6757,
+          "lon": -117.8682
+        },
+        {
+          "icao": "KONT",
+          "name": "Ontario International",
+          "lat": 34.056,
+          "lon": -117.6012
+        },
+        {
+          "icao": "KPSP",
+          "name": "Palm Springs International",
+          "lat": 33.8297,
+          "lon": -116.5067
+        },
+        {
+          "icao": "KCRQ",
+          "name": "McClellan-Palomar",
+          "lat": 33.1283,
+          "lon": -117.28
+        },
+        {
+          "icao": "KSAN",
+          "name": "San Diego International",
+          "lat": 32.7338,
+          "lon": -117.1933
+        },
+        {
+          "icao": "KSBA",
+          "name": "Santa Barbara Municipal",
+          "lat": 34.4262,
+          "lon": -119.8404
+        },
+        {
+          "icao": "KLGB",
+          "name": "Long Beach",
+          "lat": 33.8177,
+          "lon": -118.1516
+        },
+        {
+          "icao": "KCNO",
+          "name": "Chino",
+          "lat": 33.9747,
+          "lon": -117.6366
+        },
+        {
+          "icao": "KPOC",
+          "name": "Brackett Field",
+          "lat": 34.0916,
+          "lon": -117.7818
+        },
+        {
+          "icao": "KSMO",
+          "name": "Santa Monica",
+          "lat": 34.0158,
+          "lon": -118.4513
+        }
+      ]
+    }
+  ]
+}
