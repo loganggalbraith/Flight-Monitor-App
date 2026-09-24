@@ -1,8 +1,8 @@
 {
-  "last_updated": "2026-09-24T03:44:12.412472+00:00",
+  "last_updated": "2026-09-24T03:58:49.615292+00:00",
   "flight_count": 1,
   "region_counts": {
-    "Nevada": 1
+    "Unassigned / En Route": 1
   },
   "regions": [
     {
@@ -72,9 +72,9 @@
       "flightaware_url": "https://www.flightaware.com/live/flight/JRE749",
       "route_origin": null,
       "route_destination": null,
-      "region_id": "nv",
-      "region_name": "Nevada",
-      "region_reason": "possible_approach",
+      "region_id": "unassigned",
+      "region_name": "Unassigned / En Route",
+      "region_reason": "none",
       "destination_region_id": null,
       "destination_region_name": null,
       "origin_region_id": null,
@@ -82,23 +82,23 @@
       "grounded_departure": false,
       "ground_airport": null,
       "ground_airport_name": null,
-      "latitude": 38.0804,
-      "longitude": -120.5199,
-      "altitude_meters": 12222.48,
-      "velocity_mps": 162.34,
-      "heading": 79.22,
-      "vertical_rate": 5.2,
+      "latitude": 38.3344,
+      "longitude": -118.7396,
+      "altitude_meters": 13716,
+      "velocity_mps": 215.58,
+      "heading": 80.25,
+      "vertical_rate": 0,
       "on_ground": false,
       "nearest_airport": "KCXP",
       "nearest_airport_name": "Carson Airport",
-      "distance_to_nearest_airport_miles": 87.7,
-      "possible_destination": "KVGT",
-      "possible_destination_name": "North Las Vegas Airport",
-      "possible_destination_region": "Nevada",
-      "possible_destination_distance_miles": 320.4,
-      "possible_destination_bearing": 112.1,
-      "possible_heading_difference": 32.9,
-      "last_seen": "2026-09-24T03:44:12.411649+00:00"
+      "distance_to_nearest_airport_miles": 79.9,
+      "possible_destination": null,
+      "possible_destination_name": null,
+      "possible_destination_region": null,
+      "possible_destination_distance_miles": null,
+      "possible_destination_bearing": null,
+      "possible_heading_difference": null,
+      "last_seen": "2026-09-24T03:58:49.614478+00:00"
     }
   ],
   "seen_alerts": [
