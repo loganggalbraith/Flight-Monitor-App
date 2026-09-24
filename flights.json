@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-24T10:58:16.539226+00:00",
+  "last_updated": "2026-09-24T11:19:14.931384+00:00",
   "flight_count": 1,
   "region_counts": {
     "Pennsylvania": 1
@@ -82,23 +82,23 @@
       "grounded_departure": false,
       "ground_airport": null,
       "ground_airport_name": null,
-      "latitude": 40.8929,
-      "longitude": -74.3661,
-      "altitude_meters": 2956.56,
-      "velocity_mps": 152.86,
-      "heading": 261.68,
-      "vertical_rate": 13.33,
+      "latitude": 40.358,
+      "longitude": -76.6226,
+      "altitude_meters": 13106.4,
+      "velocity_mps": 164.69,
+      "heading": 265.16,
+      "vertical_rate": 0,
       "on_ground": false,
-      "nearest_airport": "KABE",
-      "nearest_airport_name": "Lehigh Valley International Airport",
-      "distance_to_nearest_airport_miles": 58.6,
-      "possible_destination": "KABE",
-      "possible_destination_name": "Lehigh Valley International Airport",
+      "nearest_airport": "KMDT",
+      "nearest_airport_name": "Harrisburg International Airport",
+      "distance_to_nearest_airport_miles": 13.6,
+      "possible_destination": "KCXY",
+      "possible_destination_name": "Capital City Airport",
       "possible_destination_region": "Pennsylvania",
-      "possible_destination_distance_miles": 58.6,
-      "possible_destination_bearing": 253.9,
-      "possible_heading_difference": 7.8,
-      "last_seen": "2026-09-24T10:58:16.538862+00:00"
+      "possible_destination_distance_miles": 15.5,
+      "possible_destination_bearing": 231.2,
+      "possible_heading_difference": 34.0,
+      "last_seen": "2026-09-24T11:19:14.930992+00:00"
     }
   ],
   "seen_alerts": [
