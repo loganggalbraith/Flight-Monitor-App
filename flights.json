@@ -1,9 +1,7 @@
 {
-  "last_updated": "2026-09-25T03:17:57.914418+00:00",
-  "flight_count": 1,
-  "region_counts": {
-    "Unassigned / En Route": 1
-  },
+  "last_updated": "2026-09-25T03:44:16.492435+00:00",
+  "flight_count": 0,
+  "region_counts": {},
   "regions": [
     {
       "id": "socal",
@@ -62,45 +60,7 @@
       ]
     }
   ],
-  "flights": [
-    {
-      "callsign": "JRE838",
-      "icao24": "ab76eb",
-      "registration": null,
-      "aircraft_type": "Unknown",
-      "photo_url": null,
-      "flightaware_url": "https://www.flightaware.com/live/flight/JRE838",
-      "route_origin": null,
-      "route_destination": null,
-      "region_id": "unassigned",
-      "region_name": "Unassigned / En Route",
-      "region_reason": "none",
-      "destination_region_id": null,
-      "destination_region_name": null,
-      "origin_region_id": null,
-      "origin_region_name": null,
-      "grounded_departure": false,
-      "ground_airport": null,
-      "ground_airport_name": null,
-      "latitude": 33.6259,
-      "longitude": -111.9049,
-      "altitude_meters": null,
-      "velocity_mps": 0,
-      "heading": 45,
-      "vertical_rate": null,
-      "on_ground": true,
-      "nearest_airport": "KHND",
-      "nearest_airport_name": "Henderson Executive Airport",
-      "distance_to_nearest_airport_miles": 244.7,
-      "possible_destination": null,
-      "possible_destination_name": null,
-      "possible_destination_region": null,
-      "possible_destination_distance_miles": null,
-      "possible_destination_bearing": null,
-      "possible_heading_difference": null,
-      "last_seen": "2026-09-25T03:17:57.913639+00:00"
-    }
-  ],
+  "flights": [],
   "seen_alerts": [
     "possible|JRE283|KINT",
     "possible|JRE283|KJQF",
