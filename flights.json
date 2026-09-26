@@ -1,7 +1,9 @@
 {
-  "last_updated": "2026-09-26T10:15:37.258215+00:00",
-  "flight_count": 0,
-  "region_counts": {},
+  "last_updated": "2026-09-26T10:42:16.627881+00:00",
+  "flight_count": 1,
+  "region_counts": {
+    "Ohio": 1
+  },
   "regions": [
     {
       "id": "socal",
@@ -60,7 +62,45 @@
       ]
     }
   ],
-  "flights": [],
+  "flights": [
+    {
+      "callsign": "JRE730",
+      "icao24": "a9cbe4",
+      "registration": null,
+      "aircraft_type": "Unknown",
+      "photo_url": null,
+      "flightaware_url": "https://www.flightaware.com/live/flight/JRE730",
+      "route_origin": null,
+      "route_destination": null,
+      "region_id": "oh",
+      "region_name": "Ohio",
+      "region_reason": "possible_approach",
+      "destination_region_id": null,
+      "destination_region_name": null,
+      "origin_region_id": null,
+      "origin_region_name": null,
+      "grounded_departure": false,
+      "ground_airport": null,
+      "ground_airport_name": null,
+      "latitude": 44.0839,
+      "longitude": -85.0926,
+      "altitude_meters": 12672.06,
+      "velocity_mps": 180.74,
+      "heading": 189.01,
+      "vertical_rate": 9.43,
+      "on_ground": false,
+      "nearest_airport": "KCLE",
+      "nearest_airport_name": "Cleveland Hopkins International Airport",
+      "distance_to_nearest_airport_miles": 247.3,
+      "possible_destination": "KCMH",
+      "possible_destination_name": "John Glenn Columbus International Airport",
+      "possible_destination_region": "Ohio",
+      "possible_destination_distance_miles": 304.0,
+      "possible_destination_bearing": 157.5,
+      "possible_heading_difference": 31.6,
+      "last_seen": "2026-09-26T10:42:16.627504+00:00"
+    }
+  ],
   "seen_alerts": [
     "possible|JRE391|KPGV",
     "possible|JRE391|KPHL",
