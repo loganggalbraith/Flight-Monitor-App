@@ -1,8 +1,8 @@
 {
-  "last_updated": "2026-09-26T10:42:16.627881+00:00",
+  "last_updated": "2026-09-26T10:55:26.778030+00:00",
   "flight_count": 1,
   "region_counts": {
-    "Ohio": 1
+    "Unassigned / En Route": 1
   },
   "regions": [
     {
@@ -72,9 +72,9 @@
       "flightaware_url": "https://www.flightaware.com/live/flight/JRE730",
       "route_origin": null,
       "route_destination": null,
-      "region_id": "oh",
-      "region_name": "Ohio",
-      "region_reason": "possible_approach",
+      "region_id": "unassigned",
+      "region_name": "Unassigned / En Route",
+      "region_reason": "none",
       "destination_region_id": null,
       "destination_region_name": null,
       "origin_region_id": null,
@@ -82,23 +82,23 @@
       "grounded_departure": false,
       "ground_airport": null,
       "ground_airport_name": null,
-      "latitude": 44.0839,
-      "longitude": -85.0926,
-      "altitude_meters": 12672.06,
-      "velocity_mps": 180.74,
-      "heading": 189.01,
-      "vertical_rate": 9.43,
+      "latitude": 42.7143,
+      "longitude": -85.6023,
+      "altitude_meters": 13716,
+      "velocity_mps": 201.42,
+      "heading": 195.1,
+      "vertical_rate": -0.33,
       "on_ground": false,
       "nearest_airport": "KCLE",
       "nearest_airport_name": "Cleveland Hopkins International Airport",
-      "distance_to_nearest_airport_miles": 247.3,
-      "possible_destination": "KCMH",
-      "possible_destination_name": "John Glenn Columbus International Airport",
-      "possible_destination_region": "Ohio",
-      "possible_destination_distance_miles": 304.0,
-      "possible_destination_bearing": 157.5,
-      "possible_heading_difference": 31.6,
-      "last_seen": "2026-09-26T10:42:16.627504+00:00"
+      "distance_to_nearest_airport_miles": 212.5,
+      "possible_destination": null,
+      "possible_destination_name": null,
+      "possible_destination_region": null,
+      "possible_destination_distance_miles": null,
+      "possible_destination_bearing": null,
+      "possible_heading_difference": null,
+      "last_seen": "2026-09-26T10:55:26.777568+00:00"
     }
   ],
   "seen_alerts": [
