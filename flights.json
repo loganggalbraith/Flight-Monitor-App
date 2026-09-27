@@ -1,9 +1,7 @@
 {
-  "last_updated": "2026-09-27T03:19:57.373614+00:00",
-  "flight_count": 1,
-  "region_counts": {
-    "Colorado": 1
-  },
+  "last_updated": "2026-09-27T03:44:37.627193+00:00",
+  "flight_count": 0,
+  "region_counts": {},
   "regions": [
     {
       "id": "socal",
@@ -62,45 +60,7 @@
       ]
     }
   ],
-  "flights": [
-    {
-      "callsign": "JRE753",
-      "icao24": "aa2607",
-      "registration": null,
-      "aircraft_type": "Unknown",
-      "photo_url": null,
-      "flightaware_url": "https://www.flightaware.com/live/flight/JRE753",
-      "route_origin": null,
-      "route_destination": null,
-      "region_id": "co",
-      "region_name": "Colorado",
-      "region_reason": "possible_approach",
-      "destination_region_id": null,
-      "destination_region_name": null,
-      "origin_region_id": null,
-      "origin_region_name": null,
-      "grounded_departure": false,
-      "ground_airport": null,
-      "ground_airport_name": null,
-      "latitude": 34.1871,
-      "longitude": -108.1845,
-      "altitude_meters": 8839.2,
-      "velocity_mps": 227.13,
-      "heading": 35.6,
-      "vertical_rate": -0.33,
-      "on_ground": false,
-      "nearest_airport": "KASE",
-      "nearest_airport_name": "Aspen/Pitkin County Airport",
-      "distance_to_nearest_airport_miles": 355.5,
-      "possible_destination": "KASE",
-      "possible_destination_name": "Aspen/Pitkin County Airport",
-      "possible_destination_region": "Colorado",
-      "possible_destination_distance_miles": 355.5,
-      "possible_destination_bearing": 11.4,
-      "possible_heading_difference": 24.2,
-      "last_seen": "2026-09-27T03:19:57.372853+00:00"
-    }
-  ],
+  "flights": [],
   "seen_alerts": [
     "possible|JRE394|KUNV",
     "possible|JRE394|KVGT",
