@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-27T10:56:15.434377+00:00",
+  "last_updated": "2026-09-27T11:16:42.335187+00:00",
   "flight_count": 1,
   "region_counts": {
     "North Carolina": 1
@@ -82,23 +82,23 @@
       "grounded_departure": false,
       "ground_airport": null,
       "ground_airport_name": null,
-      "latitude": 37.966,
-      "longitude": -75.4633,
+      "latitude": 36.0232,
+      "longitude": -77.5323,
       "altitude_meters": 13106.4,
-      "velocity_mps": 229.25,
-      "heading": 221.45,
+      "velocity_mps": 231.15,
+      "heading": 218.22,
       "vertical_rate": 0,
       "on_ground": false,
-      "nearest_airport": "KPHL",
-      "nearest_airport_name": "Philadelphia International Airport",
-      "distance_to_nearest_airport_miles": 132.4,
-      "possible_destination": "KPGV",
-      "possible_destination_name": "Pitt-Greenville Airport",
+      "nearest_airport": "KPGV",
+      "nearest_airport_name": "Pitt-Greenville Airport",
+      "distance_to_nearest_airport_miles": 28.0,
+      "possible_destination": "KFAY",
+      "possible_destination_name": "Fayetteville Regional Airport",
       "possible_destination_region": "North Carolina",
-      "possible_destination_distance_miles": 193.0,
-      "possible_destination_bearing": 214.0,
-      "possible_heading_difference": 7.4,
-      "last_seen": "2026-09-27T10:56:14.384245+00:00"
+      "possible_destination_distance_miles": 104.1,
+      "possible_destination_bearing": 227.2,
+      "possible_heading_difference": 8.9,
+      "last_seen": "2026-09-27T11:16:41.856063+00:00"
     }
   ],
   "seen_alerts": [
