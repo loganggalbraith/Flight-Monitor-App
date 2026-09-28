@@ -1,9 +1,7 @@
 {
-  "last_updated": "2026-09-28T02:20:35.548141+00:00",
-  "flight_count": 1,
-  "region_counts": {
-    "North Carolina": 1
-  },
+  "last_updated": "2026-09-28T02:45:16.044334+00:00",
+  "flight_count": 0,
+  "region_counts": {},
   "regions": [
     {
       "id": "socal",
@@ -62,45 +60,7 @@
       ]
     }
   ],
-  "flights": [
-    {
-      "callsign": "JRE753",
-      "icao24": "aa2607",
-      "registration": null,
-      "aircraft_type": "Unknown",
-      "photo_url": null,
-      "flightaware_url": "https://www.flightaware.com/live/flight/JRE753",
-      "route_origin": null,
-      "route_destination": null,
-      "region_id": "nc",
-      "region_name": "North Carolina",
-      "region_reason": "possible_approach",
-      "destination_region_id": null,
-      "destination_region_name": null,
-      "origin_region_id": null,
-      "origin_region_name": null,
-      "grounded_departure": false,
-      "ground_airport": null,
-      "ground_airport_name": null,
-      "latitude": 35.635,
-      "longitude": -79.879,
-      "altitude_meters": 9448.8,
-      "velocity_mps": 219.58,
-      "heading": 98.62,
-      "vertical_rate": 0,
-      "on_ground": false,
-      "nearest_airport": "KGSO",
-      "nearest_airport_name": "Piedmont Triad International Airport",
-      "distance_to_nearest_airport_miles": 32.1,
-      "possible_destination": "KRDU",
-      "possible_destination_name": "Raleigh-Durham International Airport",
-      "possible_destination_region": "North Carolina",
-      "possible_destination_distance_miles": 63.5,
-      "possible_destination_bearing": 74.4,
-      "possible_heading_difference": 24.3,
-      "last_seen": "2026-09-28T02:20:35.178507+00:00"
-    }
-  ],
+  "flights": [],
   "seen_alerts": [
     "possible|JRE398|KCXP",
     "possible|JRE398|KERI",
