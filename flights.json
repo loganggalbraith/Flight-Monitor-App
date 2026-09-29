@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-29T10:47:42.122847+00:00",
+  "last_updated": "2026-09-29T11:17:07.088972+00:00",
   "flight_count": 1,
   "region_counts": {
     "North Carolina": 1
@@ -82,23 +82,23 @@
       "grounded_departure": false,
       "ground_airport": null,
       "ground_airport_name": null,
-      "latitude": 38.8851,
-      "longitude": -77.7602,
+      "latitude": 36.0697,
+      "longitude": -79.6241,
       "altitude_meters": 13106.4,
-      "velocity_mps": 202.94,
-      "heading": 192.59,
-      "vertical_rate": 0.33,
+      "velocity_mps": 204.95,
+      "heading": 211.14,
+      "vertical_rate": -0.33,
       "on_ground": false,
-      "nearest_airport": "KCXY",
-      "nearest_airport_name": "Capital City Airport",
-      "distance_to_nearest_airport_miles": 104.0,
-      "possible_destination": "KRDU",
-      "possible_destination_name": "Raleigh-Durham International Airport",
+      "nearest_airport": "KBUY",
+      "nearest_airport_name": "Burlington-Alamance Regional Airport",
+      "distance_to_nearest_airport_miles": 8.5,
+      "possible_destination": "KJQF",
+      "possible_destination_name": "Concord-Padgett Regional Airport",
       "possible_destination_region": "North Carolina",
-      "possible_destination_distance_miles": 215.3,
-      "possible_destination_bearing": 195.5,
-      "possible_heading_difference": 2.9,
-      "last_seen": "2026-09-29T10:47:42.121758+00:00"
+      "possible_destination_distance_miles": 77.0,
+      "possible_destination_bearing": 232.6,
+      "possible_heading_difference": 21.4,
+      "last_seen": "2026-09-29T11:17:07.087387+00:00"
     }
   ],
   "seen_alerts": [
