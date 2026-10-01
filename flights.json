@@ -1,9 +1,7 @@
 {
-  "last_updated": "2026-10-01T03:18:58.543197+00:00",
-  "flight_count": 1,
-  "region_counts": {
-    "Unassigned / En Route": 1
-  },
+  "last_updated": "2026-10-01T03:47:54.360022+00:00",
+  "flight_count": 0,
+  "region_counts": {},
   "regions": [
     {
       "id": "socal",
@@ -62,45 +60,7 @@
       ]
     }
   ],
-  "flights": [
-    {
-      "callsign": "JRE394",
-      "icao24": "a4927e",
-      "registration": null,
-      "aircraft_type": "Unknown",
-      "photo_url": null,
-      "flightaware_url": "https://www.flightaware.com/live/flight/JRE394",
-      "route_origin": null,
-      "route_destination": null,
-      "region_id": "unassigned",
-      "region_name": "Unassigned / En Route",
-      "region_reason": "none",
-      "destination_region_id": null,
-      "destination_region_name": null,
-      "origin_region_id": null,
-      "origin_region_name": null,
-      "grounded_departure": false,
-      "ground_airport": null,
-      "ground_airport_name": null,
-      "latitude": 40.8425,
-      "longitude": -74.0637,
-      "altitude_meters": null,
-      "velocity_mps": 3.6,
-      "heading": 272.81,
-      "vertical_rate": null,
-      "on_ground": true,
-      "nearest_airport": "KPNE",
-      "nearest_airport_name": "Northeast Philadelphia Airport",
-      "distance_to_nearest_airport_miles": 72.4,
-      "possible_destination": null,
-      "possible_destination_name": null,
-      "possible_destination_region": null,
-      "possible_destination_distance_miles": null,
-      "possible_destination_bearing": null,
-      "possible_heading_difference": null,
-      "last_seen": "2026-10-01T03:18:58.542485+00:00"
-    }
-  ],
+  "flights": [],
   "seen_alerts": [
     "possible|JRE707|KABE",
     "possible|JRE707|KAGC",
