@@ -1,7 +1,9 @@
 {
-  "last_updated": "2026-10-01T09:19:45.866981+00:00",
-  "flight_count": 0,
-  "region_counts": {},
+  "last_updated": "2026-10-01T09:48:19.901589+00:00",
+  "flight_count": 1,
+  "region_counts": {
+    "Pennsylvania": 1
+  },
   "regions": [
     {
       "id": "socal",
@@ -60,7 +62,45 @@
       ]
     }
   ],
-  "flights": [],
+  "flights": [
+    {
+      "callsign": "JRE398",
+      "icao24": "a4a15a",
+      "registration": null,
+      "aircraft_type": "Unknown",
+      "photo_url": null,
+      "flightaware_url": "https://www.flightaware.com/live/flight/JRE398",
+      "route_origin": null,
+      "route_destination": null,
+      "region_id": "pa",
+      "region_name": "Pennsylvania",
+      "region_reason": "possible_approach",
+      "destination_region_id": null,
+      "destination_region_name": null,
+      "origin_region_id": null,
+      "origin_region_name": null,
+      "grounded_departure": false,
+      "ground_airport": null,
+      "ground_airport_name": null,
+      "latitude": 44.5324,
+      "longitude": -85.2469,
+      "altitude_meters": 5897.88,
+      "velocity_mps": 204.61,
+      "heading": 101.31,
+      "vertical_rate": 18.21,
+      "on_ground": false,
+      "nearest_airport": "KCLE",
+      "nearest_airport_name": "Cleveland Hopkins International Airport",
+      "distance_to_nearest_airport_miles": 275.6,
+      "possible_destination": "KERI",
+      "possible_destination_name": "Erie International Airport",
+      "possible_destination_region": "Pennsylvania",
+      "possible_destination_distance_miles": 306.0,
+      "possible_destination_bearing": 121.8,
+      "possible_heading_difference": 20.5,
+      "last_seen": "2026-10-01T09:48:19.718219+00:00"
+    }
+  ],
   "seen_alerts": [
     "possible|JRE707|KABE",
     "possible|JRE707|KAGC",
