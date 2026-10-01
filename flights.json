@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-01T02:17:42.471183+00:00",
+  "last_updated": "2026-10-01T02:46:47.201192+00:00",
   "flight_count": 1,
   "region_counts": {
     "Pennsylvania": 1
@@ -82,23 +82,23 @@
       "grounded_departure": false,
       "ground_airport": null,
       "ground_airport_name": null,
-      "latitude": 36.6264,
-      "longitude": -77.4165,
-      "altitude_meters": 13700.76,
-      "velocity_mps": 227.32,
-      "heading": 19.71,
-      "vertical_rate": 0.98,
+      "latitude": 39.6908,
+      "longitude": -75.6961,
+      "altitude_meters": 4663.44,
+      "velocity_mps": 188.56,
+      "heading": 35.34,
+      "vertical_rate": -11.05,
       "on_ground": false,
-      "nearest_airport": "KPGV",
-      "nearest_airport_name": "Pitt-Greenville Airport",
-      "distance_to_nearest_airport_miles": 68.5,
-      "possible_destination": "KMDT",
-      "possible_destination_name": "Harrisburg International Airport",
+      "nearest_airport": "KPHL",
+      "nearest_airport_name": "Philadelphia International Airport",
+      "distance_to_nearest_airport_miles": 27.2,
+      "possible_destination": "KPHL",
+      "possible_destination_name": "Philadelphia International Airport",
       "possible_destination_region": "Pennsylvania",
-      "possible_destination_distance_miles": 249.0,
-      "possible_destination_bearing": 8.0,
-      "possible_heading_difference": 11.7,
-      "last_seen": "2026-10-01T02:17:42.026713+00:00"
+      "possible_destination_distance_miles": 27.2,
+      "possible_destination_bearing": 62.1,
+      "possible_heading_difference": 26.7,
+      "last_seen": "2026-10-01T02:46:46.684359+00:00"
     }
   ],
   "seen_alerts": [
