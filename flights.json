@@ -1,9 +1,7 @@
 {
-  "last_updated": "2026-10-02T02:45:25.324428+00:00",
-  "flight_count": 1,
-  "region_counts": {
-    "Pennsylvania": 1
-  },
+  "last_updated": "2026-10-02T03:18:01.046062+00:00",
+  "flight_count": 0,
+  "region_counts": {},
   "regions": [
     {
       "id": "socal",
@@ -62,45 +60,7 @@
       ]
     }
   ],
-  "flights": [
-    {
-      "callsign": "JRE863",
-      "icao24": "abdad5",
-      "registration": null,
-      "aircraft_type": "Unknown",
-      "photo_url": null,
-      "flightaware_url": "https://www.flightaware.com/live/flight/JRE863",
-      "route_origin": null,
-      "route_destination": null,
-      "region_id": "pa",
-      "region_name": "Pennsylvania",
-      "region_reason": "possible_approach",
-      "destination_region_id": null,
-      "destination_region_name": null,
-      "origin_region_id": null,
-      "origin_region_name": null,
-      "grounded_departure": false,
-      "ground_airport": null,
-      "ground_airport_name": null,
-      "latitude": 40.6371,
-      "longitude": -76.237,
-      "altitude_meters": 7315.2,
-      "velocity_mps": 185.17,
-      "heading": 289.64,
-      "vertical_rate": 0,
-      "on_ground": false,
-      "nearest_airport": "KRDG",
-      "nearest_airport_name": "Reading Regional Airport",
-      "distance_to_nearest_airport_miles": 22.9,
-      "possible_destination": "KUNV",
-      "possible_destination_name": "University Park Airport",
-      "possible_destination_region": "Pennsylvania",
-      "possible_destination_distance_miles": 85.6,
-      "possible_destination_bearing": 280.4,
-      "possible_heading_difference": 9.3,
-      "last_seen": "2026-10-02T02:45:25.323368+00:00"
-    }
-  ],
+  "flights": [],
   "seen_alerts": [
     "possible|JRE709|KBUY",
     "possible|JRE709|KCLT",
