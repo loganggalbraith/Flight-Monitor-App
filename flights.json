@@ -1,9 +1,7 @@
 {
-  "last_updated": "2026-10-02T04:47:03.852081+00:00",
-  "flight_count": 1,
-  "region_counts": {
-    "Unassigned / En Route": 1
-  },
+  "last_updated": "2026-10-02T05:17:20.833292+00:00",
+  "flight_count": 0,
+  "region_counts": {},
   "regions": [
     {
       "id": "socal",
@@ -62,45 +60,7 @@
       ]
     }
   ],
-  "flights": [
-    {
-      "callsign": "JRE701",
-      "icao24": "a9591e",
-      "registration": null,
-      "aircraft_type": "Unknown",
-      "photo_url": null,
-      "flightaware_url": "https://www.flightaware.com/live/flight/JRE701",
-      "route_origin": null,
-      "route_destination": null,
-      "region_id": "unassigned",
-      "region_name": "Unassigned / En Route",
-      "region_reason": "none",
-      "destination_region_id": null,
-      "destination_region_name": null,
-      "origin_region_id": null,
-      "origin_region_name": null,
-      "grounded_departure": false,
-      "ground_airport": null,
-      "ground_airport_name": null,
-      "latitude": 34.7323,
-      "longitude": -92.2408,
-      "altitude_meters": null,
-      "velocity_mps": 0,
-      "heading": 2.81,
-      "vertical_rate": null,
-      "on_ground": true,
-      "nearest_airport": "KAVL",
-      "nearest_airport_name": "Asheville Regional Airport",
-      "distance_to_nearest_airport_miles": 550.3,
-      "possible_destination": null,
-      "possible_destination_name": null,
-      "possible_destination_region": null,
-      "possible_destination_distance_miles": null,
-      "possible_destination_bearing": null,
-      "possible_heading_difference": null,
-      "last_seen": "2026-10-02T04:47:03.851831+00:00"
-    }
-  ],
+  "flights": [],
   "seen_alerts": [
     "possible|JRE709|KBUY",
     "possible|JRE709|KCLT",
