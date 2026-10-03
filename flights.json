@@ -1,8 +1,8 @@
 {
-  "last_updated": "2026-10-03T04:45:44.430061+00:00",
+  "last_updated": "2026-10-03T05:15:58.452556+00:00",
   "flight_count": 1,
   "region_counts": {
-    "Unassigned / En Route": 1
+    "North Carolina": 1
   },
   "regions": [
     {
@@ -72,9 +72,9 @@
       "flightaware_url": "https://www.flightaware.com/live/flight/JRE855",
       "route_origin": null,
       "route_destination": null,
-      "region_id": "unassigned",
-      "region_name": "Unassigned / En Route",
-      "region_reason": "none",
+      "region_id": "nc",
+      "region_name": "North Carolina",
+      "region_reason": "possible_approach",
       "destination_region_id": null,
       "destination_region_name": null,
       "origin_region_id": null,
@@ -82,23 +82,23 @@
       "grounded_departure": false,
       "ground_airport": null,
       "ground_airport_name": null,
-      "latitude": 31.4652,
-      "longitude": -92.9058,
+      "latitude": 32.4744,
+      "longitude": -88.6633,
       "altitude_meters": 12496.8,
-      "velocity_mps": 230.46,
-      "heading": 73.26,
-      "vertical_rate": -0.33,
+      "velocity_mps": 235.45,
+      "heading": 75.45,
+      "vertical_rate": 0,
       "on_ground": false,
       "nearest_airport": "KAVL",
       "nearest_airport_name": "Asheville Regional Airport",
-      "distance_to_nearest_airport_miles": 657.0,
-      "possible_destination": null,
-      "possible_destination_name": null,
-      "possible_destination_region": null,
-      "possible_destination_distance_miles": null,
-      "possible_destination_bearing": null,
-      "possible_heading_difference": null,
-      "last_seen": "2026-10-03T04:45:44.429602+00:00"
+      "distance_to_nearest_airport_miles": 406.0,
+      "possible_destination": "KAVL",
+      "possible_destination_name": "Asheville Regional Airport",
+      "possible_destination_region": "North Carolina",
+      "possible_destination_distance_miles": 406.0,
+      "possible_destination_bearing": 58.1,
+      "possible_heading_difference": 17.4,
+      "last_seen": "2026-10-03T05:15:58.451625+00:00"
     }
   ],
   "seen_alerts": [
