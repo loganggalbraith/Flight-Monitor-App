@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-03T05:15:58.452556+00:00",
+  "last_updated": "2026-10-03T05:49:07.021393+00:00",
   "flight_count": 1,
   "region_counts": {
     "North Carolina": 1
@@ -82,23 +82,23 @@
       "grounded_departure": false,
       "ground_airport": null,
       "ground_airport_name": null,
-      "latitude": 32.4744,
-      "longitude": -88.6633,
+      "latitude": 33.6562,
+      "longitude": -83.8624,
       "altitude_meters": 12496.8,
-      "velocity_mps": 235.45,
-      "heading": 75.45,
+      "velocity_mps": 235.59,
+      "heading": 63.83,
       "vertical_rate": 0,
       "on_ground": false,
       "nearest_airport": "KAVL",
       "nearest_airport_name": "Asheville Regional Airport",
-      "distance_to_nearest_airport_miles": 406.0,
+      "distance_to_nearest_airport_miles": 144.1,
       "possible_destination": "KAVL",
       "possible_destination_name": "Asheville Regional Airport",
       "possible_destination_region": "North Carolina",
-      "possible_destination_distance_miles": 406.0,
-      "possible_destination_bearing": 58.1,
-      "possible_heading_difference": 17.4,
-      "last_seen": "2026-10-03T05:15:58.451625+00:00"
+      "possible_destination_distance_miles": 144.1,
+      "possible_destination_bearing": 31.1,
+      "possible_heading_difference": 32.8,
+      "last_seen": "2026-10-03T05:49:07.020773+00:00"
     }
   ],
   "seen_alerts": [
