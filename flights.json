@@ -1,7 +1,9 @@
 {
-  "last_updated": "2026-10-04T04:20:18.008362+00:00",
-  "flight_count": 0,
-  "region_counts": {},
+  "last_updated": "2026-10-04T10:51:05.330568+00:00",
+  "flight_count": 1,
+  "region_counts": {
+    "Pennsylvania": 1
+  },
   "regions": [
     {
       "id": "socal",
@@ -60,9 +62,46 @@
       ]
     }
   ],
-  "flights": [],
+  "flights": [
+    {
+      "callsign": "JRE770",
+      "icao24": "aa69e0",
+      "registration": null,
+      "aircraft_type": "Unknown",
+      "photo_url": null,
+      "flightaware_url": "https://www.flightaware.com/live/flight/JRE770",
+      "route_origin": null,
+      "route_destination": null,
+      "region_id": "pa",
+      "region_name": "Pennsylvania",
+      "region_reason": "possible_approach",
+      "destination_region_id": null,
+      "destination_region_name": null,
+      "origin_region_id": null,
+      "origin_region_name": null,
+      "grounded_departure": false,
+      "ground_airport": null,
+      "ground_airport_name": null,
+      "latitude": 35.9815,
+      "longitude": -78.74,
+      "altitude_meters": 1981.2,
+      "velocity_mps": 125.78,
+      "heading": 318.81,
+      "vertical_rate": 17.23,
+      "on_ground": false,
+      "nearest_airport": "KRDU",
+      "nearest_airport_name": "Raleigh-Durham International Airport",
+      "distance_to_nearest_airport_miles": 7.7,
+      "possible_destination": "KAGC",
+      "possible_destination_name": "Allegheny County Airport",
+      "possible_destination_region": "Pennsylvania",
+      "possible_destination_distance_miles": 309.0,
+      "possible_destination_bearing": 348.3,
+      "possible_heading_difference": 29.5,
+      "last_seen": "2026-10-04T10:51:04.970804+00:00"
+    }
+  ],
   "seen_alerts": [
-    "possible|JRE714|KGSO",
     "possible|JRE714|KHKY",
     "possible|JRE714|KILM",
     "possible|JRE714|KINT",
@@ -308,6 +347,7 @@
     "possible|JRE765|KVGT",
     "possible|JRE765|KVNY",
     "possible|JRE770|KABE",
+    "possible|JRE770|KAGC",
     "possible|JRE770|KAVL",
     "possible|JRE770|KAVP",
     "possible|JRE770|KBUY",
